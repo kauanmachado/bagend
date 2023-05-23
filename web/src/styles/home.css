@@ -1,0 +1,89 @@
+
+.titleCli {
+    letter-spacing: 1px;
+    margin-top: 190px !important;
+    font-weight: bolder;
+}
+
+.textCli {
+    font-size: 15px;
+}
+
+.btn {
+    width: auto;
+    background-color: rgb(3, 103, 196);
+    border: none;
+    font-size: 15px !important;
+}
+
+.btn:hover {
+    background-color: rgb(1, 115, 223);
+}
+
+
+.imgCliente {
+    width: 500px !important;
+    height: 460px;
+    background-size: cover !important;
+}
+
+.card {
+    width: 220px;
+    height: 300px !important;
+    transition: 0.5s;
+    border: none;
+    padding: 0  !important;
+}
+
+.card img {
+    width: 100%;
+    
+}
+.card:hover {
+    transform: scale(1.1);
+    background-position: -60px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+
+.bgBarb {
+    background-color: rgb(3, 103, 196);
+    height: 550px;
+}
+
+.btnH {
+    width: auto;
+    background-color: rgb(34, 34, 34) !important;
+    border: none;
+    font-size: 15px !important;
+}
+
+.btnH:hover {
+    background-color: rgb(48, 48, 48) !important;
+}
+
+.titleBar {
+    letter-spacing: 1px;
+    margin-top: 150px !important;
+    font-weight: bolder;
+}
+
+
+
+.logoB {
+    font-size: 300px;
+}
+
+
+@media ((max-width: 992px)) {
+    .imgCliente {
+        width: 400px !important;
+        height: 400px;
+    }
+}
+
+@media ((max-width: 860px)) {
+    .imgCliente {
+       display: none !important;
+    }
+}

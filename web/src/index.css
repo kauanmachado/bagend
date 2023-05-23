@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap");
+
+body {
+  font-family: "Inter", sans-serif !important;
+  background-color: #f8f9fa !important;
+}
+
+:root {
+  --bg-blue:  rgb(3, 103, 196);
+}
+
+.navbar-toggler-icon {
+  color: #292929 !important;
+  border: none !important;
+}
+
+.navtoggle {
+  border: none !important;
+  text-decoration: none !important;
+}
+
+
+
+footer {
+  /*border-top: 1px solid rgb(184, 184, 184);*/
+  width: 100%;
+  height: 100px;
+  bottom: 0 !important;
+}
+footer svg {
+  font-size: 22px !important;
+}
+
+.form-control {
+  font-size: 14px !important;
+}
+
+.buscarBarb {
+  width: 350px !important;
+  height: 70px !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+b {
+  color: #646464;
+}
+

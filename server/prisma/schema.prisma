@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id String @id @default(uuid())
+  nome_completo String
+  email String @unique
+  senha String 
+  endereco String
+
+  agendas Agenda[]
+}
+
+model Barbearia {
+  id String @id @default(uuid())
+  nome_barbearia String
+  email String @unique
+  cnpj Int @unique
+  senha String
+  endereco String
+  foto_perfil String
+  telefone String
+  link_instagram String
+  link_facebook String
+
+  agendas Agenda[]
+  cortesestilos CortesEstilos[]
+}
+
+model Agenda {
+  id String @id @default(uuid())
+  id_cliente String
+  id_barbearia String
+  corte String
+  data_horario DateTime
+
+  cliente Cliente @relation(fields: [id_cliente], references: [id])
+  barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+
+}
+
+model CortesEstilos {
+  id String @id @default(uuid())
+  id_barbearia String
+  nome_corte String
+  tempo_estimado String
+  preco Float
+  
+
+  barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+}

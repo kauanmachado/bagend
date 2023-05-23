@@ -1,0 +1,57 @@
+.bg-item {
+    background-color: var(--bg-blue);
+}
+
+.bg-item:hover {
+    background-color: var(--bg-blue);
+}
+
+.fotoBarbearia {
+    width: 80px;
+}
+
+.ItemsList {
+    margin-top: 10px !important;
+}
+
+.thmenu {
+    color: var(--bg-blue);
+}
+
+.listItemDash {
+    border-left: 8px solid rgb(109, 224, 109);
+}
+
+.titleDash {
+    color: rgb(109, 224, 109);
+}
+
+.dashLogo {
+    color: rgb(206, 206, 206) !important;
+    font-size: 40px;
+}
+
+.listItemDashAgen {
+    border-left: 8px solid rgb(36, 148, 253);
+}
+
+.btnRed {
+    background-color: rgb(184, 59, 59) !important;
+}
+
+.btnRed:hover {
+    background-color: rgb(233, 80, 80) !important;
+}
+.btnDark:hover {
+ background-color: rgb(49, 49, 49) !important;
+}
+
+#linkBack {
+    font-size: 14px;
+}
+
+#linkBack:hover {
+    color: rgb(63, 63, 63) !important;
+}
+
+

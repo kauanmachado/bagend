@@ -1,0 +1,67 @@
+.navbar {
+
+}
+
+.navbar-brand {
+    text-decoration: none;
+}
+
+
+.navbar-toggler-icon {
+    color: white !important;
+}
+#link {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    position: relative;
+}
+
+#link::after {
+    content: " ";
+    width: 0%;
+    height: 4px;
+    background-color: rgb(3, 103, 196);
+    color: rgb(247, 247, 247);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.4s ease-in-out;
+}
+#link:hover {
+    color: rgb(90, 90, 90) !important;
+}
+#link:hover::after {
+    width: 100%;
+}
+
+.btn {
+    background-color: rgb(3, 103, 196);
+    border: none;
+    font-size: 16px;
+}
+
+.btn svg {
+    font-size: 25px;
+    margin-right: 8px;
+}
+
+.btn:hover {
+    background-color: rgb(1, 115, 223);
+}
+
+
+
+@media ((max-width: 978px)) {
+    #navbarScroll a{
+        margin-top: 10px;
+    }
+    button {
+        margin-top: 18px !important;
+    }
+
+}
+
+.logo {
+    width: 130px !important;
+}
