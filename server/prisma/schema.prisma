@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -27,6 +27,8 @@ model Barbearia {
   cnpj Int @unique
   senha String
   endereco String
+  lat String
+  lng String
   foto_perfil String
   telefone String
   link_instagram String
