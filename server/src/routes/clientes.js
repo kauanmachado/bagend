@@ -3,7 +3,11 @@ const router = express.Router()
 
 const clienteController = require('../controllers/ClienteController')
 
-router.get('/clientes', clienteController.getCustomers)
+// Cadastro do cliente
+router.post('/cadastrar-cliente', clienteController.registerCliente)
+
+// Login do cliente
+router.post('/login-cliente', clienteController.loginCliente)
 
 
 module.exports = router
