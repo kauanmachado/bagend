@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 
-exports.registerCliente = async () => {
+exports.registerCliente = async (req, res) => {
     const {
         id,
         nome_completo,
@@ -25,9 +25,12 @@ exports.registerCliente = async () => {
     if(!endereco){
         return res.status(422).json({ msg: "O endereco é obrigatório!"})
     }
+    if(senha !== confirmarSenha){
+        return res.status(422).json({ msg: "Senhas não conferem!"})
+    }
 
     // Checar se o usuário existe
-    const clienteExiste = await prisma.barbearia.findUnique({
+    const clienteExiste = await prisma.Cliente.findUnique({
         where: {
             email: email
         }
@@ -42,7 +45,7 @@ exports.registerCliente = async () => {
     const senhaHash = await bcrypt.hash(senha, salt)
 
     try {
-        const cliente = await prisma.cliente.create({
+        const cliente = await prisma.Cliente.create({
             data: {
                 id,
                 nome_completo,
@@ -51,13 +54,14 @@ exports.registerCliente = async () => {
                 endereco
             }
         })
+        res.status(201).json(cliente)
     } catch (error) {
         res.status(400).json({ msg: error.message })
     }
 
 }
 
-exports.loginCliente = async () => {
+exports.loginCliente = async (req, res) => {
     const { email, senha } = req.body
 
     //Validações
@@ -79,7 +83,7 @@ exports.loginCliente = async () => {
     }
 
     // Checar se as senhas conferem
-    const checarSenha = await bcrypt.compare(senha, barbearia.senha)
+    const checarSenha = await bcrypt.compare(senha, cliente.senha)
 
     if(!checarSenha){
         return res.status(422).json({ msg: "Senhas inválida!"})
