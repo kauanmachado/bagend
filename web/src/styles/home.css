@@ -74,6 +74,28 @@
     font-size: 300px;
 }
 
+.icon {
+    
+    font-size: 20px;
+}
+
+
+
+.mediaPicker {
+    background-color: #fff;
+    cursor: pointer;
+    transition: ease 0.3s;
+}
+
+.mediaPicker:hover {
+    background-color: #eaeaea;
+}
+
+.previewImg {
+    width: 180px;
+    height: 180px;
+
+}
 
 @media ((max-width: 992px)) {
     .imgCliente {

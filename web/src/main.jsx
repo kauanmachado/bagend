@@ -10,7 +10,7 @@ import LoginBarbearia from './pages/LoginBarbearia'
 import CadastroCliente from './pages/CadastroCliente'
 import CadastroBarbearia from './pages/CadastroBarbearia'
 import PerfilCliente from './pages/PerfilCliente'
-import MapBarbearias from './pages/MapBarbearias'
+import Barbearias from './pages/Barbearias'
 import Geral from './pages/PainelBarbearia/Geral'
 import BrbAgendas  from './pages/PainelBarbearia/BrbAgendas'
 import Dashboard from './pages/PainelBarbearia/Dashboard'
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'barbearias',
-    element: <MapBarbearias/>
+    element: <Barbearias/>
   },
   {
     path: 'painel-barbearia',

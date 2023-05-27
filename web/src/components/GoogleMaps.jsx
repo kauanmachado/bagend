@@ -1,27 +1,22 @@
-import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer"
-import Btn from "../components/button/Btn"
+import Btn from "../components/button/Btn";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState, useCallback } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
-import Geocode from 'react-geocode'
-import Form from "react-bootstrap/Form"
+import Geocode from "react-geocode";
+import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlineSearch } from "react-icons/ai";
 
-Geocode.setLanguage("pt")
-Geocode.setRegion("br")
-Geocode.setApiKey("AIzaSyDPAo3s_G658gBCdfxq0wOjCkfj3u4GLow")
-Geocode.setLocationType("ROOFTOP")
-Geocode.enableDebug()
+Geocode.setLanguage("pt");
+Geocode.setRegion("br");
+Geocode.setApiKey("AIzaSyDPAo3s_G658gBCdfxq0wOjCkfj3u4GLow");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
 
-const MapBarbearias = () => {
-
-  
-
+const GoogleMaps = () => {
   const containerStyle = {
     width: "100%",
     height: "500px",
@@ -51,31 +46,28 @@ const MapBarbearias = () => {
     setMap(null);
   }, []);
 
-
-
   // --GEOCODE-- //
-  const [endereco, setEndereco] = useState(null)
+  const [endereco, setEndereco] = useState(null);
   // Busca endereço e retorna os seus dados
   const buscarEndereco = (e) => {
-  e.preventDefault()
-  Geocode.fromAddress(endereco).then(
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location
-      const enderecoFormatado = response.results[0].formatted_address;
-      console.log(lat, lng);
-      console.log(enderecoFormatado) 
-    },
-    (error) => {
-      console.error(error)
-    }
-  )
-}
-// --GEOCODE-- //
+    e.preventDefault();
+    Geocode.fromAddress(endereco).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        const enderecoFormatado = response.results[0].formatted_address;
+        console.log(lat, lng);
+        console.log(enderecoFormatado);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+  // --GEOCODE-- //
 
-  
   return isLoaded ? (
     <>
-      <Header />
+      
       <Container className="mt-5">
         <Row>
           <h2 className="fw-bold">
@@ -86,27 +78,25 @@ const MapBarbearias = () => {
           </p>
 
           <Form onSubmit={buscarEndereco}>
-              <InputGroup className=" mt-5 mb-3 shadow rounded buscarBarb">
-                <Form.Control
-                  type="text"
-                  name="endereco"
-                  id="endereco"
-                  placeholder="Digite o endereço da barbearia"
-                  aria-label="Username"
-                  value={endereco}
-                  onChange={(e) => setEndereco(e.target.value)}
-                  aria-describedby="basic-addon1"
-                  required
-                />
-                
-              </InputGroup>
-            </Form>
+            <InputGroup className=" mt-5 mb-3 shadow rounded buscarBarb">
+              <Form.Control
+                type="text"
+                name="endereco"
+                id="endereco"
+                placeholder="Digite o endereço da barbearia"
+                aria-label="Username"
+                value={endereco}
+                onChange={(e) => setEndereco(e.target.value)}
+                aria-describedby="basic-addon1"
+                required
+              />
+            </InputGroup>
+          </Form>
         </Row>
       </Container>
       <Container className="mt-4" fluid>
         <Row className="justify-content-center">
           <Col md={12}>
-          
             <GoogleMap
               id="map"
               className="mb-5"
@@ -129,7 +119,7 @@ const MapBarbearias = () => {
                     featureType: "transit",
                     stylers: [{ visibility: "off" }],
                   },
-                
+
                   {
                     featureType: "road",
                     elementType: "geometry",
@@ -138,20 +128,16 @@ const MapBarbearias = () => {
                 ],
               }}
             >
-            
-            
               {/* Child components, such as markers, info windows, etc. */}
             </GoogleMap>
           </Col>
         </Row>
       </Container>
-      <Footer/>
-
     </>
+  ):
+  (<>
     
-  ) : (
-    <></>
-  );
+  </>)
 };
 
-export default MapBarbearias;
+export default GoogleMaps;

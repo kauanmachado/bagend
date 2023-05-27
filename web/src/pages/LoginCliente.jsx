@@ -1,12 +1,7 @@
 import "../styles/loginCliente.css";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
+import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { HiUser } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri"
@@ -25,7 +20,7 @@ const LoginCliente = () => {
         
           <Col lg={5} md={12} className="shadow rounded mt-5 p-5 justify-content-center">
             <img src={logoPreta} className="logo text-center"/>
-            <h2 className=" fw-bold  mt-5">Seja bem-vindo</h2>
+            <h2 className=" fw-bold  mt-5">Login do cliente</h2>
             <p className="mt-0 textP text-secondary mb-5">Nao possui conta? <Link to="/cadastro-cliente">Cadastre-se</Link></p>
             <Form>
             <Row className="justify-content-center">

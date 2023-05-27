@@ -22,7 +22,7 @@ const Home = () => {
               Seja bem-vindo(a) ao
             </h1>
             <h1 className="titleCli2 fw-bold  text-xl-end">
-              BAgend
+              InBarber
             </h1>
             <p className="ms-md-5 mt-4 textCli text-xl-end text-secondary">
               Encontre barbearias na sua região e<br />de qualquer lugar do mundo e  faça seu agendamento
@@ -62,7 +62,7 @@ const Home = () => {
               Cadastre sua barbearia e tenha uma plataforma gratuita onde<br />você
               pode gerenciar seu negócio de forma prática
             </p>
-            <Link to="cadastro-barbearia">
+            <Link to="login-barbearia">
             <Button className=" rounded-pill px-5  py-3 py-2 mt-3 ms-md-5 shadow btnH">
               Comece agora
             </Button>
