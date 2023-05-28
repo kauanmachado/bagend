@@ -1,18 +1,42 @@
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { HiUser } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { MdAlternateEmail } from "react-icons/md"
-import logoPreta from "../assets/img/logo1.png"
+import { MdAlternateEmail } from "react-icons/md";
+import logoPreta from "../assets/img/logo1.png";
+import axios from "axios";
+import { useState } from "react";
 
 const CadastroCliente = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState("");
+  const [senha, setSenha] = useState("");
+  const [endereco, setEndereco] = useState("");
+
+  const handleRegistrarCliente = async (event) => {
+    await axios
+      .post("http://localhost:8001/cadastrar-cliente", {
+        nome_completo: nome,
+        email: email,
+        senha: senha,
+        endereco: endereco,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.error) {
+          alert("Email ja cadastrado!");
+        } else {
+          alert("Cadastrado com sucesso");
+          navigate("/");
+        }
+      })
+
+      .catch((error) => alert("Erro ao cadastrar: ", error));
+  };
+
   return (
     <>
       <Header />
@@ -24,7 +48,7 @@ const CadastroCliente = () => {
             <p className="textP text-secondary mb-5">
               Ja possui conta? <Link to="/login-cliente">Entre</Link>
             </p>
-            <Form>
+            <Form onSubmit={handleRegistrarCliente}>
               <Row className="justify-content-center">
                 <Col md={12}>
                   <Form.Label>E-mail</Form.Label>
@@ -33,10 +57,12 @@ const CadastroCliente = () => {
                       <MdAlternateEmail />
                     </InputGroup.Text>
                     <Form.Control
+                      id="email"
                       type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="cliente@exemplo.com"
-                      aria-label="Email"
-                      aria-describedby="basic-addon1"
+                      required
                     />
                   </InputGroup>
                 </Col>
@@ -48,9 +74,12 @@ const CadastroCliente = () => {
                       <HiUser />
                     </InputGroup.Text>
                     <Form.Control
+                      id="nomecompleto"
+                      type="text"
+                      value={nome}
+                      onChange={(e) => setNome(e.target.value)}
                       placeholder="Lucas Lima"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
+                      required
                     />
                   </InputGroup>
                 </Col>
@@ -62,10 +91,12 @@ const CadastroCliente = () => {
                       <RiLockPasswordFill />
                     </InputGroup.Text>
                     <Form.Control
+                      id="senha"
+                      onChange={(e) => setSenha(e.target.value)}
+                      value={senha}
                       type="password"
                       placeholder="12345teste"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
+                      required
                     />
                   </InputGroup>
                 </Col>
@@ -77,10 +108,23 @@ const CadastroCliente = () => {
                       <RiLockPasswordFill />
                     </InputGroup.Text>
                     <Form.Control
+                      id="confirmsenha"
                       type="password"
                       placeholder="Digite a senha novamente"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
+                    />
+                  </InputGroup>
+                </Col>
+
+                <Col md={12} className="">
+                  <Form.Label>Endereco</Form.Label>
+                  <InputGroup className="shadow rounded">
+                    <Form.Control
+                      type="text"
+                      id="endereco"
+                      placeholder="Digite o endereço"
+                      value={endereco}
+                      onChange={(e) => setEndereco(e.target.value)}
+                      required
                     />
                   </InputGroup>
                 </Col>

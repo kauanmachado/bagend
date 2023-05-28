@@ -21,13 +21,17 @@ const CadastroBarbearia = () => {
   Geocode.enableDebug();
 
   const [endereco, setEndereco] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [nomeBarbearia, setNomeBarbearia] = useState(null);
+  const [cnpj, setCnpj] = useState(null);
+  const [senha, setSenha] = useState(null);
+  const [rua, setRua] = useState(null);
+  const [numeroRua, setNumeroRua] = useState(null);
+  const [linkInsta, setLinkInsta] = useState("");
+  const [linkFacebook, setLinkFacebook] = useState("");
 
-  const handleRegistrarBarbearia = async () => {
-    const rua = document.getElementById("rua").value;
-    const numerorua = document.getElementById("numerorua").value;
-    const cidade = document.getElementById("cidade").value;
-    const estado = document.getElementById("estado").value;
-
+  const handleRegistrarBarbearia = async (e) => {
+    e.preventDefault()
     const enderecoFormatado =
       rua + ", " + numerorua + ", " + cidade + ", " + estado;
     Geocode.fromAddress(endereco).then(
@@ -41,29 +45,22 @@ const CadastroBarbearia = () => {
       }
     );
 
-    try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:8001/cadastrar-barbearia",
         {
-          nome_barbearia,
-          email,
-          cnpj,
-          senha,
-          confirmarSenha,
+          nome_barbearia: nomeBarbearia,
+          email: email,
+          cnpj: cnpj,
+          senha: senha,
           enderecoFormatado: enderecoFormatado,
           lat: lat,
           lng: lng,
-          foto_perfil,
+          foto_perfil: fotoPerfil,
           telefone,
-          link_instagram,
-          link_facebook,
+          link_instagram: linkInsta,
+          link_facebook: linkFacebook,
         }
       );
-
-      console.log("Usuário cadastrado com sucesso!", response.data);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -86,10 +83,12 @@ const CadastroBarbearia = () => {
                       <MdAlternateEmail />
                     </InputGroup.Text>
                     <Form.Control
+                      id="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       type="email"
                       placeholder="barbearia@exemplo.com"
-                      aria-label="Email"
-                      aria-describedby="basic-addon1"
                       required
                     />
                   </InputGroup>
@@ -102,9 +101,11 @@ const CadastroBarbearia = () => {
                       <MdBusinessCenter />
                     </InputGroup.Text>
                     <Form.Control
+                      id="nomebarbearia"
+                      name="nomebarbearia"
+                      value={nomeBarbearia}
+                      onChange={(e) => setNomeBarbearia(e.target.value)}
                       placeholder="Mr Barba"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
                       required
                     />
                   </InputGroup>
@@ -115,9 +116,11 @@ const CadastroBarbearia = () => {
                       <MdBusinessCenter />
                     </InputGroup.Text>
                     <Form.Control
+                      id="cnpj"
+                      name="cnpj"
+                      value={cnpj}
+                      onChange={(e) => setCnpj(e.target.value)}
                       placeholder="00.000.000/0001-00"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
                       required
                     />
                   </InputGroup>
@@ -128,10 +131,12 @@ const CadastroBarbearia = () => {
                       <RiLockPasswordFill />
                     </InputGroup.Text>
                     <Form.Control
+                      id="senha"
+                      name="senha"
+                      value={senha}
+                      onChange={(e) => setSenha(e.target.value)}
                       type="password"
                       placeholder="12345teste"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
                       required
                     />
                   </InputGroup>
@@ -144,11 +149,10 @@ const CadastroBarbearia = () => {
                       <RiLockPasswordFill />
                     </InputGroup.Text>
                     <Form.Control
+                      id="confirmSenha"
+                      name="confirmSenha"
                       type="password"
                       placeholder="Digite a senha novamente"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                      required
                     />
                   </InputGroup>
                 </Col>
@@ -161,10 +165,8 @@ const CadastroBarbearia = () => {
                       name="rua"
                       id="rua"
                       placeholder="Digite o nome da rua"
-                      aria-label="Username"
-                      value={endereco}
-                      onChange={(e) => setEndereco(e.target.value)}
-                      aria-describedby="basic-addon1"
+                      value={rua}
+                      onChange={(e) => setRua(e.target.value)}
                       required
                     />
                   </InputGroup>
@@ -177,9 +179,9 @@ const CadastroBarbearia = () => {
                       type="number"
                       name="numerorua"
                       id="numerorua"
+                      value={numeroRua}
+                      onChange={(e) => setNumeroRua(e.target.value)}
                       placeholder="Digite o número da rua"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
                       data-maxlength="4"
                       min="0"
                       required
@@ -199,28 +201,32 @@ const CadastroBarbearia = () => {
                 </Form.Label>
                 <Col md={6}>
                   <InputGroup className="mb-3 shadow">
-                    <InputGroup.Text id="basic-addon1">
+                    <InputGroup.Text>
                       <AiOutlineInstagram />
                     </InputGroup.Text>
                     <Form.Control
+                      id="linkinsta"
+                      name="linkinsta"
+                      value={linkInsta}
+                      onChange={(e) => setLinkInsta(e.target.value)}
                       type="url"
                       placeholder="Instagram"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
                     />
                   </InputGroup>
                 </Col>
 
                 <Col md={6}>
                   <InputGroup className="mb-3 shadow">
-                    <InputGroup.Text id="basic-addon1">
+                    <InputGroup.Text>
                       <AiOutlineFacebook />
                     </InputGroup.Text>
                     <Form.Control
+                      id="linkfacebook"
+                      name="linkfacebook"
+                      value={linkFacebook}
+                      onChange={(e) => setLinkFacebook(e.target.value)}
                       type="url"
                       placeholder="Facebook"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
                     />
                   </InputGroup>
                 </Col>

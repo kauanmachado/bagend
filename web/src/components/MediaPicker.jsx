@@ -4,6 +4,11 @@ import { MdPermMedia } from "react-icons/md";
 
 const MediaPicker = () => {
   const [preview, setPreview] = useState(null);
+  const [fotoPerfil, setFotoPerfil] = useState(null);
+
+  //const fotoperfil = document.getElementById("fotoperfil");
+  //fotoperfil.addEventListener("fotoperfil", onFileSelected);
+
   const onFileSelected = (event) => {
     const { files } = event.target;
 
@@ -15,6 +20,8 @@ const MediaPicker = () => {
 
     setPreview(previewUrl);
   };
+
+  
 
   return (
     <>
@@ -32,8 +39,10 @@ const MediaPicker = () => {
           type="file"
           accept="image/png,image/jpeg"
           id="fotoperfil"
+          name="fotoperfil"
+          value={fotoPerfil}
           className="d-none"
-          onChange={onFileSelected}
+          onChange={(e) => setFotoPerfil(e.target.value)}
         />
         {preview && (
           <img src={preview} alt="" className="rounded-circle previewImg" />

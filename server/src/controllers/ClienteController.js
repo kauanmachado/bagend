@@ -25,27 +25,24 @@ exports.registerCliente = async (req, res) => {
     if(!endereco){
         return res.status(422).json({ msg: "O endereco é obrigatório!"})
     }
-    if(senha !== confirmarSenha){
-        return res.status(422).json({ msg: "Senhas não conferem!"})
-    }
 
-    // Checar se o usuário existe
-    const clienteExiste = await prisma.Cliente.findUnique({
+    //Checar se o usuário existe
+    const clienteExiste = await prisma.cliente.findUnique({
         where: {
             email: email
         }
     })
 
-    if(clienteExiste){
-        return res.status(422).json({ msg: "Email ja cadastrado!"})
-    }
+     if(clienteExiste){
+            return res.json({ error: "Email ja cadastrado!"})
+        }
 
     // Criar senha
     const salt = await bcrypt.genSalt(12)
     const senhaHash = await bcrypt.hash(senha, salt)
 
     try {
-        const cliente = await prisma.Cliente.create({
+        const cliente = await prisma.cliente.create({
             data: {
                 id,
                 nome_completo,
@@ -54,9 +51,10 @@ exports.registerCliente = async (req, res) => {
                 endereco
             }
         })
-        res.status(201).json(cliente)
+       
+        res.status(201).json(cliente).send({status: "ok"})
     } catch (error) {
-        res.status(400).json({ msg: error.message })
+        res.status(400).send({ status: "error" })
     }
 
 }
@@ -101,3 +99,4 @@ exports.loginCliente = async (req, res) => {
         res.status(400).json({ msg: error.message })
     }
 }
+

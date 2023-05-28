@@ -7,13 +7,18 @@ const SelectCidadeEstado = () => {
   const { estados } = useEstados();
   const [selectedEstado, setSelectedEstado] = useState("");
   const { cidades } = useCidades({ uf: selectedEstado });
+  const [cidade, setCidade] = useState(null);
 
   const handleEstadoUpdate = (event) => {
     setSelectedEstado(event.target.value);
   };
 
+  const handleCidadeUpdate = (event) => {
+    setCidade(event.target.value);
+  };
+
   const select = {
-    fontSize: "14px"
+    fontSize: "14px",
   };
 
   return (
@@ -41,9 +46,11 @@ const SelectCidadeEstado = () => {
           <Col md={6}>
             <Form.Label>Cidade</Form.Label>
             <Form.Select
-            id="cidade"
+              id="cidade"
               name="cidade"
               style={select}
+              value={cidade}
+              onChange={handleCidadeUpdate}
               className="shadow"
               placeholder="Selecione uma cidade"
             >
