@@ -10,11 +10,12 @@ import { RiEditBoxFill } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import { AiFillSchedule, AiOutlinePlus } from "react-icons/ai";
 import { TiThMenu } from "react-icons/ti";
+import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 
 const AdicionarCorteEstilo = () => {
   return (
     <>
-      <Header />
+      <HeaderClienteLogado />
       <Container className="mt-5 mb-3">
         <div>
           <h4 className="text-center fw-bold">

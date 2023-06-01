@@ -7,7 +7,7 @@ body {
 }
 
 :root {
-  --bg-blue:  rgb(3, 103, 196);
+  --bg-blue: rgb(3, 103, 196);
 }
 
 .navbar-toggler-icon {
@@ -20,7 +20,10 @@ body {
   text-decoration: none !important;
 }
 
-
+.toastEmail svg {
+  font-size: 26px;
+  z-index: 1;
+}
 
 footer {
   /*border-top: 1px solid rgb(184, 184, 184);*/
@@ -48,4 +51,3 @@ a {
 b {
   color: #646464;
 }
-

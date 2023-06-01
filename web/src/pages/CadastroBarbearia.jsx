@@ -68,15 +68,16 @@ const CadastroBarbearia = () => {
       <Header />
       <Container className="mt-3 mb-5">
         <Row className="justify-content-center">
-          <Col lg={5} md={9} className="shadow rounded mt-5 p-5">
+          <Col lg={10} md={9} className="shadow rounded mt-5 p-5">
             <img src={logoPreta} className="logo text-center" />
             <h2 className=" fw-bold  mt-5">Crie sua conta</h2>
             <p className="textP text-secondary mb-5">
               Ja possui conta? <Link to="/login-barbearia">Entre</Link>
             </p>
             <Form onSubmit={handleRegistrarBarbearia}>
-              <Row className="justify-content-center">
-                <Col md={12}>
+              <Row className="justify-content-center d-flex">
+                <Col md={6}>
+                <Col md={10}>
                   <Form.Label>E-mail</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
@@ -94,7 +95,7 @@ const CadastroBarbearia = () => {
                   </InputGroup>
                 </Col>
 
-                <Col md={12}>
+                <Col md={10}>
                   <Form.Label>Nome da Barbearia</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
@@ -142,7 +143,7 @@ const CadastroBarbearia = () => {
                   </InputGroup>
                 </Col>
 
-                <Col md={12}>
+                <Col md={10}>
                   <Form.Label>Confirmar senha</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
@@ -156,7 +157,10 @@ const CadastroBarbearia = () => {
                     />
                   </InputGroup>
                 </Col>
+                </Col>
 
+                <Col md={6}>
+                <Row>
                 <Col md={9} className="">
                   <Form.Label>Rua</Form.Label>
                   <InputGroup className="shadow rounded">
@@ -188,19 +192,15 @@ const CadastroBarbearia = () => {
                     />
                   </InputGroup>
                 </Col>
+                </Row>
 
-                <SelectCidadeEstado />
-
-                <Form.Label className="text-center mt-5">
-                  Foto de perfil da barbearia ( Opcional )
-                </Form.Label>
-                <MediaPicker />
-
-                <Form.Label className="text-center mt-5">
+                <SelectCidadeEstado/>
+                <Form.Label className="text-center mt-4">
                   Redes sociais ( Opcional )
                 </Form.Label>
+                <Row>
                 <Col md={6}>
-                  <InputGroup className="mb-3 shadow">
+                  <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text>
                       <AiOutlineInstagram />
                     </InputGroup.Text>
@@ -211,12 +211,13 @@ const CadastroBarbearia = () => {
                       onChange={(e) => setLinkInsta(e.target.value)}
                       type="url"
                       placeholder="Instagram"
+                      
                     />
                   </InputGroup>
                 </Col>
 
                 <Col md={6}>
-                  <InputGroup className="mb-3 shadow">
+                  <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text>
                       <AiOutlineFacebook />
                     </InputGroup.Text>
@@ -229,6 +230,16 @@ const CadastroBarbearia = () => {
                       placeholder="Facebook"
                     />
                   </InputGroup>
+                </Col>
+                </Row>
+
+                <Form.Label className="text-center mt-3">
+                  Foto de perfil da barbearia ( Opcional )
+                </Form.Label>
+                <MediaPicker />
+
+                
+                
                 </Col>
 
                 <Button

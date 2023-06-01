@@ -24,8 +24,8 @@ const SelectCidadeEstado = () => {
   return (
     <>
       <Container className="mt-3">
-        <Row className="d-flex justify-content-center">
-          <Col md={6}>
+        <Row className="d-flex">
+          <Col md={6} className="ps-0">
             <Form.Label>Estado</Form.Label>
             <Form.Select
               id="estado"
@@ -43,7 +43,7 @@ const SelectCidadeEstado = () => {
             </Form.Select>
           </Col>
 
-          <Col md={6}>
+          <Col md={6} className="pe-0">
             <Form.Label>Cidade</Form.Label>
             <Form.Select
               id="cidade"

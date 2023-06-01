@@ -51,11 +51,17 @@ exports.registerCliente = async (req, res) => {
                 endereco
             }
         })
-       
-        res.status(201).json(cliente).send({status: "ok"})
+        
+        const payload = { id: id };
+        const chaveSecreta = process.env.SECRET; // Substitua pela sua chave secreta
+        const token = jwt.sign(payload, chaveSecreta, { expiresIn: '1h' });
+        res.json({ token })
+
     } catch (error) {
-        res.status(400).send({ status: "error" })
+        res.status(400).json({ status: "error" })
     }
+
+    
 
 }
 

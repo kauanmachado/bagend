@@ -9,6 +9,10 @@ import { TiThMenu } from "react-icons/ti"
 import logoPreta  from "../../assets/img/logo1.png"
 
 const Header = () => {
+
+
+
+
   return (
     <Navbar expand="lg" bg="light" className=" px-5 navbar">
       <Container fluid className="px-md-5 py-xl-2 py-sm-3 py-3">

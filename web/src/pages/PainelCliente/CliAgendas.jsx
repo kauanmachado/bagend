@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MdCoPresent,
   MdFreeCancellation
@@ -17,11 +17,16 @@ import { RiEditBoxFill } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCheck } from "react-icons/fa";
+import HeaderClienteLogado from "../../components/HeaderClienteLogado";
+import Cookies from "js-cookie";
 
 const CliAgendas = () => {
+  const navigate = useNavigate();
+  const Autenticado = Cookies.get('token')
+
   return (
     <>
-      <Header />
+      {Autenticado ?  
       <Container className="mt-5 mb-3">
         <div>
           <h4 className="text-center fw-bold">
@@ -90,7 +95,8 @@ const CliAgendas = () => {
           </Col>
         </Row>
       </Container>
-    </>
+      : navigate('/barbearias')}
+      </>
   );
 };
 

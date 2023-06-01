@@ -18,11 +18,12 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCheck } from "react-icons/fa";
 import exBarber from "../../assets/img/exBarber.png";
+import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 
 const CliGeral = () => {
   return (
     <>
-      <Header />
+      <HeaderClienteLogado />
       <Container className="mt-5 mb-3">
         <div>
           <h4 className="text-center fw-bold">

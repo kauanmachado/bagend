@@ -1,19 +1,24 @@
 import "../styles/home.css"
 import imgHome from "../assets/img/imgHome.jpg";
 import imgHome2 from "../assets/img/imgHome2.jpg";
-import Header from "../components/header/Header";
+import HeaderClienteLogado from "../components/HeaderClienteLogado";
 import Footer from "../components/footer/Footer";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom"
+import Cookies from "js-cookie";
+import Header from "../components/header/Header";
 
 
 const Home = () => {
+
+  const Autenticado = Cookies.get('token')
+
   return (
     <>
-      <Header />
+      {Autenticado ? <HeaderClienteLogado /> : <Header/>}
       <Container fluid className="mb-5 px-xl-5">
         <Row>
           <Col sm={12} md={6} lg={6} className="">
@@ -22,7 +27,7 @@ const Home = () => {
               Seja bem-vindo(a) ao
             </h1>
             <h1 className="titleCli2 fw-bold  text-xl-end">
-              InBarber
+              BAgend
             </h1>
             <p className="ms-md-5 mt-4 textCli text-xl-end text-secondary">
               Encontre barbearias na sua região e<br />de qualquer lugar do mundo e  faça seu agendamento
