@@ -11,77 +11,25 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { AiFillSchedule, AiOutlinePlus } from "react-icons/ai";
 import { TiThMenu } from "react-icons/ti";
 import HeaderClienteLogado from "../../components/HeaderClienteLogado";
+import PainelBarbearia from "../../components/PainelBarbearia";
 
 const AdicionarCorteEstilo = () => {
   return (
     <>
       <HeaderClienteLogado />
       <Container className="mt-5 mb-3">
-        <div>
-          <h4 className="text-center fw-bold">
-            Bem vindo, <strong className="text-primary">Mr Barba!</strong>
-          </h4>
-          <hr></hr>
-        </div>
         <Row className="justify-content-center">
-          <Col md={3} className="mb-5">
-            <Navbar expand="lg">
-              <Navbar.Toggle
-                aria-controls="navbarScroll"
-                className="w-100 navtoggle"
-              >
-                <TiThMenu className=" float-start thmenu text-dark" />
-              </Navbar.Toggle>
-              <Navbar.Collapse id="navbarScroll" className="">
-                <ListGroup className="shadow">
-                  <Link to="../painel-barbearia">
-                    <ListGroup.Item className="list-group-item-action rounded-top ">
-                      <MdBusinessCenter className="mb-1  me-2 fs-5" />
-                      Geral
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="../painel-barbearia/agendas">
-                    <ListGroup.Item className="list-group-item-action">
-                      <AiFillSchedule className="mb-1  me-2 fs-5" />
-                      Agendas
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="../painel-barbearia/dashboard">
-                    <ListGroup.Item className="list-group-item-action">
-                      <MdDashboard className="mb-1  me-2 fs-5" />
-                      Dashboard
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="../painel-barbearia/cortes-estilos">
-                    <ListGroup.Item className="list-group-item-action bg-item text-light">
-                      <BsScissors className="mb-1  me-2 fs-5" />
-                      Painel de cortes / estilos
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="alterar-dados">
-                    <ListGroup.Item className="list-group-item-action">
-                      <RiEditBoxFill className="mb-1  me-2 fs-5" />
-                      Alterar dados
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="/">
-                    <ListGroup.Item className="list-group-item-action rounded-bottom">
-                      <IoLogOutOutline className="mb-1  me-2 fs-5" />
-                      Sair
-                    </ListGroup.Item>
-                  </Link>
-                </ListGroup>
-              </Navbar.Collapse>
-            </Navbar>
+          <Col md={3} className="border bg-light col-auto d-flex flex-column p-5">
+            <PainelBarbearia />
           </Col>
 
-          <Col md={8} className=" ms-md-0 mt-2">
+          <Col md={9} className="border p-5">
           <Form>
           <Link to="../painel-barbearia/cortes-estilos" id="linkBack" className="me-5 py-1 fw-bold text-dark">
           <MdOutlineArrowBackIos style={{fontSize: 15}} className="me-2"/>
               Voltar para cortes e estilos
             </Link>
-            <Row className=" shadow rounded p-4 w-auto mt-3">
+            <Row className="p-4 w-auto mt-3">
             
               <Col md={6}>
                 <Form.Label>Nome do corte</Form.Label>

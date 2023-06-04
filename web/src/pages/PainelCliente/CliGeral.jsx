@@ -20,6 +20,7 @@ import { FaUserCheck } from "react-icons/fa";
 import exBarber from "../../assets/img/exBarber.png";
 import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 import Cookies from "js-cookie";
+import PainelCliente from "../../components/PainelCliente.jsx";
 
 const CliGeral = () => {
 
@@ -27,55 +28,14 @@ const CliGeral = () => {
 
   return (
     <>
-      {Autenticado ? <HeaderClienteLogado /> : <Header/>}
+    
+    {Autenticado ? <HeaderClienteLogado /> : <Header/>}
       <Container className="mt-5 mb-3">
-        <div>
-          <h4 className="text-center fw-bold">
-            Bem vindo, <strong className="text-primary">Kauan Machado!</strong>
-          </h4>
-          <hr></hr>
-        </div>
-        <Row className="justify-content-center">
-          <Col md={3} className="mb-5">
-            <Navbar expand="lg">
-              <Navbar.Toggle
-                aria-controls="navbarScroll"
-                className="w-100 navtoggle"
-              >
-                <TiThMenu className=" float-start thmenu text-dark" />
-              </Navbar.Toggle>
-              <Navbar.Collapse id="navbarScroll" className="">
-                <ListGroup className="shadow w-100">
-                  <Link to="../painel-cliente">
-                    <ListGroup.Item className="list-group-item-action bg-item text-light rounded-top ">
-                      <MdCoPresent className="mb-1  me-2 fs-5" />
-                      Geral
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="agendas">
-                    <ListGroup.Item className="list-group-item-action">
-                      <FaUserCheck className="mb-1  me-2 fs-5" />
-                      Agendas
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="alterar-dados">
-                    <ListGroup.Item className="list-group-item-action">
-                      <RiEditBoxFill className="mb-1  me-2 fs-5" />
-                      Alterar dados
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="/">
-                    <ListGroup.Item className="list-group-item-action rounded-bottom">
-                      <IoLogOutOutline className="mb-1  me-2 fs-5" />
-                      Sair
-                    </ListGroup.Item>
-                  </Link>
-                </ListGroup>
-              </Navbar.Collapse>
-            </Navbar>
+        <Row className="shadow">
+          <Col md={3} className=" border bg-light col-auto d-flex flex-column p-5">
+          <PainelCliente />
           </Col>
-
-          <Col md={8} className="ms-5  ms-md-0 mt-2">
+          <Col md={9} className=" border p-5">
             <h5 className="fw-bold">Informações gerais</h5>
             <hr></hr>
             <p>

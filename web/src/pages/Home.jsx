@@ -1,6 +1,6 @@
 import "../styles/home.css"
-import imgHome from "../assets/img/imgHome.jpg";
-import imgHome2 from "../assets/img/imgHome2.jpg";
+import imgHome from "../assets/img/barberbeard.png";
+import imgHome2 from "../assets/img/imgBarbearia.jpg";
 import HeaderClienteLogado from "../components/HeaderClienteLogado";
 import Footer from "../components/footer/Footer";
 import Container from "react-bootstrap/Container";
@@ -30,7 +30,7 @@ const Home = () => {
               BAgend
             </h1>
             <p className="ms-md-5 mt-4 textCli text-xl-end text-secondary">
-              Encontre barbearias na sua região e<br />de qualquer lugar do mundo e  faça seu agendamento
+              Encontre barbearias na sua região e<br />de qualquer lugar do brasil e  faça seu agendamento
             </p>
             <Link to="barbearias">
             <Button className="btn rounded-pill px-5  py-3 py-2 mt-3 ms-md-5 float-xl-end shadow">
@@ -41,7 +41,7 @@ const Home = () => {
           <Col md={6} className="pe-5 pt-5">
             <img
               src={imgHome}
-              className="imgCliente mt-5 rounded-circle  float-start shadow"
+              className="imgCliente mt-5  float-start"
             />
           </Col>
         </Row>
@@ -53,7 +53,7 @@ const Home = () => {
         <Col md={6} >
         <img
               src={imgHome2}
-              className="imgCliente mt-5 rounded-circle float-end shadow"
+              className="imgBarbearia mt-5 float-end shadow"
             />
         </Col>
         <Col md={6}>

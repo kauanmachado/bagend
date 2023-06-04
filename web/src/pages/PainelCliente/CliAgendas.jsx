@@ -6,97 +6,85 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button"
+import Button from "react-bootstrap/Button";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  MdCoPresent,
-  MdFreeCancellation
-} from "react-icons/md";
-import { BsClock } from "react-icons/bs"
+import { MdCoPresent, MdFreeCancellation } from "react-icons/md";
+import { BsClock } from "react-icons/bs";
 import { RiEditBoxFill } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCheck } from "react-icons/fa";
 import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 import Cookies from "js-cookie";
+import PainelCliente from "../../components/PainelCliente";
+import { Card, Table } from "react-bootstrap";
 
 const CliAgendas = () => {
   const navigate = useNavigate();
-  const Autenticado = Cookies.get('token')
+  const Autenticado = Cookies.get("token");
 
   return (
     <>
-      {Autenticado ?  
+      {Autenticado ? <HeaderClienteLogado /> : <Header />}
       <Container className="mt-5 mb-3">
-        <div>
-          <h4 className="text-center fw-bold">
-            Bem vindo, <strong className="text-primary">Kauan Machado!</strong>
-          </h4>
-          <hr></hr>
-        </div>
-        <Row className="justify-content-center">
-          <Col md={3} className="mb-5">
-            <Navbar expand="lg">
-              <Navbar.Toggle
-                aria-controls="navbarScroll"
-                className="w-100 navtoggle"
-              >
-                <TiThMenu className=" float-start thmenu text-dark" />
-              </Navbar.Toggle>
-              <Navbar.Collapse id="navbarScroll" className="">
-                <ListGroup className="shadow w-100">
-                  <Link to="../painel-cliente">
-                    <ListGroup.Item className="list-group-item-action rounded-top ">
-                      <MdCoPresent className="mb-1  me-2 fs-5" />
-                      Geral
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="../painel-cliente/agendas">
-                    <ListGroup.Item className="list-group-item-action bg-item text-light ">
-                      <FaUserCheck className="mb-1  me-2 fs-5" />
-                      Agendas
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="../painel-cliente/alterar-dados">
-                    <ListGroup.Item className="list-group-item-action">
-                      <RiEditBoxFill className="mb-1  me-2 fs-5" />
-                      Alterar dados
-                    </ListGroup.Item>
-                  </Link>
-                  <Link to="/">
-                    <ListGroup.Item className="list-group-item-action rounded-bottom">
-                      <IoLogOutOutline className="mb-1  me-2 fs-5" />
-                      Sair
-                    </ListGroup.Item>
-                  </Link>
-                </ListGroup>
-              </Navbar.Collapse>
-            </Navbar>
+        <Row className=" shadow">
+          <Col
+            md={3}
+            className="border bg-light col-auto d-flex flex-column p-5"
+          >
+            <PainelCliente />
           </Col>
 
-          <Col md={8} className="ms-5  ms-md-0 mt-2">
-          <ListGroup horizontal variant="flush" className="d-flex">
-            <Container>
-            <Row>
+          <Col md={9} className="border p-5">
+            <h3 className="fw-bold mb-5">Agendas</h3>
+            <ListGroup horizontal variant="flush" className="d-flex">
+              <Container>
+                <Row className="d-flex justify-content-start">
+                  <Card className="border mx-4">
+                    <Card.Body className="p-4">
+                      <Card.Title className="fw-bold mb-3">Mr Barba</Card.Title>
+                      <hr className="text-secondary" />
+                      <p>Corte degradê</p>
+                      <p>12h00 - 29/07/23</p>
+                      <p className="text-success">R$30,00</p>
+                      <Link to="/" className="fw-bold text-danger">
+                      <Button className=" px-4 py-2  shadow rounded-pill">Cancelar horário</Button>
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                  <Card className="border mx-4">
+                    <Card.Body className="p-4">
+                      <Card.Title className="fw-bold mb-3">Mr Barba</Card.Title>
+                      <hr className="text-secondary" />
+                      <p>Corte degradê</p>
+                      <p>12h00 - 29/07/23</p>
+                      <p className="text-success">R$30,00</p>
+                      <Link to="/" className="fw-bold text-danger">
+                      <Button className=" px-4 py-2  shadow rounded-pill">Cancelar horário</Button>
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                  <Card className="border mx-4">
+                    <Card.Body className="p-4">
+                      <Card.Title className="fw-bold mb-3">Mr Barba</Card.Title>
+                      <hr className="text-secondary" />
+                      <p>Corte degradê</p>
+                      <p>12h00 - 29/07/23</p>
+                      <p className="text-success">R$30,00</p>
+                      <Link to="/" className="fw-bold text-danger">
+                      <Button className=" px-4 py-2  shadow rounded-pill">Cancelar horário</Button>
+                      </Link>
+                    </Card.Body>
+                  </Card>
 
-              <ListGroup.Item className="p-3 rounded shadow mx-2 mb-3 col-5">
-                <h5 className="fs-6">Mr Barba</h5>
-                <hr></hr>
-                <h5 className="fw-bold fs-6">Corte degradê</h5>
-                <h5 className="text-success fs-6">R$30,00</h5>
-                <p className="fs-6">Tempo estimado: 15 minutos</p>
-                <p className="fs-6"><BsClock className="fs-6 fw-bold"/> 18:00</p>
-                <Button variant="primary px-4 py-2 agendar shadow rounded mt-3 "><MdFreeCancellation/>Cancelar horário</Button>
-              </ListGroup.Item>
-              
-              </Row>
+                  
+                </Row>
               </Container>
             </ListGroup>
           </Col>
         </Row>
       </Container>
-      : navigate('/barbearias')}
-      </>
+    </>
   );
 };
 

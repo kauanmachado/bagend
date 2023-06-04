@@ -54,4 +54,12 @@
     color: rgb(63, 63, 63) !important;
 }
 
+#d {
+    padding: 15px 0;
+}
+
+
+#link span {
+    font-size: 1rem;
+}
 

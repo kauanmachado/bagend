@@ -11,7 +11,7 @@
 
 .btn {
     width: auto;
-    background-color: rgb(3, 103, 196);
+    background-color: rgb(22, 89, 235);
     border: none;
     font-size: 15px !important;
 }
@@ -24,30 +24,27 @@
 .imgCliente {
     width: 500px !important;
     height: 460px;
-    background-size: cover !important;
+}
+
+.imgBarbearia {
+    width: 500px !important;
+    height: 460px;
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    border-right: 3px groove white
 }
 
 .card {
-    width: 220px;
-    height: 300px !important;
-    transition: 0.5s;
+    width: 15rem;
     border: none;
-    padding: 0  !important;
 }
 
-.card img {
-    width: 100%;
-    
-}
-.card:hover {
-    transform: scale(1.1);
-    background-position: -60px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
 
 
 .bgBarb {
-    background-color: rgb(3, 103, 196);
+    background-color: #9c7e59;
+    background-size: cover;
+    width: 100vw;
     height: 550px;
 }
 
