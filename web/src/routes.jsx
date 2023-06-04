@@ -23,21 +23,13 @@ import AdicionarCorteEstilo from "./pages/PainelBarbearia/AdicionarCorteEstilo";
 import CliGeral from "./pages/PainelCliente/CliGeral";
 import CliAgendas from "./pages/PainelCliente/CliAgendas";
 import CliEditarDados from "./pages/PainelCliente/CliEditarDados";
+import Cookies from "js-cookie";
 
-// const PrivateRoute = ({ component: Component, ...rest }) => {
-//     return (
-//       <Route
-//       {...rest}
-//       render={(props) =>
-//         Autenticado ? (
-//           <Component {...props} />
-//         ) : (
-//           <Link to="/login-cliente" />
-//         )
-//       }
-//       />
-//     )
-// };
+const PrivateRoute = ({children, redirectTo}) => {
+  const isAuthenticated = Cookies.get('token');
+  console.log("isAuth: ", isAuthenticated)
+  return isAuthenticated ? children : <Navigate to={redirectTo} />
+}
 
 const Routers = () => {
   return (
@@ -48,7 +40,9 @@ const Routers = () => {
         <Route path="cadastro-cliente" element={<CadastroCliente />} />
         <Route path="login-barbearia" element={<LoginBarbearia />} />
         <Route path="cadastro-barbearia" element={<CadastroBarbearia />} />
-        <Route path="painel-cliente" element={<CliGeral />} />
+        <Route path="painel-cliente" element={<PrivateRoute redirectTo="/login-cliente">
+          <CliGeral />
+        </PrivateRoute>} />
         <Route path="painel-cliente/agendas" element={<CliAgendas />} />
         <Route path="painel-cliente/alterar-dados" element={<CliEditarDados />} />
         <Route path="painel-barbearia" element={<Geral />} />

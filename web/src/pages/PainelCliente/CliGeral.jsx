@@ -19,11 +19,15 @@ import { TiThMenu } from "react-icons/ti";
 import { FaUserCheck } from "react-icons/fa";
 import exBarber from "../../assets/img/exBarber.png";
 import HeaderClienteLogado from "../../components/HeaderClienteLogado";
+import Cookies from "js-cookie";
 
 const CliGeral = () => {
+
+  const Autenticado = Cookies.get('token')
+
   return (
     <>
-      <HeaderClienteLogado />
+      {Autenticado ? <HeaderClienteLogado /> : <Header/>}
       <Container className="mt-5 mb-3">
         <div>
           <h4 className="text-center fw-bold">
