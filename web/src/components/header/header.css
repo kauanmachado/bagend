@@ -1,4 +1,6 @@
-
+:root {
+    --blue-strong: #0f4c83;
+}
 
 .navbar-brand {
     text-decoration: none;
@@ -19,7 +21,7 @@
     content: " ";
     width: 0%;
     height: 4px;
-    background-color: rgb(22, 89, 235);
+    background-color: var(--blue-strong);
     color: rgb(247, 247, 247);
     position: absolute;
     bottom: 0;

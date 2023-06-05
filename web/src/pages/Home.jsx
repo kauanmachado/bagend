@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom"
 import Cookies from "js-cookie";
 import Header from "../components/header/Header";
+import { FcBusiness } from "react-icons/fc"
 
 
 const Home = () => {
@@ -19,22 +20,22 @@ const Home = () => {
   return (
     <>
       {Autenticado ? <HeaderClienteLogado /> : <Header/>}
-      <Container fluid className="mb-5 px-xl-5">
+      <Container fluid className=" px-xl-5" id="containerHome">
         <Row>
           <Col sm={12} md={6} lg={6} className="">
           
             <h1 className="titleCli  text-xl-end">
-              Seja bem-vindo(a) ao
+              Seja bem-vindo(a) ao <br/>BAgend
             </h1>
-            <h1 className="titleCli2 fw-bold  text-xl-end">
-              BAgend
-            </h1>
+            
+              
+            
             <p className="ms-md-5 mt-4 textCli text-xl-end text-secondary">
               Encontre barbearias na sua região e<br />de qualquer lugar do brasil e  faça seu agendamento
             </p>
             <Link to="barbearias">
             <Button className="btn rounded-pill px-5  py-3 py-2 mt-3 ms-md-5 float-xl-end shadow">
-              Comece agora
+              Saiba mais
             </Button>
             </Link>
           </Col>
@@ -47,28 +48,31 @@ const Home = () => {
         </Row>
       </Container>
 
-      <Container className="mt-5 bgBarb shadow" fluid>
+      {/* <Container className="mt-5 bgBarb mb-5" fluid>
         <Container>
         <Row className="justify-content-center">
         <Col md={6} >
+        
+          
         <img
               src={imgHome2}
               className="imgBarbearia mt-5 float-end shadow"
-            />
+            /> 
+          <FcBusiness className="fs-1 float-end" id="fcBusiness"/>
         </Col>
         <Col md={6}>
-        <h1 className="titleBar ms-md-5 text-white">
+        <h1 className="titleBar ms-md-5">
               Gerencie seu
             </h1>
-            <h1 className="titleBar2 fw-bold ms-md-5 text-white">
+            <h1 className="titleBar2 fw-bold ms-md-5">
               Negócio
             </h1>
-            <p className="ms-md-5 mt-4 textCli text-white">
+            <p className="ms-md-5 mt-4 textCli text-secondary">
               Cadastre sua barbearia e tenha uma plataforma gratuita onde<br />você
               pode gerenciar seu negócio de forma prática
             </p>
             <Link to="login-barbearia">
-            <Button className=" rounded-pill px-5  py-3 py-2 mt-3 ms-md-5 shadow btnH">
+            <Button className="rounded-pill px-5  py-3 py-2 mt-3 ms-md-5 shadow btnH">
               Comece agora
             </Button>
             </Link>
@@ -76,7 +80,7 @@ const Home = () => {
           
         </Row>
         </Container>
-      </Container>
+      </Container> */}
       <Footer/>
 
     </>

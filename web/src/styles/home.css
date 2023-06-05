@@ -1,108 +1,89 @@
+#containerHome {
+    margin-top: 100px;
+    margin-bottom: 300px;
+}
 
 .titleCli {
-    letter-spacing: 1px;
-    margin-top: 190px !important;
-    font-weight: bolder;
+font-size: 3rem;
+  letter-spacing: 1px;
+  margin-top: 190px !important;
+  font-weight: bolder;
 }
 
 .textCli {
-    font-size: 15px;
+  font-size: 1rem;
 }
-
-.btn {
-    width: auto;
-    background-color: rgb(22, 89, 235);
-    border: none;
-    font-size: 15px !important;
-}
-
-.btn:hover {
-    background-color: rgb(1, 115, 223);
-}
-
 
 .imgCliente {
-    width: 500px !important;
-    height: 460px;
+  width: 500px !important;
+  height: 460px;
 }
 
 .imgBarbearia {
-    width: 500px !important;
-    height: 460px;
-    border-top-left-radius: 80px;
-    border-bottom-left-radius: 80px;
-    border-right: 3px groove white
+  width: 500px !important;
+  height: 460px;
+  border-top-left-radius: 80px;
+  border-bottom-left-radius: 80px;
+  border-right: 3px groove white;
 }
-
-.card {
-    width: 15rem;
-    border: none;
-}
-
-
 
 .bgBarb {
-    background-color: #9c7e59;
-    background-size: cover;
-    width: 100vw;
-    height: 550px;
+ 
+}
+
+#fcBusiness {
+    font-size: 30rem ;
 }
 
 .btnH {
-    width: auto;
-    background-color: rgb(34, 34, 34) !important;
-    border: none;
-    font-size: 15px !important;
+  width: auto;
+  background-color: #9c7e59 !important;
+  border: none;
+  font-size: 15px !important;
 }
 
 .btnH:hover {
-    background-color: rgb(48, 48, 48) !important;
+  background-color: rgb(151, 127, 98) !important;
 }
 
 .titleBar {
-    letter-spacing: 1px;
-    margin-top: 150px !important;
-    font-weight: bolder;
+  letter-spacing: 1px;
+  margin-top: 150px !important;
+  font-weight: bolder;
 }
 
-
-
 .logoB {
-    font-size: 300px;
+  font-size: 300px;
 }
 
 .icon {
-    
-    font-size: 20px;
+  font-size: 20px;
 }
 
-
-
 .mediaPicker {
-    background-color: #fff;
-    cursor: pointer;
-    transition: ease 0.3s;
+  background-color: #fff;
+  cursor: pointer;
+  transition: ease 0.3s;
 }
 
 .mediaPicker:hover {
-    background-color: #eaeaea;
+  background-color: #eaeaea;
 }
 
 .previewImg {
-    width: 180px;
-    height: 180px;
-
+  width: 180px;
+  height: 180px;
 }
 
 @media ((max-width: 992px)) {
-    .imgCliente {
-        width: 400px !important;
-        height: 400px;
-    }
+  .imgCliente {
+    width: 400px !important;
+    height: 400px;
+  }
 }
 
 @media ((max-width: 860px)) {
-    .imgCliente {
-       display: none !important;
-    }
+  .imgCliente {
+    display: none !important;
+  }
 }
