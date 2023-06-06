@@ -25,7 +25,7 @@ const Home = () => {
           <Col sm={12} md={6} lg={6} className="">
           
             <h1 className="titleCli  text-xl-end">
-              Seja bem-vindo(a) ao <br/>BAgend
+              Seja bem-vindo(a) ao <br/>GoBarber
             </h1>
             
               

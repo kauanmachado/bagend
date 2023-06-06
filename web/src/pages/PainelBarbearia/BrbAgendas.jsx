@@ -21,7 +21,7 @@ const BrbAgendas = () => {
     <>
       <Header />
       <Container className="mt-5 mb-5">
-        <Row className="justify-content-center">
+        <Row className="justify-content-center shadow">
         <Col md={3} className="border bg-light col-auto d-flex flex-column p-5">
           <PainelBarbearia />
           </Col>
@@ -37,7 +37,7 @@ const BrbAgendas = () => {
                 <h5 className="fw-bold fs-6">Corte degradê</h5>
                 <h5 className="text-success fs-6">R$30,00</h5>
                 <p className="fs-6"><BsClock className="fs-6 fw-bold"/> 18:00</p>
-                <Button variant="primary px-4 py-2 agendar shadow rounded mt-3 "><MdFreeCancellation/>Cancelar horário</Button>
+                <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 "><MdFreeCancellation/>Cancelar horário</Button>
               </ListGroup.Item>
               <ListGroup.Item className="p-3 rounded  mx-2 mb-3">
                 <h5 className="fs-6">Kauan da Silva Machado</h5>
@@ -45,7 +45,7 @@ const BrbAgendas = () => {
                 <h5 className="fw-bold fs-6">Corte degradê</h5>
                 <h5 className="text-success fs-6">R$30,00</h5>
                 <p className="fs-6"><BsClock className="fs-6 fw-bold"/> 18:00</p>
-                <Button variant="primary px-4 py-2 agendar shadow rounded mt-3 "><MdFreeCancellation/>Cancelar horário</Button>
+                <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 "><MdFreeCancellation/>Cancelar horário</Button>
               </ListGroup.Item>
               
               </Row>

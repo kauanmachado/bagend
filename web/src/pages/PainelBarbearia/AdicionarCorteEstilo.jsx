@@ -18,7 +18,7 @@ const AdicionarCorteEstilo = () => {
     <>
       <HeaderClienteLogado />
       <Container className="mt-5 mb-3">
-        <Row className="justify-content-center">
+        <Row className="justify-content-center shadow">
           <Col md={3} className="border bg-light col-auto d-flex flex-column p-5">
             <PainelBarbearia />
           </Col>
@@ -68,7 +68,7 @@ const AdicionarCorteEstilo = () => {
                 </Col>
 
                 <Col md={12}>
-                <Button variant="primary px-4 py-2 agendar shadow rounded mt-3 "><AiOutlinePlus/>Adicionar</Button>
+                <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 "><AiOutlinePlus/>Adicionar</Button>
                 </Col>
               
             </Row>

@@ -10,8 +10,9 @@ import { BsBookmarks, BsScissors } from "react-icons/bs"
 import { RiEditBoxFill, RiMenu2Fill } from "react-icons/ri";
 import logoPreta  from "../assets/img/logo1.png"
 import { Link } from "react-router-dom";
-import { MdBusinessCenter, MdCoPresent } from "react-icons/md";
+import { MdBusinessCenter, MdCoPresent, MdOutlineForum } from "react-icons/md";
 import { TiThMenu } from "react-icons/ti";
+import { ImUserTie } from "react-icons/im"
 
 
 const PainelBarbearia = () => {
@@ -49,6 +50,18 @@ const PainelBarbearia = () => {
             <Link to="../painel-barbearia/cortes-estilos" id="link" className="nav-link text-dark fs-5">
             <BsScissors/>
                 <span className="ms-2">Cortes / estilo</span>
+                </Link>
+            </li>
+            <li className="nav-item  fs-4 my-1">
+            <Link to="../painel-barbearia/cortes-estilos" id="link" className="nav-link text-dark fs-5">
+            <ImUserTie/>
+                <span className="ms-2">Profissionais</span>
+                </Link>
+            </li>
+            <li className="nav-item  fs-4 my-1">
+            <Link to="../painel-barbearia/cortes-estilos" id="link" className="nav-link text-dark fs-5">
+            <MdOutlineForum/>
+                <span className="ms-2">Avaliações</span>
                 </Link>
             </li>
             <li className="nav-item fs-4 my-1">
