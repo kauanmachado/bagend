@@ -73,7 +73,7 @@ const PainelBarbearia = () => {
               </li>
               <li className="nav-item  fs-4 my-1">
                 <Link
-                  to="../painel-barbearia/cortes-estilos"
+                  to="../painel-barbearia/profissionais"
                   className="nav-link text-dark fs-5"
                 >
                   <ImUserTie className=" text-secondary" />
@@ -82,7 +82,7 @@ const PainelBarbearia = () => {
               </li>
               <li className="nav-item  fs-4 my-1">
                 <Link
-                  to="../painel-barbearia/cortes-estilos"
+                  to="../painel-barbearia/avaliacoes"
                   className="nav-link text-dark fs-5"
                 >
                   <MdOutlineForum className=" text-secondary" />

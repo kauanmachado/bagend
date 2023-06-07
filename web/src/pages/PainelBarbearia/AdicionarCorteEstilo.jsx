@@ -18,12 +18,12 @@ const AdicionarCorteEstilo = () => {
     <>
       <HeaderClienteLogado />
       <Container className="default-margin">
-        <Row className="justify-content-center shadow">
-          <Col md={3} className="border bg-light col-auto d-flex flex-column p-5">
+        <Row className="justify-content-center shadow bg-white rounded">
+          <Col md={3} className="bg-white rounded col-auto d-flex flex-column p-5">
             <PainelBarbearia />
           </Col>
 
-          <Col md={9} className="border p-5">
+          <Col md={9} className="border rounded p-5 bg-light">
           <Form>
           <Link to="../painel-barbearia/cortes-estilos" id="linkBack" className="me-5 py-1 fw-bold text-dark">
           <MdOutlineArrowBackIos style={{fontSize: 15}} className="me-2"/>
@@ -76,6 +76,7 @@ const AdicionarCorteEstilo = () => {
           </Col>
         </Row>
       </Container>
+      <Footer/>
     </>
   );
 };

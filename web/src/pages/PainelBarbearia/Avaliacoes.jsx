@@ -1,15 +1,12 @@
+import { Card, Col, Container, Row } from "react-bootstrap";
 import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
-import "../../styles/dashboard.css";
-import { Button, Col, Row, Container } from "react-bootstrap"
 import PainelBarbearia from "../../components/PainelBarbearia";
-import { Card } from "react-bootstrap";
-import { ImUserTie } from "react-icons/im";
-import { Link } from "react-router-dom";
-import { HiOutlinePlusSm, HiUserRemove } from "react-icons/hi";
+import { MdOutlineForum } from "react-icons/md";
+import Footer from "../../components/footer/Footer";
 import profileEx from "../../assets/img/profileExample.jpg";
+import { AiFillStar } from "react-icons/ai";
 
-const Profissionais = () => {
+const Avaliacoes = () => {
     return (
         <>
             <Header />
@@ -23,16 +20,10 @@ const Profissionais = () => {
 
                     <Col md={9} className="p-5 border rounded bg-light">
                         <div className="d-flex">
-                            <ImUserTie className="fs-2 text-secondary ms-1" />
-                            <h3 className="fw-bold mb-5 text-secondary ms-3">Profissionais</h3>
+                            <MdOutlineForum className="fs-2 text-secondary ms-1" />
+                            <h3 className="fw-bold mb-5 text-secondary ms-3">Avaliações</h3>
                         </div>
-                        <Link to="./adicionar-profissional">
-                            <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 mb-3">
-                                <HiOutlinePlusSm />
-                                Adicionar
-                            </Button>
-                        </Link>
-                        <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-1">
+                        <Card className="border-0 shadow m-1 p-3">
                             <Card.Body>
                                 <div className="d-flex align-items-center">
                                     <img
@@ -43,11 +34,16 @@ const Profissionais = () => {
                                     />
                                     <h5 className="fs-6 ms-3">Kauan da Silva Machado</h5>
                                 </div>
-                                <hr className="text-secondary" />
-                                <Button className="bg-danger px-4 py-2 btnRed shadow rounded-pill">
-                                    <HiUserRemove />
-                                    Remover
-                                </Button>
+                                
+                                <p className="text-secondary mt-3">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                </p>
+
+                                <div className="d-flex mt-3">
+                                    <AiFillStar /><AiFillStar/><AiFillStar/><AiFillStar/><AiFillStar/>
+                                </div>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -56,7 +52,7 @@ const Profissionais = () => {
             </Container>
             <Footer />
         </>
-    );
-};
+    )
+}
 
-export default Profissionais;
+export default Avaliacoes;

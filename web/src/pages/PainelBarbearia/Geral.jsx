@@ -34,16 +34,20 @@ const Geral = () => {
           
           
           <Col md={9} className="p-5 border rounded bg-light">
+          <div className="d-flex">
+                            <MdBusinessCenter className="fs-2 text-secondary ms-1" />
+                            <h3 className="fw-bold mb-5 text-secondary ms-3">Visão Geral</h3>
+          </div>
             <img src={exBarber} className="logo rounded-circle" />
             <h3 className=" mt-3 fw-bold title">Mr Barba</h3>
-            <p className="endereco mt-4">Gravataí, Rio Grande do Sul</p>
-            <p className="endereco text-secondary">Av. Flores da Cunha 000</p>
+            <p className="endereco mt-4"></p>
+            <p className="endereco text-secondary">Av. Flores da Cunha 000, Gravataí, Rio Grande do Sul</p>
 
             <p>
-              <AiOutlineInstagram />: instagram.com/mrbarba
+              <AiOutlineInstagram className="fs-3"/> instagram.com/mrbarba
             </p>
             <p>
-              <AiOutlineFacebook />: facebook.com/mrbarba
+              <AiOutlineFacebook className="fs-3"/> facebook.com/mrbarba
             </p>
           </Col>
         </Row>

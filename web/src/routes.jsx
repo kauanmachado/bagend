@@ -12,11 +12,9 @@ import LoginCliente from "./pages/LoginCliente";
 import LoginBarbearia from "./pages/LoginBarbearia";
 import CadastroCliente from "./pages/CadastroCliente";
 import CadastroBarbearia from "./pages/CadastroBarbearia";
-import PerfilCliente from "./pages/PerfilCliente";
 import Barbearias from "./pages/Barbearias";
 import Geral from "./pages/PainelBarbearia/Geral";
 import BrbAgendas from "./pages/PainelBarbearia/BrbAgendas";
-import Dashboard from "./pages/PainelBarbearia/Dashboard";
 import CortesEstilos from "./pages/PainelBarbearia/CortesEstilos";
 import BrbEditarDados from "./pages/PainelBarbearia/BrbEditarDados";
 import AdicionarCorteEstilo from "./pages/PainelBarbearia/AdicionarCorteEstilo";
@@ -25,6 +23,8 @@ import CliAgendas from "./pages/PainelCliente/CliAgendas";
 import CliEditarDados from "./pages/PainelCliente/CliEditarDados";
 import Cookies from "js-cookie";
 import Agenda from "./pages/Agenda";
+import Profissionais from "./pages/PainelBarbearia/Profissionais";
+import Avaliacoes from "./pages/PainelBarbearia/Avaliacoes";
 
 const PrivateRoute = ({children, redirectTo}) => {
   const isAuthenticated = Cookies.get('token');
@@ -41,16 +41,24 @@ const Routers = () => {
         <Route path="cadastro-cliente" element={<CadastroCliente />} />
         <Route path="login-barbearia" element={<LoginBarbearia />} />
         <Route path="cadastro-barbearia" element={<CadastroBarbearia />} />
+
+        {/* PAINEL DO CLIENTE */}
         <Route path="painel-cliente" element={<PrivateRoute redirectTo="/login-cliente">
           <CliGeral />
         </PrivateRoute>} />
         <Route path="painel-cliente/agendas" element={<CliAgendas />} />
         <Route path="painel-cliente/alterar-dados" element={<CliEditarDados />} />
+
+        {/* PAINEL DA BARBEARIA */}
         <Route path="painel-barbearia" element={<Geral />} />
         <Route path="painel-barbearia/agendas" element={<BrbAgendas />} />
         <Route path="painel-barbearia/cortes-estilos" element={<CortesEstilos />} />
         <Route path="painel-barbearia/alterar-dados" element={<BrbEditarDados />} />
         <Route path="painel-barbearia/cortes-estilos/adicionar-corteestilo" element={<AdicionarCorteEstilo />} />
+        <Route path="painel-barbearia/profissionais" element={<Profissionais />} />
+        <Route path="painel-barbearia/avaliacoes" element={<Avaliacoes />} />
+
+
         <Route path="/barbearias" element={<Barbearias />} /> 
         <Route path="/agenda" element={<Agenda/>} />   
       </Routes>
