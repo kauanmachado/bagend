@@ -37,13 +37,19 @@
 
 .btnRed {
     background-color: rgb(184, 59, 59) !important;
+    font-size: 14px;
 }
 
 .btnRed:hover {
     background-color: rgb(233, 80, 80) !important;
 }
+
+.btnDark {
+    font-size: 14px;
+}
 .btnDark:hover {
  background-color: rgb(49, 49, 49) !important;
+ 
 }
 
 #linkBack {
@@ -62,4 +68,6 @@
 #link span {
     font-size: 1rem;
 }
+
+
 

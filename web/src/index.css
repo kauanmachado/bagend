@@ -8,6 +8,37 @@ body {
 
 :root {
   --blue-strong: #0f4c83;
+  --blue-weak: #0f4f8f;
+}
+
+.bg-blue {
+  background-color: var(--blue-strong)
+}
+
+.bg-brown {
+  background-color: #63523D;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+
+.nav-link:hover {
+  background-color: #e9ecef;
+}
+.nav-link span {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.nav-link-painel:hover {
+  background-color: gra
+}
+
+.default-margin {
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .navbar-toggler-icon {

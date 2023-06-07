@@ -24,7 +24,7 @@ const Header = () => {
             />
         </Navbar.Brand>
         </Link>
-        <Navbar.Toggle aria-controls="navbarScroll" className="navtoggle"><TiThMenu className="text-dark thmenu"/></Navbar.Toggle>
+        <Navbar.Toggle aria-controls="navbarScroll" className="navtoggle m-0"><TiThMenu className="text-dark thmenu"/></Navbar.Toggle>
         <Navbar.Collapse id="navbarScroll" className="justify-content-end">
           <Nav style={{ maxHeight: "100px" }} navbarScroll>
           <Link to="/" id="link" className="me-5 py-1 fw-bold text-dark">

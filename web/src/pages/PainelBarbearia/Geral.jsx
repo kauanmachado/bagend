@@ -25,13 +25,15 @@ const Geral = () => {
   return (
     <>
       <Header />
-      <Container className="mt-5 mb-3">
-        <Row className="justify-content-center shadow">
-          <Col md={3} className="border bg-light col-auto d-flex flex-column p-5">
-            <PainelBarbearia />
+      <Container className="default-margin">
+      <Row className="justify-content-center shadow rounded bg-white">
+      <Col md={3} className="col-auto d-flex flex-column p-5 rounded bg-white">
+          <PainelBarbearia />
           </Col>
 
-          <Col md={9} className="p-5 border">
+          
+          
+          <Col md={9} className="p-5 border rounded bg-light">
             <img src={exBarber} className="logo rounded-circle" />
             <h3 className=" mt-3 fw-bold title">Mr Barba</h3>
             <p className="endereco mt-4">Gravataí, Rio Grande do Sul</p>
@@ -45,7 +47,9 @@ const Geral = () => {
             </p>
           </Col>
         </Row>
+        
       </Container>
+      <Footer />
     </>
   );
 };

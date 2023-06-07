@@ -17,7 +17,7 @@ const AdicionarCorteEstilo = () => {
   return (
     <>
       <HeaderClienteLogado />
-      <Container className="mt-5 mb-3">
+      <Container className="default-margin">
         <Row className="justify-content-center shadow">
           <Col md={3} className="border bg-light col-auto d-flex flex-column p-5">
             <PainelBarbearia />

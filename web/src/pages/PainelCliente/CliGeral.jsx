@@ -30,7 +30,7 @@ const CliGeral = () => {
     <>
     
     {Autenticado ? <HeaderClienteLogado /> : <Header/>}
-      <Container className="mt-5 mb-3">
+      <Container className="default-margin">
         <Row className="shadow">
           <Col md={3} className=" border bg-light col-auto d-flex flex-column p-5">
           <PainelCliente />

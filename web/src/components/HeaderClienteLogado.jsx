@@ -28,7 +28,7 @@ const HeaderClienteLogado = () => {
               <img src={logoPreta} className="logo" />
             </Navbar.Brand>
           </Link>
-          <Navbar.Toggle aria-controls="navbarScroll" className="navtoggle">
+          <Navbar.Toggle aria-controls="navbarScroll" className="navtoggle m-0">
             <TiThMenu className="text-dark thmenu" />
           </Navbar.Toggle>
           <Navbar.Collapse id="navbarScroll" className="justify-content-end">

@@ -24,6 +24,7 @@ import CliGeral from "./pages/PainelCliente/CliGeral";
 import CliAgendas from "./pages/PainelCliente/CliAgendas";
 import CliEditarDados from "./pages/PainelCliente/CliEditarDados";
 import Cookies from "js-cookie";
+import Agenda from "./pages/Agenda";
 
 const PrivateRoute = ({children, redirectTo}) => {
   const isAuthenticated = Cookies.get('token');
@@ -50,7 +51,8 @@ const Routers = () => {
         <Route path="painel-barbearia/cortes-estilos" element={<CortesEstilos />} />
         <Route path="painel-barbearia/alterar-dados" element={<BrbEditarDados />} />
         <Route path="painel-barbearia/cortes-estilos/adicionar-corteestilo" element={<AdicionarCorteEstilo />} />
-        <Route path="/barbearias" element={<Barbearias />} />       
+        <Route path="/barbearias" element={<Barbearias />} /> 
+        <Route path="/agenda" element={<Agenda/>} />   
       </Routes>
     </BrowserRouter>
   );

@@ -26,7 +26,7 @@ const CliAgendas = () => {
   return (
     <>
       {Autenticado ? <HeaderClienteLogado /> : <Header />}
-      <Container className="mt-5 mb-3">
+      <Container className="default-margin">
         <Row className=" shadow">
           <Col
             md={3}
