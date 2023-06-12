@@ -12,11 +12,13 @@ import { AiFillSchedule, AiOutlinePlus } from "react-icons/ai";
 import { TiThMenu } from "react-icons/ti";
 import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 import PainelBarbearia from "../../components/PainelBarbearia";
+import HeaderBarbearia from "../../components/HeaderBarbearia";
+import { HiOutlinePlusSm } from "react-icons/hi";
 
 const AdicionarCorteEstilo = () => {
   return (
     <>
-      <HeaderClienteLogado />
+      <HeaderBarbearia />
       <Container className="default-margin">
         <Row className="justify-content-center shadow bg-white rounded">
           <Col md={3} className="bg-white rounded col-auto d-flex flex-column p-5">
@@ -68,7 +70,7 @@ const AdicionarCorteEstilo = () => {
                 </Col>
 
                 <Col md={12}>
-                <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 "><AiOutlinePlus/>Adicionar</Button>
+                <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 "><HiOutlinePlusSm />Adicionar</Button>
                 </Col>
               
             </Row>

@@ -17,11 +17,12 @@ import { IoLogOutOutline } from "react-icons/io5"
 import { TiThMenu } from "react-icons/ti"
 import { MdAlternateEmail, MdDashboard, MdBusinessCenter } from "react-icons/md";
 import { BsFillPinMapFill, BsScissors  } from "react-icons/bs";
+import HeaderBarbearia from "../../components/HeaderBarbearia";
 
 const BrbEditarDados = () => {
     return(
         <>
-            <Header/>
+            <HeaderBarbearia />
             <Container className="mt-5 mb-3">
         <div>
         <h4 className="text-center fw-bold">Bem vindo, <strong className="text-primary">Mr Barba!</strong></h4>

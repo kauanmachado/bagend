@@ -20,11 +20,12 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
 import PainelBarbearia from "../../components/PainelBarbearia";
 import { Card } from "react-bootstrap";
+import HeaderBarbearia from "../../components/HeaderBarbearia";
 
 const BrbAgendas = () => {
   return (
     <>
-      <Header />
+      <HeaderBarbearia />
       <Container className="default-margin">
         <Row className="justify-content-center shadow bg-white rounded">
           <Col
@@ -38,7 +39,7 @@ const BrbAgendas = () => {
               <AiFillSchedule className="fs-2 text-secondary ms-1" />
               <h3 className="fw-bold mb-5 text-secondary ms-3">Agendas</h3>
             </div>
-            <ListGroup horizontal variant="flush" className="d-flex">
+
               <Container>
                 <Row>
                   <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">
@@ -93,7 +94,7 @@ const BrbAgendas = () => {
                 
                 </Row>
               </Container>
-            </ListGroup>
+            
           </Col>
         </Row>
       </Container>

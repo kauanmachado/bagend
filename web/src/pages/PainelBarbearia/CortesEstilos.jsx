@@ -20,11 +20,13 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
 import PainelBarbearia from "../../components/PainelBarbearia";
 import { Card } from "react-bootstrap";
+import HeaderBarbearia from "../../components/HeaderBarbearia";
+import { HiOutlinePlusSm } from "react-icons/hi";
 
 const CortesEstilos = () => {
   return (
     <>
-      <Header />
+      <HeaderBarbearia />
       <Container className="default-margin">
         <Row className="justify-content-center shadow rounded bg-white">
           <Col
@@ -43,7 +45,7 @@ const CortesEstilos = () => {
             </div>
             <Link to="./adicionar-corteestilo">
               <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 ">
-                <AiOutlinePlus />
+              <HiOutlinePlusSm />
                 Adicionar
               </Button>
             </Link>
@@ -112,8 +114,6 @@ const CortesEstilos = () => {
                       </Button>
                     </Card.Body>
                   </Card>
-
-                  
                 </Row>
               </Container>
             </ListGroup>

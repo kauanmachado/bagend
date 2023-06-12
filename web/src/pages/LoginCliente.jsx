@@ -12,7 +12,11 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { HiUser } from "react-icons/hi";
-import { RiCheckboxCircleFill, RiErrorWarningFill, RiLockPasswordFill } from "react-icons/ri";
+import {
+  RiCheckboxCircleFill,
+  RiErrorWarningFill,
+  RiLockPasswordFill,
+} from "react-icons/ri";
 import { RxScissors } from "react-icons/rx";
 import logoPreta from "../assets/img/logo1.png";
 import { useState } from "react";
@@ -42,8 +46,6 @@ const LoginCliente = () => {
     }, 3000);
   };
 
-
-
   const handleFazerLogin = async (e) => {
     e.preventDefault();
     const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
@@ -70,7 +72,7 @@ const LoginCliente = () => {
   return (
     <>
       <Header />
-      <Container className="mt-4 mb-5">
+      <Container className=" mb-5">
         <Row className="justify-content-center">
           <Toast
             show={toastErro}
@@ -87,7 +89,6 @@ const LoginCliente = () => {
             show={toastCheck}
             onClose={() => setToastCheck(false)}
             className="position-absolute toastEmail bg-success text-white"
-            
           >
             <Toast.Body>
               <RiCheckboxCircleFill className="me-2" />
@@ -96,18 +97,35 @@ const LoginCliente = () => {
           </Toast>
           <Col
             lg={5}
-            md={12}
-            className="shadow rounded mt-5 p-5 justify-content-center"
+            md={8}
+            className="shadow rounded mt-5 p-sm-5 p-4 justify-content-center"
           >
             <img src={logoPreta} className="logo text-center" />
-            <h2 className=" fw-bold  mt-5">Login do cliente</h2>
+            <h3 className="fw-bold  mt-5">Faça login para continuar</h3>
             <p className="mt-0 textP text-secondary mb-5">
               Nao possui conta? <Link to="/cadastro-cliente">Cadastre-se</Link>
             </p>
             <Form onSubmit={handleFazerLogin}>
               <Row className="justify-content-center">
                 <Col md={12}>
-                  <Form.Label>E-mail</Form.Label>
+                  <div class="form-floating mb-4">
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="cliente@exemplo.com"
+                      className="form-control shadow"
+                      required
+                      autoComplete="email"
+                    />
+                    <label for="floatingInput" className="text-secondary">
+                      <HiUser className="fs-3 me-2" />
+                      cliente@exemplo.com
+                    </label>
+                  </div>
+
+                  {/* <Form.Label>E-mail</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <HiUser />
@@ -121,25 +139,26 @@ const LoginCliente = () => {
                       required
                       autoComplete="email"
                     />
-                  </InputGroup>
+                  </InputGroup> */}
                 </Col>
 
                 <Col md={12}>
-                  <Form.Label>Senha</Form.Label>
-                  <InputGroup className="mb-3 shadow rounded">
-                    <InputGroup.Text id="basic-addon1">
-                      <RiLockPasswordFill />
-                    </InputGroup.Text>
-                    <Form.Control
+                  <div class="form-floating mb-4">
+                    <input
                       id="senha"
                       value={senha}
                       onChange={(e) => setSenha(e.target.value)}
                       type="password"
                       placeholder="12345teste"
+                      className="form-control shadow"
                       required
                       autoComplete="senha"
                     />
-                  </InputGroup>
+                    <label for="floatingInput" className="text-secondary">
+                      <RiLockPasswordFill className="fs-3 me-2" />
+                      12345teste
+                    </label>
+                  </div>
                 </Col>
 
                 <p className="mt-0 textP text-secondary mb-5">
@@ -147,7 +166,7 @@ const LoginCliente = () => {
                   <Link to="/cadastro-cliente"> Clique aqui</Link>
                 </p>
                 <Button
-                  variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0 w-100"
+                  variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
                   type="submit"
                 >
                   Entrar
@@ -155,13 +174,12 @@ const LoginCliente = () => {
               </Row>
             </Form>
 
-            <p className="mt-0 textP fw-bold text-center mt-4">Ou</p>
+            <p className="mt-3 textP fw-bold text-center">Ou</p>
             <Link to="/login-barbearia">
               <Button
-                variant="primary rounded-pill px-4 py-3 mt-3 shadow mx-0 btnEsc mb-3 w-100"
+                variant="primary rounded-pill px-5 py-3 mt-2 shadow btnEsc w-100"
                 type="submit"
               >
-                <RxScissors />
                 Entrar como barbearia
               </Button>
             </Link>

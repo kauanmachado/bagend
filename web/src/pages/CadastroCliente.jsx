@@ -20,7 +20,8 @@ import { MdAlternateEmail } from "react-icons/md";
 import logoPreta from "../assets/img/logo1.png";
 import axios from "axios";
 import { useState } from "react";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
+import { BsFillPinMapFill } from "react-icons/bs";
 
 const CadastroCliente = () => {
   const navigate = useNavigate();
@@ -61,26 +62,23 @@ const CadastroCliente = () => {
     e.preventDefault();
 
     if (senha !== confirmSenha) {
-      setSenha("")
-      setConfirmSenha("")
+      setSenha("");
+      setConfirmSenha("");
       throw exibirToastSenha();
     }
 
     await axios
-      .post(
-        "http://localhost:8001/cadastrar-cliente",
-        {
-          nome_completo: nome,
-          email: email,
-          senha: senha,
-          endereco: endereco,
-        }
-      )
+      .post("http://localhost:8001/cadastrar-cliente", {
+        nome_completo: nome,
+        email: email,
+        senha: senha,
+        endereco: endereco,
+      })
 
       .then((response) => {
         console.log(response.data);
 
-        const cookieExpiresInSeconds = 60 * 60 * 24 * 30
+        const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
 
         if (response.data.error) {
           exibirToastErro();
@@ -88,7 +86,7 @@ const CadastroCliente = () => {
         } else {
           exibirToastCheck();
           const token = response.data.token;
-          Cookies.set('token', token, { expires: cookieExpiresInSeconds })
+          Cookies.set("token", token, { expires: cookieExpiresInSeconds });
           setTimeout(() => {
             navigate("/barbearias");
           }, 2000);
@@ -101,15 +99,12 @@ const CadastroCliente = () => {
   return (
     <>
       <Header />
-      <Container className="mb-5 mt-3">
+      <Container className="mb-5">
         <Row className="justify-content-center">
-
-        
           <Toast
             show={toastErro}
             onClose={() => setToastErro(false)}
             className="position-absolute toastEmail bg-danger text-white"
-            
           >
             <Toast.Body>
               <RiErrorWarningFill className="me-2" />
@@ -120,7 +115,6 @@ const CadastroCliente = () => {
             show={toastSenha}
             onClose={() => setToastSenha(false)}
             className="position-absolute toastEmail bg-danger text-white"
-            
           >
             <Toast.Body>
               <RiErrorWarningFill className="me-2" />
@@ -131,7 +125,6 @@ const CadastroCliente = () => {
             show={toastCheck}
             onClose={() => setToastCheck(false)}
             className="position-absolute toastEmail bg-success text-white"
-            
           >
             <Toast.Body>
               <RiCheckboxCircleFill className="me-2" />
@@ -139,17 +132,18 @@ const CadastroCliente = () => {
             </Toast.Body>
           </Toast>
 
-
-          <Col lg={5} md={8} className="shadow rounded mt-5 p-5">
+          <Col lg={5} md={8} className="shadow rounded mt-5 p-sm-5 p-4">
             <img src={logoPreta} className="logo text-center" />
-            <h2 className=" fw-bold  mt-5">Crie sua conta</h2>
+            <h3 className=" fw-bold  mt-5">
+              Cadastre-se como cliente e agende seu horário
+            </h3>
             <p className="textP text-secondary mb-5">
               Ja possui conta? <Link to="/login-cliente">Entre</Link>
             </p>
             <Form onSubmit={handleRegistrarCliente}>
               <Row className="justify-content-center">
                 <Col md={12}>
-                  <Form.Label>E-mail</Form.Label>
+                  {/* <Form.Label>E-mail</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <MdAlternateEmail />
@@ -162,11 +156,41 @@ const CadastroCliente = () => {
                       placeholder="cliente@exemplo.com"
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
+                  <div class="form-floating mb-4">
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="cliente@exemplo.com"
+                      required
+                      className="form-control shadow"
+                    />
+                    <label for="floatingInput" className="text-secondary">
+                      <MdAlternateEmail className="fs-3 me-2" />
+                      cliente@exemplo.com
+                    </label>
+                  </div>
                 </Col>
 
                 <Col md={12}>
-                  <Form.Label>Nome completo</Form.Label>
+                  <div class="form-floating mb-4">
+                    <input
+                      id="nomecompleto"
+                      type="text"
+                      value={nome}
+                      onChange={(e) => setNome(e.target.value)}
+                      placeholder="Lucas Lima"
+                      required
+                      className="form-control shadow"
+                    />
+                    <label for="floatingInput" className="text-secondary">
+                      <HiUser className="fs-3 me-2" />
+                      Lucas Lima
+                    </label>
+                  </div>
+                  {/* <Form.Label>Nome completo</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <HiUser />
@@ -179,11 +203,26 @@ const CadastroCliente = () => {
                       placeholder="Lucas Lima"
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
                 </Col>
 
                 <Col md={12}>
-                  <Form.Label>Senha</Form.Label>
+                  <div class="form-floating mb-4">
+                    <input
+                      id="senha"
+                      onChange={(e) => setSenha(e.target.value)}
+                      value={senha}
+                      type="password"
+                      placeholder="12345teste"
+                      required
+                      className="form-control shadow"
+                    />
+                    <label for="floatingInput" className="text-secondary">
+                      <RiLockPasswordFill className="fs-3 me-2" />
+                      12345teste
+                    </label>
+                  </div>
+                  {/* <Form.Label>Senha</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <RiLockPasswordFill />
@@ -196,11 +235,26 @@ const CadastroCliente = () => {
                       placeholder="12345teste"
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
                 </Col>
 
                 <Col md={12}>
-                  <Form.Label>Confirmar senha</Form.Label>
+                  <div class="form-floating mb-4">
+                    <input
+                      id="confirmsenha"
+                      type="password"
+                      value={confirmSenha}
+                      onChange={(e) => setConfirmSenha(e.target.value)}
+                      placeholder="Digite a senha novamente"
+                      required
+                      className="form-control shadow"
+                    />
+                    <label for="floatingInput" className="text-secondary">
+                      <RiLockPasswordFill className="fs-3 me-2" />
+                      Digite a senha novamente
+                    </label>
+                  </div>
+                  {/* <Form.Label>Confirmar senha</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <RiLockPasswordFill />
@@ -213,28 +267,45 @@ const CadastroCliente = () => {
                       placeholder="Digite a senha novamente"
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
                 </Col>
 
                 <Col md={12} className="">
-                  <Form.Label>Endereco</Form.Label>
+                  <div class="form-floating mb-4">
+                    <input
+                      type="text"
+                      id="endereco"
+                      placeholder="Digite o seu endereço"
+                      value={endereco}
+                      onChange={(e) => setEndereco(e.target.value)}
+                      required
+                      className="form-control shadow"
+                    />
+                    <label for="floatingInput" className="text-secondary">
+                      <BsFillPinMapFill className="fs-3 me-2" />
+                      Digite o seu endereço
+                    </label>
+                  </div>
+                  {/* <Form.Label>Endereco</Form.Label>
                   <InputGroup className="shadow rounded">
                     <Form.Control
                       type="text"
                       id="endereco"
-                      placeholder="Digite o endereço"
+                      placeholder="Digite o seu endereço"
                       value={endereco}
                       onChange={(e) => setEndereco(e.target.value)}
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
                 </Col>
-                <Button
-                  variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
-                  type="submit"
-                >
-                  Cadastrar
-                </Button>
+                <Col md={12}>
+                  <Button
+                    variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
+                    type="submit"
+                  >
+                    Cadastrar
+                  </Button>
+                </Col>
               </Row>
             </Form>
           </Col>

@@ -25,6 +25,7 @@ import Cookies from "js-cookie";
 import Agenda from "./pages/Agenda";
 import Profissionais from "./pages/PainelBarbearia/Profissionais";
 import Avaliacoes from "./pages/PainelBarbearia/Avaliacoes";
+import CliSalvos from "./pages/PainelCliente/CliSalvos";
 
 const PrivateRoute = ({children, redirectTo}) => {
   const isAuthenticated = Cookies.get('token');
@@ -48,6 +49,7 @@ const Routers = () => {
         </PrivateRoute>} />
         <Route path="painel-cliente/agendas" element={<CliAgendas />} />
         <Route path="painel-cliente/alterar-dados" element={<CliEditarDados />} />
+        <Route path="painel-cliente/salvos" element={<CliSalvos />} />
 
         {/* PAINEL DA BARBEARIA */}
         <Route path="painel-barbearia" element={<Geral />} />

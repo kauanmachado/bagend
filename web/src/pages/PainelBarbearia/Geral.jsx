@@ -20,11 +20,12 @@ import { TiThMenu } from "react-icons/ti";
 
 import exBarber from "../../assets/img/exBarber.png";
 import PainelBarbearia from "../../components/PainelBarbearia";
+import HeaderBarbearia from "../../components/HeaderBarbearia";
 
 const Geral = () => {
   return (
     <>
-      <Header />
+      <HeaderBarbearia />
       <Container className="default-margin">
       <Row className="justify-content-center shadow rounded bg-white">
       <Col md={3} className="col-auto d-flex flex-column p-5 rounded bg-white">

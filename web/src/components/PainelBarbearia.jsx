@@ -46,56 +46,56 @@ const PainelBarbearia = () => {
               <li className="nav-item  fs-4 my-1">
                 <Link
                   to="../painel-barbearia"
-                  className="nav-link text-dark fs-5"
+                  className="nav-link text-secondary fs-5"
                 >
-                  <MdBusinessCenter className=" text-secondary" />
-                  <span className="ms-3 text-secondary">Geral</span>
+                  <MdBusinessCenter />
+                  <span className="ms-3">Geral</span>
                 </Link>
               </li>
 
               <li className="nav-item  fs-4 my-1">
                 <Link
                   to="../painel-barbearia/agendas"
-                  className="nav-link text-dark fs-5"
+                  className="nav-link text-secondary fs-5"
                 >
-                  <AiOutlineSchedule className=" text-secondary" />
-                  <span className="ms-3 text-secondary">Agendas</span>
+                  <AiOutlineSchedule />
+                  <span className="ms-3">Agendas</span>
                 </Link>
               </li>
               <li className="nav-item  fs-4 my-1">
                 <Link
                   to="../painel-barbearia/cortes-estilos"
-                  className="nav-link text-dark fs-5"
+                  className="nav-link text-secondary fs-5"
                 >
-                  <BsScissors className=" text-secondary" />
-                  <span className="ms-3 text-secondary">Cortes / estilo</span>
+                  <BsScissors />
+                  <span className="ms-3">Cortes / estilo</span>
                 </Link>
               </li>
               <li className="nav-item  fs-4 my-1">
                 <Link
                   to="../painel-barbearia/profissionais"
-                  className="nav-link text-dark fs-5"
+                  className="nav-link text-secondary fs-5"
                 >
-                  <ImUserTie className=" text-secondary" />
-                  <span className="ms-3 text-secondary">Profissionais</span>
+                  <ImUserTie/>
+                  <span className="ms-3 ">Profissionais</span>
                 </Link>
               </li>
               <li className="nav-item  fs-4 my-1">
                 <Link
                   to="../painel-barbearia/avaliacoes"
-                  className="nav-link text-dark fs-5"
+                  className="nav-link text-secondary fs-5"
                 >
-                  <MdOutlineForum className=" text-secondary" />
-                  <span className="ms-3 text-secondary">Avaliações</span>
+                  <MdOutlineForum />
+                  <span className="ms-3 ">Avaliações</span>
                 </Link>
               </li>
               <li className="nav-item fs-4 my-1">
                 <Link
                   to="../painel-barbearia/alterar-dados"
-                  className="nav-link text-dark fs-5"
+                  className="nav-link text-secondary fs-5"
                 >
-                  <RiEditBoxFill className=" text-secondary" />
-                  <span className="ms-3 text-secondary">Editar dados</span>
+                  <RiEditBoxFill/>
+                  <span className="ms-3">Editar dados</span>
                 </Link>
               </li>
             </ul>

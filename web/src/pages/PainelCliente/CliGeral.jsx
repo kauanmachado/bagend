@@ -23,21 +23,24 @@ import Cookies from "js-cookie";
 import PainelCliente from "../../components/PainelCliente.jsx";
 
 const CliGeral = () => {
-
-  const Autenticado = Cookies.get('token')
+  const Autenticado = Cookies.get("token");
 
   return (
     <>
-    
-    {Autenticado ? <HeaderClienteLogado /> : <Header/>}
+      {Autenticado ? <HeaderClienteLogado /> : <Header />}
       <Container className="default-margin">
-        <Row className="shadow">
-          <Col md={3} className=" border bg-light col-auto d-flex flex-column p-5">
-          <PainelCliente />
+        <Row className="shadow rounded bg-white">
+          <Col
+            md={3}
+            className="bg-white rounded col-auto d-flex flex-column p-5"
+          >
+            <PainelCliente />
           </Col>
-          <Col md={9} className=" border p-5">
-            <h5 className="fw-bold">Informações gerais</h5>
-            <hr></hr>
+          <Col md={9} className="p-5 rounded border bg-light">
+            <div className="d-flex">
+              <MdPerson className="fs-2 text-secondary ms-1" />
+              <h3 className="fw-bold mb-5 text-secondary ms-3">Visão Geral</h3>
+            </div>
             <p>
               <MdPerson /> Kauan Machado
             </p>
@@ -50,6 +53,7 @@ const CliGeral = () => {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 };

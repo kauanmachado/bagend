@@ -33,28 +33,28 @@ const PainelCliente = () => {
           <hr className="text-secondary"/>
           <ul className="nav nav-pills flex-column">
           <li className="nav-item  fs-4 my-1">
-              <Link to="../painel-cliente" id="link" className="nav-link text-dark fs-5">
+              <Link to="../painel-cliente"  className="nav-link text-secondary fs-5">
                 <MdCoPresent />
-                <span className="ms-2">Geral</span>
+                <span className="ms-3 text-secondary">Geral</span>
                 </Link>
             </li>
             
             <li className="nav-item  fs-4 my-1">
-              <Link to="../painel-cliente/agendas" id="link" className="nav-link text-dark fs-5">
+              <Link to="../painel-cliente/agendas"  className="nav-link text-secondary fs-5">
                 <AiOutlineSchedule />
-                <span className="ms-2">Agendas</span>
+                <span className="ms-3">Agendas</span>
                 </Link>
             </li>
             <li className="nav-item  fs-4 my-1">
-            <Link to="../painel-cliente/salvos" id="link" className="nav-link text-dark fs-5">
+            <Link to="../painel-cliente/salvos"  className="nav-link text-secondary fs-5">
                 <BsBookmarks />
-                <span className="ms-2">Salvos</span>
+                <span className="ms-3">Salvos</span>
                 </Link>
             </li>
             <li className="nav-item fs-4 my-1">
-            <Link to="../painel-cliente/alterar-dados" id="link" className="nav-link text-dark fs-5">
+            <Link to="../painel-cliente/alterar-dados"  className="nav-link text-secondary fs-5">
                 <RiEditBoxFill />
-                <span className="ms-2">Editar dados</span>
+                <span className="ms-3">Editar dados</span>
                 </Link>
             </li>
           </ul>

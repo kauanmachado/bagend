@@ -1,4 +1,3 @@
-import Btn from "../components/button/Btn";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -67,7 +66,6 @@ const GoogleMaps = () => {
 
   return isLoaded ? (
     <>
-      
       <Container className="mt-5">
         <Row>
           <h2 className="fw-bold">
@@ -78,9 +76,8 @@ const GoogleMaps = () => {
           </p>
 
           <Form onSubmit={buscarEndereco}>
-            
-            <InputGroup className=" mt-5 mb-3 shadow rounded buscarBarb">
-              <Form.Control
+            <div class="form-floating mb-4">
+              <input
                 type="text"
                 name="endereco"
                 id="endereco"
@@ -90,8 +87,14 @@ const GoogleMaps = () => {
                 onChange={(e) => setEndereco(e.target.value)}
                 aria-describedby="basic-addon1"
                 required
+                autoComplete="email"
+                className="form-control shadow"
               />
-            </InputGroup>
+              <label for="floatingInput" className="text-secondary">
+                <AiOutlineSearch className="fs-3 me-2" />
+                Digite o endereço da barbearia
+              </label>
+            </div>
           </Form>
         </Row>
       </Container>
@@ -135,10 +138,9 @@ const GoogleMaps = () => {
         </Row>
       </Container>
     </>
-  ):
-  (<>
-    
-  </>)
+  ) : (
+    <></>
+  );
 };
 
 export default GoogleMaps;

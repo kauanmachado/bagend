@@ -4,20 +4,16 @@ import "../../styles/dashboard.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Navbar from "react-bootstrap/Navbar";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { MdCoPresent, MdFreeCancellation } from "react-icons/md";
-import { BsClock } from "react-icons/bs";
-import { RiEditBoxFill } from "react-icons/ri";
-import { IoLogOutOutline } from "react-icons/io5";
-import { TiThMenu } from "react-icons/ti";
-import { FaUserCheck } from "react-icons/fa";
 import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 import Cookies from "js-cookie";
 import PainelCliente from "../../components/PainelCliente";
 import { Card, Table } from "react-bootstrap";
+import { AiFillSchedule } from "react-icons/ai";
+import { BsClock } from "react-icons/bs";
+import { MdFreeCancellation } from "react-icons/md";
 
 const CliAgendas = () => {
   const navigate = useNavigate();
@@ -27,63 +23,43 @@ const CliAgendas = () => {
     <>
       {Autenticado ? <HeaderClienteLogado /> : <Header />}
       <Container className="default-margin">
-        <Row className=" shadow">
+        <Row className="rounded shadow bg-white">
           <Col
             md={3}
-            className="border bg-light col-auto d-flex flex-column p-5"
+            className="rounded bg-white col-auto d-flex flex-column p-5"
           >
             <PainelCliente />
           </Col>
 
-          <Col md={9} className="border p-5">
-            <h3 className="fw-bold mb-5">Agendas</h3>
-            <ListGroup horizontal variant="flush" className="d-flex">
+          <Col md={9} className="border rounded bg-light p-5">
+          <div className="d-flex">
+              <AiFillSchedule className="fs-2 text-secondary ms-1" />
+              <h3 className="fw-bold mb-5 text-secondary ms-3">Agendas</h3>
+            </div>
+          
               <Container>
                 <Row className="d-flex justify-content-start">
-                  <Card className="border mx-4">
-                    <Card.Body className="p-4">
-                      <Card.Title className="fw-bold mb-3">Mr Barba</Card.Title>
-                      <hr className="text-secondary" />
-                      <p>Corte degradê</p>
-                      <p>12h00 - 29/07/23</p>
-                      <p className="text-success">R$30,00</p>
-                      <Link to="/" className="fw-bold text-danger">
-                      <Button className=" px-4 py-2  shadow rounded-pill">Cancelar horário</Button>
-                      </Link>
-                    </Card.Body>
-                  </Card>
-                  <Card className="border mx-4">
-                    <Card.Body className="p-4">
-                      <Card.Title className="fw-bold mb-3">Mr Barba</Card.Title>
-                      <hr className="text-secondary" />
-                      <p>Corte degradê</p>
-                      <p>12h00 - 29/07/23</p>
-                      <p className="text-success">R$30,00</p>
-                      <Link to="/" className="fw-bold text-danger">
-                      <Button className=" px-4 py-2  shadow rounded-pill">Cancelar horário</Button>
-                      </Link>
-                    </Card.Body>
-                  </Card>
-                  <Card className="border mx-4">
-                    <Card.Body className="p-4">
-                      <Card.Title className="fw-bold mb-3">Mr Barba</Card.Title>
-                      <hr className="text-secondary" />
-                      <p>Corte degradê</p>
-                      <p>12h00 - 29/07/23</p>
-                      <p className="text-success">R$30,00</p>
-                      <Link to="/" className="fw-bold text-danger">
-                      <Button className=" px-4 py-2  shadow rounded-pill">Cancelar horário</Button>
-                      </Link>
+                <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">
+                    <Card.Body>
+                    <h5 className="fw-bold fs-6">Corte degradê</h5>
+                    <h5 className="text-success fs-6">R$30,00</h5>
+                    <p className="fs-6">
+                      <BsClock className="fs-6 fw-bold" /> 18:00 - 02/07/23
+                    </p>
+                    <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 w-100">
+                      <MdFreeCancellation />
+                      Cancelar horário
+                    </Button>
                     </Card.Body>
                   </Card>
 
                   
                 </Row>
               </Container>
-            </ListGroup>
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   );
 };

@@ -23,29 +23,54 @@ const SelectCidadeEstado = () => {
 
   return (
     <>
-      <Container className="mt-3">
+      <Container className="mt-3 mb-3">
         <Row className="d-flex">
           <Col md={6} className="ps-0">
-            <Form.Label>Estado</Form.Label>
-            <Form.Select
-              id="estado"
-              name="estado"
-              style={select}
-              value={selectedEstado}
-              onChange={handleEstadoUpdate}
-              className="shadow"
-            >
+            <div class="form-floating">
+              <select
+                id="estado"
+                name="estado"
+                style={select}
+                value={selectedEstado}
+                onChange={handleEstadoUpdate}
+                className="form-select shadow"
+              >
+                {estados.map((estado) => (
+                <option key={estado.id} value={estado.sigla}>
+                  {estado.nome}
+                </option>
+              ))}
+              </select>
+              <label for="floatingSelect">Estado</label>
+            </div>
+            {/* <Form.Label>Estado</Form.Label>
+            <Form.Select className="shadow">
               {estados.map((estado) => (
                 <option key={estado.id} value={estado.sigla}>
                   {estado.nome}
                 </option>
               ))}
-            </Form.Select>
+            </Form.Select> */}
           </Col>
 
           <Col md={6} className="pe-0">
-            <Form.Label>Cidade</Form.Label>
-            <Form.Select
+            <div class="form-floating">
+              <select
+                id="cidade"
+                name="cidade"
+                style={select}
+                value={cidade}
+                onChange={handleCidadeUpdate}
+                placeholder="Selecione uma cidade"
+                className="form-select shadow"
+              >
+                {cidades.map((cidade) => (
+                  <option key={cidade.codigo_ibge}>{cidade.nome}</option>
+                ))}
+              </select>
+              <label for="floatingSelect">Cidade</label>
+            </div>
+            {/* <Form.Select
               id="cidade"
               name="cidade"
               style={select}
@@ -57,7 +82,7 @@ const SelectCidadeEstado = () => {
               {cidades.map((cidade) => (
                 <option key={cidade.codigo_ibge}>{cidade.nome}</option>
               ))}
-            </Form.Select>
+            </Form.Select> */}
           </Col>
         </Row>
       </Container>

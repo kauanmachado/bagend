@@ -31,7 +31,7 @@ const CadastroBarbearia = () => {
   const [linkFacebook, setLinkFacebook] = useState("");
 
   const handleRegistrarBarbearia = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const enderecoFormatado =
       rua + ", " + numerorua + ", " + cidade + ", " + estado;
     Geocode.fromAddress(endereco).then(
@@ -45,22 +45,19 @@ const CadastroBarbearia = () => {
       }
     );
 
-      await axios.post(
-        "http://localhost:8001/cadastrar-barbearia",
-        {
-          nome_barbearia: nomeBarbearia,
-          email: email,
-          cnpj: cnpj,
-          senha: senha,
-          enderecoFormatado: enderecoFormatado,
-          lat: lat,
-          lng: lng,
-          foto_perfil: fotoPerfil,
-          telefone,
-          link_instagram: linkInsta,
-          link_facebook: linkFacebook,
-        }
-      );
+    await axios.post("http://localhost:8001/cadastrar-barbearia", {
+      nome_barbearia: nomeBarbearia,
+      email: email,
+      cnpj: cnpj,
+      senha: senha,
+      enderecoFormatado: enderecoFormatado,
+      lat: lat,
+      lng: lng,
+      foto_perfil: fotoPerfil,
+      telefone,
+      link_instagram: linkInsta,
+      link_facebook: linkFacebook,
+    });
   };
 
   return (
@@ -68,17 +65,34 @@ const CadastroBarbearia = () => {
       <Header />
       <Container className="mt-3 mb-5">
         <Row className="justify-content-center">
-          <Col lg={10} md={9} className="shadow rounded mt-5 p-5">
+          <Col lg={10} md={9} className="shadow rounded mt-5 p-sm-5 p-4">
             <img src={logoPreta} className="logo text-center" />
-            <h2 className=" fw-bold  mt-5">Crie sua conta</h2>
+            <h3 className=" fw-bold  mt-5">
+             Cadastre sua barbearia e aumente sua visibilidade</h3>
             <p className="textP text-secondary mb-5">
               Ja possui conta? <Link to="/login-barbearia">Entre</Link>
             </p>
             <Form onSubmit={handleRegistrarBarbearia}>
               <Row className="justify-content-center d-flex">
                 <Col md={6}>
-                <Col md={10}>
-                  <Form.Label>E-mail</Form.Label>
+                  <Col md={10}>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="email"
+                        placeholder="barbearia@exemplo.com"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <MdAlternateEmail className="fs-3 me-2" />
+                        barbearia@exemplo.com
+                      </label>
+                    </div>
+                    {/* <Form.Label>E-mail</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <MdAlternateEmail />
@@ -92,11 +106,27 @@ const CadastroBarbearia = () => {
                       placeholder="barbearia@exemplo.com"
                       required
                     />
-                  </InputGroup>
-                </Col>
+                  </InputGroup> */}
+                  </Col>
 
-                <Col md={10}>
-                  <Form.Label>Nome da Barbearia</Form.Label>
+                  <Col md={10}>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="nomebarbearia"
+                        name="nomebarbearia"
+                        value={nomeBarbearia}
+                        onChange={(e) => setNomeBarbearia(e.target.value)}
+                        placeholder="Mr Barba"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <MdBusinessCenter className="fs-3 me-2" />
+                        Mr Barba
+                      </label>
+                    </div>
+
+                    {/* <Form.Label>Nome da Barbearia</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <MdBusinessCenter />
@@ -109,9 +139,25 @@ const CadastroBarbearia = () => {
                       placeholder="Mr Barba"
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
 
-                  <Form.Label>CNPJ</Form.Label>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="cnpj"
+                        name="cnpj"
+                        value={cnpj}
+                        onChange={(e) => setCnpj(e.target.value)}
+                        placeholder="00.000.000/0001-00"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <MdBusinessCenter className="fs-3 me-2" />
+                        00.000.000/0001-00
+                      </label>
+                    </div>
+
+                    {/* <Form.Label>CNPJ</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <MdBusinessCenter />
@@ -124,9 +170,25 @@ const CadastroBarbearia = () => {
                       placeholder="00.000.000/0001-00"
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
 
-                  <Form.Label>Senha</Form.Label>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="senha"
+                        name="senha"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        type="password"
+                        placeholder="12345teste"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <RiLockPasswordFill className="fs-3 me-2" />
+                        12345teste
+                      </label>
+                    </div>
+                    {/* <Form.Label>Senha</Form.Label>
                   <InputGroup className="mb-3 shadow rounded">
                     <InputGroup.Text id="basic-addon1">
                       <RiLockPasswordFill />
@@ -140,29 +202,47 @@ const CadastroBarbearia = () => {
                       placeholder="12345teste"
                       required
                     />
-                  </InputGroup>
-                </Col>
+                  </InputGroup> */}
+                  </Col>
 
-                <Col md={10}>
-                  <Form.Label>Confirmar senha</Form.Label>
-                  <InputGroup className="mb-3 shadow rounded">
-                    <InputGroup.Text id="basic-addon1">
-                      <RiLockPasswordFill />
-                    </InputGroup.Text>
-                    <Form.Control
-                      id="confirmSenha"
-                      name="confirmSenha"
-                      type="password"
-                      placeholder="Digite a senha novamente"
-                    />
-                  </InputGroup>
-                </Col>
+                  <Col md={10}>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="confirmSenha"
+                        name="confirmSenha"
+                        type="password"
+                        placeholder="Digite a senha novamente"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <RiLockPasswordFill className="fs-3 me-2" />
+                        Digite a senha novamente
+                      </label>
+                    </div>
+                  </Col>
                 </Col>
 
                 <Col md={6}>
-                <Row>
-                <Col md={9} className="">
-                  <Form.Label>Rua</Form.Label>
+                  <Row>
+                    <Col md={9} className="py-0">
+                      <div className="form-floating mb-4">
+                        <input
+                          type="text"
+                          name="rua"
+                          id="rua"
+                          placeholder="Digite o nome da rua"
+                          value={rua}
+                          onChange={(e) => setRua(e.target.value)}
+                          required
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          {/* <RiLockPasswordFill className="fs-3 me-2" /> */}
+                          Digite o nome da rua
+                        </label>
+                      </div>
+                      {/* <Form.Label>Rua</Form.Label>
                   <InputGroup className="shadow rounded">
                     <Form.Control
                       type="text"
@@ -173,81 +253,81 @@ const CadastroBarbearia = () => {
                       onChange={(e) => setRua(e.target.value)}
                       required
                     />
-                  </InputGroup>
+                  </InputGroup> */}
+                    </Col>
+
+                    <Col md={3} className="py-0">
+                      <div className="form-floating mb-4">
+                        <input
+                          type="number"
+                          name="numerorua"
+                          id="numerorua"
+                          value={numeroRua}
+                          onChange={(e) => setNumeroRua(e.target.value)}
+                          placeholder="Digite o número da rua"
+                          data-maxlength="4"
+                          min="0"
+                          required
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          {/* <RiLockPasswordFill className="fs-3 me-2" /> */}
+                          Número
+                        </label>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <SelectCidadeEstado />
+                  <Row>
+                    <Col md={6}>
+                      <div className="form-floating mb-4">
+                        <input
+                          id="linkinsta"
+                          name="linkinsta"
+                          value={linkInsta}
+                          onChange={(e) => setLinkInsta(e.target.value)}
+                          type="url"
+                          placeholder="Instagram"
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          <AiOutlineInstagram className="fs-3 me-2" />
+                          Instagram
+                        </label>
+                      </div>
+                    </Col>
+
+                    <Col md={6}>
+                      <div className="form-floating mb-4">
+                        <input
+                          id="tel"
+                          name="tel"
+                          value={linkInsta}
+                          onChange={(e) => setLinkInsta(e.target.value)}
+                          type="tel"
+                          placeholder="Número de telefone"
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          {/* <AiOutlineInstagram className="fs-3 me-2" />  */}
+                          Número de telefone
+                        </label>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <MediaPicker />
                 </Col>
 
-                <Col md={3}>
-                  <Form.Label>Número</Form.Label>
-                  <InputGroup className="shadow rounded">
-                    <Form.Control
-                      type="number"
-                      name="numerorua"
-                      id="numerorua"
-                      value={numeroRua}
-                      onChange={(e) => setNumeroRua(e.target.value)}
-                      placeholder="Digite o número da rua"
-                      data-maxlength="4"
-                      min="0"
-                      required
-                    />
-                  </InputGroup>
+                <Col md={12}>
+                  <Button
+                    variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
+                    type="submit"
+                  >
+                    Cadastrar
+                  </Button>
                 </Col>
-                </Row>
-
-                <SelectCidadeEstado/>
-                <Form.Label className="text-center mt-4">
-                  Redes sociais ( Opcional )
-                </Form.Label>
-                <Row>
-                <Col md={6}>
-                  <InputGroup className="mb-3 shadow rounded">
-                    <InputGroup.Text>
-                      <AiOutlineInstagram />
-                    </InputGroup.Text>
-                    <Form.Control
-                      id="linkinsta"
-                      name="linkinsta"
-                      value={linkInsta}
-                      onChange={(e) => setLinkInsta(e.target.value)}
-                      type="url"
-                      placeholder="Instagram"
-                      
-                    />
-                  </InputGroup>
-                </Col>
-
-                <Col md={6}>
-                  <InputGroup className="mb-3 shadow rounded">
-                    <InputGroup.Text>
-                      <AiOutlineFacebook />
-                    </InputGroup.Text>
-                    <Form.Control
-                      id="linkfacebook"
-                      name="linkfacebook"
-                      value={linkFacebook}
-                      onChange={(e) => setLinkFacebook(e.target.value)}
-                      type="url"
-                      placeholder="Facebook"
-                    />
-                  </InputGroup>
-                </Col>
-                </Row>
-
-                <Form.Label className="text-center mt-3">
-                  Foto de perfil da barbearia ( Opcional )
-                </Form.Label>
-                <MediaPicker />
-
-                
-                
-                </Col>
-
-                <Button
-                  variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
-                  type="submit"
-                >
-                  Cadastrar
-                </Button>
               </Row>
             </Form>
           </Col>
