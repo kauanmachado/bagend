@@ -83,3 +83,7 @@ b {
   color: #646464;
 }
 
+.dropdown-toggle::after {
+  content: none !important;
+}
+

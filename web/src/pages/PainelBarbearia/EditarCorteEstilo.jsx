@@ -1,24 +1,17 @@
+import { Button, Col, Container, Row } from "react-bootstrap";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import "../../styles/dashboard.css";
-import { InputGroup, Form, Col, Row, Container, Navbar, Button } from "react-bootstrap";
-import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
-import { MdBusinessCenter, MdDashboard, MdAttachMoney, MdOutlineArrowBackIos } from "react-icons/md";
-import { BsScissors, BsClock } from "react-icons/bs";
-import { RiEditBoxFill } from "react-icons/ri";
-import { IoLogOutOutline } from "react-icons/io5";
-import { AiFillSchedule, AiOutlinePlus } from "react-icons/ai";
-import { TiThMenu } from "react-icons/ti";
-import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 import PainelBarbearia from "../../components/PainelBarbearia";
-import HeaderBarbearia from "../../components/HeaderBarbearia";
+import { AiFillSchedule } from "react-icons/ai";
+import { BsClock, BsScissors } from "react-icons/bs";
+import { MdAttachMoney, MdOutlineArrowBackIos } from "react-icons/md";
 import { HiOutlinePlusSm } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
-const AdicionarCorteEstilo = () => {
+const EditarCorteEstilo = () => {
   return (
     <>
-      <HeaderBarbearia />
+      <Header />
       <Container className="default-margin">
         <Row className="justify-content-center shadow bg-white rounded">
           <Col
@@ -92,7 +85,7 @@ const AdicionarCorteEstilo = () => {
                 <Col md={12}>
                   <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 ">
                     <HiOutlinePlusSm />
-                    Adicionar
+                    Salvar alterações
                   </Button>
                 </Col>
               </Row>
@@ -100,9 +93,9 @@ const AdicionarCorteEstilo = () => {
           </Col>
         </Row>
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 };
 
-export default AdicionarCorteEstilo;
+export default EditarCorteEstilo;

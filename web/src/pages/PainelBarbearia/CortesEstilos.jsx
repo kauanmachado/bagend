@@ -66,10 +66,12 @@ const CortesEstilos = () => {
                         <MdFreeCancellation />
                         Remover
                       </Button>
+                      <Link to="./editar-corteestilo">
                       <Button className="bg-dark px-4 py-2  btnDark shadow rounded-pill w-100">
                         <AiOutlineEdit />
                         Alterar
                       </Button>
+                      </Link>
                     </Card.Body>
                   </Card>
 

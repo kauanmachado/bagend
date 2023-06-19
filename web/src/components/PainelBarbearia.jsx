@@ -68,7 +68,7 @@ const PainelBarbearia = () => {
                   className="nav-link text-secondary fs-5"
                 >
                   <BsScissors />
-                  <span className="ms-3">Cortes / estilo</span>
+                  <span className="ms-3">Cortes / Estilos</span>
                 </Link>
               </li>
               <li className="nav-item  fs-4 my-1">

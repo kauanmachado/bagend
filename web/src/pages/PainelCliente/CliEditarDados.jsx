@@ -183,7 +183,7 @@ const CliEditarDados = () => {
                         variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
                         type="submit"
                       >
-                        Cadastrar
+                        Confirmar alteração
                       </Button>
                     </Col>
                 </Form>

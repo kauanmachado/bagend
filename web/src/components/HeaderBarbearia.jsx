@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { TiThMenu } from "react-icons/ti";
+import  { MdNotifications, } from "react-icons/md"
 import logoPreta from "../assets/img/logo1.png";
 import { Dropdown } from "react-bootstrap";
 import Cookies from "js-cookie";
@@ -47,26 +48,28 @@ const HeaderBarbearia = () => {
             </Nav>
 
             <br />
-            <Dropdown>
+            <Dropdown className="me-2">
+              <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
+                <MdNotifications className="text-secondary"/>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="shadow border-0 mt-2 p-4">
+                <p className="text-secondary fs-6">Não há notificações para você</p>
+              </Dropdown.Menu>
+            </Dropdown>
               <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
               <img
                 src={exBarber}
                 width="40"
                 height="40"
                 className="rounded-circle me-2"
-              />Kauan Machado
+              />
               </Dropdown.Toggle>
 
-              <Dropdown.Menu className="shadow border-0 mt-2 p-2">
-                <Link to="/painel-cliente">
-                <Dropdown.Item href="#/action-1">Painel</Dropdown.Item>
-                </Link>
-                <Link to="/" onClick={fazerLogout}>
-                <Dropdown.Item>Sair</Dropdown.Item>
-                </Link>
-                
-              </Dropdown.Menu>
-            </Dropdown>
+              
+            
+
+
             <Link to="/painel-cliente">
               
             </Link>

@@ -2,178 +2,215 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import "../../styles/dashboard.css";
 import React from "react";
-import Container from "react-bootstrap/Container"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Navbar from "react-bootstrap/Navbar";
-import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
-import { AiFillSchedule } from "react-icons/ai"
-import { RiEditBoxFill } from "react-icons/ri"
-import { IoLogOutOutline } from "react-icons/io5"
-import { TiThMenu } from "react-icons/ti"
-import { MdAlternateEmail, MdDashboard, MdBusinessCenter } from "react-icons/md";
-import { BsFillPinMapFill, BsScissors  } from "react-icons/bs";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import HeaderBarbearia from "../../components/HeaderBarbearia";
+import PainelBarbearia from "../../components/PainelBarbearia";
+import { RiEditBoxFill, RiLockPasswordFill } from "react-icons/ri";
+import { MdAlternateEmail, MdBusinessCenter } from "react-icons/md";
+import SelectCidadeEstado from "../../components/SelectCidadeEstado";
+import { AiOutlineInstagram } from "react-icons/ai";
+import MediaPicker from "../../components/MediaPicker";
 
 const BrbEditarDados = () => {
-    return(
-        <>
-            <HeaderBarbearia />
-            <Container className="mt-5 mb-3">
-        <div>
-        <h4 className="text-center fw-bold">Bem vindo, <strong className="text-primary">Mr Barba!</strong></h4>
-        <hr></hr>
-        </div>
-        <Row className="justify-content-center">
-        
-        
-          <Col md={3} className="mb-5">
-          <Navbar expand="lg">
-          
-          <Navbar.Toggle aria-controls="navbarScroll" className="w-100 navtoggle"><TiThMenu className=" float-start thmenu text-dark"/></Navbar.Toggle>
-          <Navbar.Collapse id="navbarScroll" className="">
-
-            <ListGroup className="shadow">
-              <Link to="../painel-barbearia">
-                <ListGroup.Item className="list-group-item-action  rounded-top ">
-                  <MdBusinessCenter className="mb-1  me-2 fs-5"/>
-                   Geral
-                </ListGroup.Item>
-              </Link>
-              <Link to="../painel-barbearia/agendas">
-                <ListGroup.Item className="list-group-item-action">
-                  <AiFillSchedule  className="mb-1  me-2 fs-5"/>
-                   Agendas
-                </ListGroup.Item>
-              </Link>
-              <Link to="../painel-barbearia/dashboard">
-                <ListGroup.Item className="list-group-item-action">
-                  <MdDashboard   className="mb-1  me-2 fs-5"/>
-                   Dashboard
-                </ListGroup.Item>
-              </Link>
-              <Link to="../painel-barbearia/cortes-estilos">
-                <ListGroup.Item className="list-group-item-action">
-                  <BsScissors  className="mb-1  me-2 fs-5"/>
-                   Painel de cortes / estilos
-                </ListGroup.Item>
-              </Link>
-              <Link to="../painel-barbearia/alterar-dados">
-                <ListGroup.Item className="list-group-item-action bg-item text-light" >
-                  <RiEditBoxFill  className="mb-1  me-2 fs-5"/>
-                   Alterar dados
-                </ListGroup.Item>
-              </Link>
-              <Link to="/">
-                
-                <ListGroup.Item className="list-group-item-action rounded-bottom">
-                  <IoLogOutOutline  className="mb-1  me-2 fs-5"/>
-                   Sair
-                </ListGroup.Item>
-              </Link>
-            </ListGroup>
-            </Navbar.Collapse>
-            </Navbar>
+  return (
+    <>
+      <HeaderBarbearia />
+      <Container className="default-margin">
+        <Row className="justify-content-center shadow rounded bg-white">
+          <Col
+            md={3}
+            className="col-auto d-flex flex-column p-5 rounded bg-white"
+          >
+            <PainelBarbearia />
           </Col>
-          
 
-
-          <Col md={8} className=" mt-2 shadow rounded border p-5">
-            <h4 className="fw-bold">Alterar dados</h4>
-            <p className="mt-0 textP text-secondary mb-5">Deseja redefinir a senha? <Link to="/redefinir-senha">Clique aqui</Link></p>
-            <Form>
-              <Form.Label>E-mail</Form.Label>
-              <InputGroup className="mb-3 shadow">
-                <InputGroup.Text id="basic-addon1">
-                  <MdAlternateEmail />
-                </InputGroup.Text>
-                <Form.Control
-                  type="email"
-                  placeholder="barbearia@exemplo.com"
-                  aria-label="Email"
-                  aria-describedby="basic-addon1"
-                />
-              </InputGroup>
-
-              <Form.Label>Nome da Barbearia</Form.Label>
-              <InputGroup className="mb-3 shadow">
-                <InputGroup.Text id="basic-addon1">
-                  <MdBusinessCenter />
-                </InputGroup.Text>
-                <Form.Control
-                  placeholder="Mr Barba"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </InputGroup>
-
-              <Form.Label>CNPJ</Form.Label>
-              <InputGroup className="mb-3 shadow">
-                <InputGroup.Text id="basic-addon1">
-                  <MdBusinessCenter />
-                </InputGroup.Text>
-                <Form.Control
-                  placeholder="00.000.000/0001-00"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </InputGroup>
-
-              <Form.Label>Estado</Form.Label>
-              <Form.Select
-                aria-label="Default select example"
-                className="mb-3 shadow"
-              >
-                <option>Selecione o estado</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </Form.Select>
-              <Form.Label>Cidade</Form.Label>
-              <Form.Select
-                aria-label="Default select example"
-                className="mb-3 shadow"
-              >
-                <option>Selecione a cidade</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </Form.Select>
-
-              <Form.Label>Endereço</Form.Label>
-              <InputGroup className="mb-3 shadow">
-                <InputGroup.Text id="basic-addon1">
-                  <BsFillPinMapFill />
-                </InputGroup.Text>
-                <Form.Control
-                  placeholder="Av. Flores da Cunha 000"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </InputGroup>
+          <Col md={9} className="p-5 border rounded bg-light">
+          <div className="d-flex mb-5">
+              <RiEditBoxFill className="fs-2 text-secondary ms-1" />
+              <h3 className="fw-bold text-secondary ms-3">Alterar dados</h3>
+            </div>
+            
+              <form>
               
-              <Form.Label>Foto de perfil da barbearia</Form.Label>
-              <Form.Group controlId="formFile" className="mb-3">
-                <Form.Control type="file" />
-              </Form.Group>
+              <Row>
+              <Col md={6}>
+                  <Col md={12}>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="barbearia@exemplo.com"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <MdAlternateEmail className="fs-3 me-2" />
+                        barbearia@exemplo.com
+                      </label>
+                    </div>
+                  </Col>
 
-              <Button
-                variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
-                type="submit"
-              >
-                Salvar alterações
-              </Button>
-            </Form>
+                  <Col md={12}>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="nomebarbearia"
+                        name="nomebarbearia"
+                        placeholder="Mr Barba"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <MdBusinessCenter className="fs-3 me-2" />
+                        Mr Barba
+                      </label>
+                    </div>
+
+                    <div className="form-floating mb-4">
+                      <input
+                        id="cnpj"
+                        name="cnpj"
+                        placeholder="00.000.000/0001-00"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <MdBusinessCenter className="fs-3 me-2" />
+                        00.000.000/0001-00
+                      </label>
+                    </div>
+
+                    <div className="form-floating mb-4">
+                      <input
+                        id="senha"
+                        name="senha"
+                        type="password"
+                        placeholder="12345teste"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <RiLockPasswordFill className="fs-3 me-2" />
+                        12345teste
+                      </label>
+                    </div>
+                  </Col>
+
+                  <Col md={12}>
+                    <div className="form-floating mb-4">
+                      <input
+                        id="confirmSenha"
+                        name="confirmSenha"
+                        type="password"
+                        placeholder="Digite a senha novamente"
+                        required
+                        className="form-control shadow"
+                      />
+                      <label for="floatingInput" className="text-secondary">
+                        <RiLockPasswordFill className="fs-3 me-2" />
+                        Digite a senha novamente
+                      </label>
+                    </div>
+                  </Col>
+                </Col>
+
+                <Col md={6}>
+                  <Row>
+                    <Col md={9} className="py-0">
+                      <div className="form-floating mb-4">
+                        <input
+                          type="text"
+                          name="rua"
+                          id="rua"
+                          placeholder="Digite o nome da rua"
+                          required
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          {/* <RiLockPasswordFill className="fs-3 me-2" /> */}
+                          Digite o nome da rua
+                        </label>
+                      </div>
+                    </Col>
+
+                    <Col md={3} className="py-0">
+                      <div className="form-floating mb-4">
+                        <input
+                          type="number"
+                          name="numerorua"
+                          id="numerorua"
+                          placeholder="Digite o número da rua"
+                          data-maxlength="4"
+                          min="0"
+                          required
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          {/* <RiLockPasswordFill className="fs-3 me-2" /> */}
+                          Número
+                        </label>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <SelectCidadeEstado />
+                  <Row>
+                    <Col md={6}>
+                      <div className="form-floating mb-4">
+                        <input
+                          id="linkinsta"
+                          name="linkinsta"
+                          type="url"
+                          placeholder="Instagram"
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          <AiOutlineInstagram className="fs-3 me-2" />
+                          Instagram
+                        </label>
+                      </div>
+                    </Col>
+
+                    <Col md={6}>
+                      <div className="form-floating mb-4">
+                        <input
+                          id="tel"
+                          name="tel"
+                          type="tel"
+                          placeholder="Número de telefone"
+                          className="form-control shadow"
+                        />
+                        <label for="floatingInput" className="text-secondary">
+                          {/* <AiOutlineInstagram className="fs-3 me-2" />  */}
+                          Número de telefone
+                        </label>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <MediaPicker />
+                </Col>
+
+                <Col md={12}>
+                  <Button
+                    variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0"
+                    type="submit"
+                  >
+                    Confirmar alteração
+                  </Button>
+                </Col>
+                </Row>
+              </form>
+            
           </Col>
         </Row>
       </Container>
-      <Footer/>
-        </>
-    )
-}
+      <Footer />
+    </>
+  );
+};
 
-export default BrbEditarDados
+export default BrbEditarDados;

@@ -3,7 +3,7 @@ import HeaderClienteLogado from "../../components/HeaderClienteLogado";
 import Footer from "../../components/footer/Footer";
 import PainelCliente from "../../components/PainelCliente";
 import Cookies from "js-cookie";
-import { BsBookmarks, BsClock } from "react-icons/bs";
+import { BsBookmarkX, BsBookmarks, BsClock } from "react-icons/bs";
 import exBarber from "../../assets/img/exBarber.png";
 
 const CliSalvos = () => {
@@ -43,8 +43,11 @@ const CliSalvos = () => {
                 <p className="endereco text-secondary">
                   Av. Flores da Cunha 000, Gravataí, Rio Grande do Sul
                 </p>
-                <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3">
-                  Agendar
+                <Button variant="primary py-2 btnRed shadow rounded-pill mt-3">
+                 <BsBookmarkX className="fs-6 m-0"/>
+                </Button>
+                <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 ms-2">
+                  Marcar horário
                 </Button>
               </Card.Body>
             </Card>

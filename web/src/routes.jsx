@@ -6,7 +6,6 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import Autenticado from "./auth";
 import Home from "./pages/Home";
 import LoginCliente from "./pages/LoginCliente";
 import LoginBarbearia from "./pages/LoginBarbearia";
@@ -26,6 +25,10 @@ import Agenda from "./pages/Agenda";
 import Profissionais from "./pages/PainelBarbearia/Profissionais";
 import Avaliacoes from "./pages/PainelBarbearia/Avaliacoes";
 import CliSalvos from "./pages/PainelCliente/CliSalvos";
+import EditarCorteEstilo from "./pages/PainelBarbearia/EditarCorteEstilo";
+import PerfilBarbearia from "./pages/PerfilBarbearia";
+import Avaliar from "./pages/Avaliar";
+import RedefinirSenha from "./pages/RedefinirSenha";
 
 const PrivateRoute = ({children, redirectTo}) => {
   const isAuthenticated = Cookies.get('token');
@@ -57,10 +60,14 @@ const Routers = () => {
         <Route path="painel-barbearia/cortes-estilos" element={<CortesEstilos />} />
         <Route path="painel-barbearia/alterar-dados" element={<BrbEditarDados />} />
         <Route path="painel-barbearia/cortes-estilos/adicionar-corteestilo" element={<AdicionarCorteEstilo />} />
+        <Route path="painel-barbearia/cortes-estilos/editar-corteestilo" element={<EditarCorteEstilo />} />
         <Route path="painel-barbearia/profissionais" element={<Profissionais />} />
         <Route path="painel-barbearia/avaliacoes" element={<Avaliacoes />} />
+        <Route path="perfil-barbearia" element={<PerfilBarbearia />} />
+        <Route path="perfil-barbearia/avaliar" element={<Avaliar />} />
 
 
+        <Route path="/redefinir-senha" element={<RedefinirSenha />} /> 
         <Route path="/barbearias" element={<Barbearias />} /> 
         <Route path="/agenda" element={<Agenda/>} />   
       </Routes>

@@ -9,6 +9,7 @@ import { TiThMenu } from "react-icons/ti";
 import logoPreta from "../assets/img/logo1.png";
 import { Dropdown } from "react-bootstrap";
 import Cookies from "js-cookie";
+import { MdNotifications } from "react-icons/md";
 
 const HeaderClienteLogado = () => {
 
@@ -46,21 +47,18 @@ const HeaderClienteLogado = () => {
             </Nav>
 
             <br />
-            <Dropdown>
+            <Dropdown className="me-2">
               <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
-              <VscAccount />Kauan Machado
+                <MdNotifications className="text-secondary"/>
               </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Link to="/painel-cliente">
-                <Dropdown.Item href="#/action-1">Painel</Dropdown.Item>
-                </Link>
-                <Link to="/" onClick={fazerLogout}>
-                <Dropdown.Item>Sair</Dropdown.Item>
-                </Link>
-                
+              <Dropdown.Menu className="shadow border-0 mt-2 p-4">
+                <p className="text-secondary fs-6">Não há notificações para você</p>
               </Dropdown.Menu>
             </Dropdown>
+              <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
+              Kauan Machado
+              </Dropdown.Toggle>
             <Link to="/painel-cliente">
               
             </Link>

@@ -32,10 +32,10 @@ const Footer = () => {
             </li>
           </ul>
             </Col>
-            <Col md={2}>
+            {/* <Col md={2}>
               <BsLinkedin className="text-white me-3"/>
               <BsGithub className="text-white"/>
-            </Col>
+            </Col> */}
             <Col>
             
             </Col>
