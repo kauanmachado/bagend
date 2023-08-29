@@ -12,14 +12,12 @@ exports.registerBarbearia = async (req, res) => {
         email,
         cnpj,
         senha,
-        confirmarSenha,
         endereco,
         lat,
         lng,
         foto_perfil,
         telefone,
-        link_instagram,
-        link_facebook } = req.body
+        link_instagram } = req.body
 
     // Validações
     if(!nome_barbearia){
@@ -46,9 +44,9 @@ exports.registerBarbearia = async (req, res) => {
     if(!telefone){
         return res.status(422).json({ msg: "O telefone é obrigatório!"})
     }
-    if(senha !== confirmarSenha){
-        return res.status(422).json({ msg: "Senhas não conferem!"})
-    }
+    // if(senha !== confirmarSenha){
+    //     return res.status(422).json({ msg: "Senhas não conferem!"})
+    // }
 
     // Checar se o usuário existe
     const barbeariaExiste = await prisma.Barbearia.findUnique({
@@ -57,8 +55,18 @@ exports.registerBarbearia = async (req, res) => {
         }
     })
 
+    const barbeariaCnpjExiste = await prisma.Barbearia.findUnique({
+        where: {
+            cnpj: cnpj
+        }
+    })
+
     if(barbeariaExiste){
         return res.status(422).json({ msg: "Email ja cadastrado!"})
+    }
+
+    if(barbeariaCnpjExiste){
+        return res.status(422).json({ msg: "CNPJ ja cadastrado!"})
     }
 
     // Criar senha
@@ -68,7 +76,7 @@ exports.registerBarbearia = async (req, res) => {
     
 
     try {
-    const barbearia = await prisma.Barbearia.create({
+    const barbearia = await prisma.barbearia.create({
         data: {
         id,
         nome_barbearia,
@@ -80,11 +88,14 @@ exports.registerBarbearia = async (req, res) => {
         lng,
         foto_perfil,
         telefone,
-        link_instagram,
-        link_facebook,
+        link_instagram
         }
     })
-    res.status(201).json(barbearia)
+    //res.status(201).json(barbearia)
+    const payload = { id: id };
+    const chaveSecreta = process.env.SECRET; // Substitua pela sua chave secreta
+    const token = jwt.sign(payload, chaveSecreta, { expiresIn: '1h' });
+    res.json({ token })
     } 
     catch(error) {
     res.status(400).json({ msg: error.message })

@@ -1,18 +1,97 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-import { Container, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
-import { RiLockPasswordFill } from "react-icons/ri";
+import { Container, Row, Col, Form, InputGroup, Button, Toast } from "react-bootstrap";
+import { RiCheckboxCircleFill, RiErrorWarningFill, RiLockPasswordFill } from "react-icons/ri";
 import { SlUser } from "react-icons/sl";
 import { MdBusinessCenter } from "react-icons/md";
 import logoPreta from "../assets/img/logo1.png";
+import { useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const LoginBarbearia = () => {
+
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [toastErro, setToastErro] = useState(false);
+  const [toastCheck, setToastCheck] = useState(false);
+
+  const exibirToastErro = () => {
+    setToastErro(true);
+
+    setTimeout(() => {
+      setToastErro(false);
+    }, 3000);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  const exibirToastCheck = () => {
+    setToastCheck(true);
+
+    setTimeout(() => {
+      setToastCheck(false);
+    }, 3000);
+  };
+
+  const handleFazerLogin = async (e) => {
+    e.preventDefault();
+    const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
+    await axios
+      .post("http://localhost:8001/login-barbearia", {
+        email: email,
+        senha: senha,
+      })
+      .then((response) => {
+        scrollToTop();
+        exibirToastCheck();
+        const token = response.data.token;
+        Cookies.set("token", token, { expires: cookieExpiresInSeconds });
+        setTimeout(() => {
+          navigate("/painel-barbearia");
+        }, 2000);
+      })
+      .catch(() => {
+        scrollToTop();
+        exibirToastErro();
+        setEmail("");
+        setSenha("");
+      });
+  };
+
   return (
     <>
       <Header />
       <Container className="mb-5">
         <Row className="justify-content-center">
+        <Toast
+            show={toastErro}
+            onClose={() => setToastErro(false)}
+            className="position-absolute toastEmail bg-danger text-white"
+          >
+            <Toast.Body>
+              <RiErrorWarningFill className="me-2" />
+              Credenciais Incorretas!
+            </Toast.Body>
+          </Toast>
+
+          <Toast
+            show={toastCheck}
+            onClose={() => setToastCheck(false)}
+            className="position-absolute toastEmail bg-success text-white"
+          >
+            <Toast.Body>
+              <RiCheckboxCircleFill className="me-2" />
+              Login realizado com sucesso!
+            </Toast.Body>
+          </Toast>
           <Col lg={5} md={8} className="mt-5 p-sm-5 p-4 shadow rounded">
             <img src={logoPreta} className="logo text-center" />
             <h3 className=" fw-bold  mt-5">
@@ -22,15 +101,15 @@ const LoginBarbearia = () => {
               Nao possui conta?{" "}
               <Link to="/cadastro-barbearia">Cadastre-se</Link>
             </p>
-            <Form>
+            <Form onSubmit={handleFazerLogin}>
               <Row className="justify-content-center">
                 <Col md={12}>
                   <div class="form-floating mb-4">
                     <input
                       id="email"
                       type="email"
-                      value=""
-                      onChange=""
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="cliente@exemplo.com"
                       className="form-control shadow"
                       required
@@ -48,8 +127,8 @@ const LoginBarbearia = () => {
                     <input
                       id="senha"
                       type="password"
-                      value=""
-                      onChange=""
+                      value={senha}
+                      onChange={(e) => setSenha(e.target.value)}
                       placeholder="cliente@exemplo.com"
                       className="form-control shadow"
                       required

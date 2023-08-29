@@ -38,6 +38,13 @@ const LoginCliente = () => {
     }, 3000);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
   const exibirToastCheck = () => {
     setToastCheck(true);
 
@@ -55,6 +62,7 @@ const LoginCliente = () => {
         senha: senha,
       })
       .then((response) => {
+        scrollToTop();
         exibirToastCheck();
         const token = response.data.token;
         Cookies.set("token", token, { expires: cookieExpiresInSeconds });
@@ -63,6 +71,7 @@ const LoginCliente = () => {
         }, 2000);
       })
       .catch(() => {
+        scrollToTop();
         exibirToastErro();
         setEmail("");
         setSenha("");
@@ -124,22 +133,6 @@ const LoginCliente = () => {
                       cliente@exemplo.com
                     </label>
                   </div>
-
-                  {/* <Form.Label>E-mail</Form.Label>
-                  <InputGroup className="mb-3 shadow rounded">
-                    <InputGroup.Text id="basic-addon1">
-                      <HiUser />
-                    </InputGroup.Text>
-                    <Form.Control
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="cliente@exemplo.com"
-                      required
-                      autoComplete="email"
-                    />
-                  </InputGroup> */}
                 </Col>
 
                 <Col md={12}>

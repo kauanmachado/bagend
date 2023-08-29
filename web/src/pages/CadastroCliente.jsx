@@ -42,6 +42,13 @@ const CadastroCliente = () => {
     }, 3000);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
   const exibirToastCheck = () => {
     setToastCheck(true);
 
@@ -62,9 +69,16 @@ const CadastroCliente = () => {
     e.preventDefault();
 
     if (senha !== confirmSenha) {
+      scrollToTop();
       setSenha("");
       setConfirmSenha("");
       throw exibirToastSenha();
+    }
+
+    if (response.data.error.msg) {
+      scrollToTop();
+      exibirToastErro();
+      setEmail("");
     }
 
     await axios
@@ -81,14 +95,16 @@ const CadastroCliente = () => {
         const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
 
         if (response.data.error) {
+          scrollToTop();
           exibirToastErro();
           setEmail("");
         } else {
+          scrollToTop();
           exibirToastCheck();
           const token = response.data.token;
           Cookies.set("token", token, { expires: cookieExpiresInSeconds });
           setTimeout(() => {
-            navigate("/barbearias");
+            navigate("/");
           }, 2000);
         }
       })

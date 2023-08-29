@@ -24,7 +24,7 @@ model Barbearia {
   id String @id @default(uuid())
   nome_barbearia String
   email String @unique
-  cnpj Int @unique
+  cnpj String @unique
   senha String
   endereco String
   lat String
@@ -32,7 +32,6 @@ model Barbearia {
   foto_perfil String
   telefone String
   link_instagram String
-  link_facebook String
 
   agendas Agenda[]
   cortesestilos CortesEstilos[]

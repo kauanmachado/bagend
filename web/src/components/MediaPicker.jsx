@@ -2,9 +2,9 @@ import { Form } from "react-bootstrap";
 import { useState } from "react";
 import { MdPermMedia } from "react-icons/md";
 
-const MediaPicker = () => {
+const MediaPicker = ({ onChange }) => {
   const [preview, setPreview] = useState(null);
-  const [fotoPerfil, setFotoPerfil] = useState(null);
+  //const [fotoPerfil, setFotoPerfil] = useState(null);
 
   //const fotoperfil = document.getElementById("fotoperfil");
   //fotoperfil.addEventListener("fotoperfil", onFileSelected);
@@ -17,7 +17,9 @@ const MediaPicker = () => {
     }
 
     const previewUrl = URL.createObjectURL(files[0]);
-
+    const novoValor = event.target.value;
+    // Chame a função de controle fornecida pelo formulário
+    onChange(novoValor);
     setPreview(previewUrl);
   };
 
@@ -40,9 +42,8 @@ const MediaPicker = () => {
           accept="image/png,image/jpeg"
           id="fotoperfil"
           name="fotoperfil"
-          value={fotoPerfil}
           className="d-none"
-          onChange={(e) => setFotoPerfil(e.target.value)}
+          onChange={onFileSelected}
         />
         {preview && (
           <img src={preview} alt="" className="rounded-circle previewImg" />

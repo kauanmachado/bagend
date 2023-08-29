@@ -3,7 +3,7 @@ import { useState } from "react";
 import useEstados from "../hooks/useEstados";
 import useCidades from "../hooks/useCidades";
 
-const SelectCidadeEstado = () => {
+const SelectCidadeEstado = ({ onSelectChange }) => {
   const { estados } = useEstados();
   const [selectedEstado, setSelectedEstado] = useState("");
   const { cidades } = useCidades({ uf: selectedEstado });
@@ -11,10 +11,13 @@ const SelectCidadeEstado = () => {
 
   const handleEstadoUpdate = (event) => {
     setSelectedEstado(event.target.value);
+    onSelectChange(selectedEstado)
   };
 
   const handleCidadeUpdate = (event) => {
     setCidade(event.target.value);
+
+    onSelectChange(cidade)
   };
 
   const select = {
@@ -43,14 +46,6 @@ const SelectCidadeEstado = () => {
               </select>
               <label for="floatingSelect">Estado</label>
             </div>
-            {/* <Form.Label>Estado</Form.Label>
-            <Form.Select className="shadow">
-              {estados.map((estado) => (
-                <option key={estado.id} value={estado.sigla}>
-                  {estado.nome}
-                </option>
-              ))}
-            </Form.Select> */}
           </Col>
 
           <Col md={6} className="pe-0">
@@ -70,19 +65,6 @@ const SelectCidadeEstado = () => {
               </select>
               <label for="floatingSelect">Cidade</label>
             </div>
-            {/* <Form.Select
-              id="cidade"
-              name="cidade"
-              style={select}
-              value={cidade}
-              onChange={handleCidadeUpdate}
-              className="shadow"
-              placeholder="Selecione uma cidade"
-            >
-              {cidades.map((cidade) => (
-                <option key={cidade.codigo_ibge}>{cidade.nome}</option>
-              ))}
-            </Form.Select> */}
           </Col>
         </Row>
       </Container>
