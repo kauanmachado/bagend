@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { MdPerson, MdAlternateEmail } from "react-icons/md";
 import { RiEditBoxFill, RiLockPasswordFill } from "react-icons/ri";
-import HeaderClienteLogado from "../../components/HeaderClienteLogado";
+import HeaderCliente from "../../components/HeaderCliente";
 import PainelCliente from "../../components/PainelCliente";
 import { useState } from "react";
 import { HiUser } from "react-icons/hi";
@@ -67,7 +67,7 @@ const CliEditarDados = () => {
 
   return (
     <>
-      <HeaderClienteLogado />
+      <HeaderCliente/>
       <Container className="default-margin">
         <Row className="shadow rounded bg-white">
           <Col

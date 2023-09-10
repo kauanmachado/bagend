@@ -22,8 +22,40 @@ import PainelBarbearia from "../../components/PainelBarbearia";
 import { Card } from "react-bootstrap";
 import HeaderBarbearia from "../../components/HeaderBarbearia";
 import { HiOutlinePlusSm } from "react-icons/hi";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
+import jwt_decode from "jwt-decode"
 
 const CortesEstilos = () => {
+
+  const [data, setData] = useState([]);
+  const token = Cookies.get('token')
+  const decodedToken = jwt_decode(token)
+  // console.log(decodedToken)
+  const id = decodedToken.id
+  const apiUrl = "http://localhost:8001"
+
+
+  useEffect(() => {
+    async function fetchData() {
+        try {
+          const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
+            withCredentials: true
+          })
+           const data = {
+              cortesestilos: res.data.cortesestilos
+           }
+           setData(data)
+           console.log(data)
+        } catch(error){
+          console.error('Erro ao buscar dados da API:', error)
+        }
+    }
+    fetchData()
+  }, [])
+
+
   return (
     <>
       <HeaderBarbearia />
@@ -52,7 +84,10 @@ const CortesEstilos = () => {
             <ListGroup horizontal variant="flush" className="mt-3 d-flex">
               <Container>
                 <Row>
-                  <Card
+                  {data && data.cortesestilos && data.cortesestilos.length === 0 ? (
+                    <h5 className="text-muted mt-4">Não há nenhum corte ou estilo registrado.</h5>
+                  ) : (
+                    <Card
                     style={{ width: "18rem" }}
                     className="border-0 shadow m-1 p-3"
                   >
@@ -74,48 +109,12 @@ const CortesEstilos = () => {
                       </Link>
                     </Card.Body>
                   </Card>
+                  )}
+                  
 
-                  <Card
-                    style={{ width: "18rem" }}
-                    className="border-0 shadow m-1 p-3"
-                  >
-                    <Card.Body>
-                      <h5 className="fw-bold fs-6 text-uppercase">
-                        Corte degradê
-                      </h5>
-                      <h5 className="text-success fs-6">R$30,00</h5>
-                      <p className="">Tempo estimado: 30 minutos</p>
-                      <Button className="bg-danger px-4 py-2 btnRed shadow rounded-pill w-100 mt-3 mb-1">
-                        <MdFreeCancellation />
-                        Remover
-                      </Button>
-                      <Button className="bg-dark px-4 py-2  btnDark shadow rounded-pill w-100">
-                        <AiOutlineEdit />
-                        Alterar
-                      </Button>
-                    </Card.Body>
-                  </Card>
+                  
 
-                  <Card
-                    style={{ width: "18rem" }}
-                    className="border-0 shadow m-1 p-3"
-                  >
-                    <Card.Body>
-                      <h5 className="fw-bold fs-6 text-uppercase">
-                        Corte degradê
-                      </h5>
-                      <h5 className="text-success fs-6">R$30,00</h5>
-                      <p className="">Tempo estimado: 30 minutos</p>
-                      <Button className="bg-danger px-4 py-2 btnRed shadow rounded-pill w-100 mt-3 mb-1">
-                        <MdFreeCancellation />
-                        Remover
-                      </Button>
-                      <Button className="bg-dark px-4 py-2  btnDark shadow rounded-pill w-100">
-                        <AiOutlineEdit />
-                        Alterar
-                      </Button>
-                    </Card.Body>
-                  </Card>
+                  
                 </Row>
               </Container>
             </ListGroup>

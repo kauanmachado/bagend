@@ -52,10 +52,18 @@ exports.registerCliente = async (req, res) => {
             }
         })
         
-        const payload = { id: id };
+
         const chaveSecreta = process.env.SECRET; // Substitua pela sua chave secreta
-        const token = jwt.sign(payload, chaveSecreta, { expiresIn: '1h' });
-        res.json({ token })
+        const token = jwt.sign({
+            id: cliente.id,
+            role: "cliente"
+        }, chaveSecreta, { expiresIn: '1h' });
+        const data = {cliente, token}
+        const tokenCookie = res.cookie('token', token, { httpOnly: true, secure: true });
+        console.log(tokenCookie)
+
+        return res.json(data)
+        
 
     } catch (error) {
         res.status(400).json({ status: "error" })
@@ -97,7 +105,8 @@ exports.loginCliente = async (req, res) => {
         const secret = process.env.SECRET
 
         const token = jwt.sign({
-            id: cliente.id
+            id: cliente.id,
+            role: "cliente"
         }, secret)
 
         res.status(200).json({ msg: "Autenticação realizada com sucesso", token})
@@ -106,3 +115,22 @@ exports.loginCliente = async (req, res) => {
     }
 }
 
+exports.getCliente = async (req, res) => {
+    const id = req.params.id
+
+    const cliente = await prisma.cliente.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            agendas: true,
+            salvos: true
+        }
+    })
+
+    if (!cliente) {
+        return res.status(404).json({ msg: 'Cliente não encontrado' });
+    }
+
+    return res.json(cliente);
+}

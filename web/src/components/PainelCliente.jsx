@@ -3,7 +3,7 @@ import Footer from "./footer/Footer";
 import "../styles/dashboard.css";
 import {Container,Row,Col, Navbar, ListGroup, Button, ListGroupItem  } from "react-bootstrap"
 import { FaBars } from "react-icons/fa";
-import HeaderClienteLogado from "./HeaderClienteLogado";
+import HeaderClienteLogado from "./HeaderCliente";
 import { AiOutlineSchedule } from "react-icons/ai"
 import { VscAccount } from "react-icons/vsc";
 import { BsBookmarks } from "react-icons/bs"
@@ -12,6 +12,7 @@ import logoPreta  from "../assets/img/logo1.png"
 import { Link } from "react-router-dom";
 import { MdCoPresent } from "react-icons/md";
 import { TiThMenu } from "react-icons/ti";
+import Logout from "./Logout";
 
 
 const PainelCliente = () => {
@@ -59,9 +60,7 @@ const PainelCliente = () => {
             </li>
           </ul>
           <hr className="text-secondary"/>
-          <Link to="/" className="p-3 fw-bold text-danger">
-              Sair
-            </Link>
+              <Logout/>
           </div>
         </Navbar.Collapse>
         </Navbar>

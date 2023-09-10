@@ -18,12 +18,54 @@ import {
   AiFillStar,
 } from "react-icons/ai";
 import { TiThMenu } from "react-icons/ti";
-
+import jwt_decode from "jwt-decode"
 import exBarber from "../../assets/img/exBarber.png";
 import PainelBarbearia from "../../components/PainelBarbearia";
 import HeaderBarbearia from "../../components/HeaderBarbearia";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Geral = () => {
+
+  const [data, setData] = useState([]);
+  const token = Cookies.get('token')
+  const decodedToken = jwt_decode(token)
+  // console.log(decodedToken)
+  const id = decodedToken.id
+  const apiUrl = "http://localhost:8001"
+
+
+    useEffect(() => {
+      async function fetchData(){
+        try {
+        const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
+          withCredentials: true
+        })
+          console.log(res)
+          const data = {
+            nomebarbearia: res.data.nome_barbearia,
+            email: res.data.email,
+            cnpj: res.data.cnpj,
+            endereco: res.data.endereco,
+            telefone: res.data.telefone,
+            link_instagram: res.data.link_instagram,
+            foto_perfil: res.data.foto_perfil
+          }
+          setData(data)
+          // console.log(data)
+    
+      }
+        catch(error) {
+          console.error('Erro ao buscar dados da API:', error)
+        }
+      }
+      fetchData();
+    },[])
+    
+  
+
+  
   return (
     <>
       <HeaderBarbearia />
@@ -41,9 +83,9 @@ const Geral = () => {
               <MdBusinessCenter className="fs-2 text-secondary ms-1" />
               <h3 className="fw-bold mb-5 text-secondary ms-3">Visão Geral</h3>
             </div>
-            <img src={exBarber} className="logo rounded-circle" />
+            <img src={data.foto_perfil} className="logo rounded-circle" />
 
-            <h3 className=" mt-3 fw-bold title">Mr Barba</h3>
+            <h3 className=" mt-3 fw-bold title">{data.nomebarbearia}</h3>
             <div className="d-flex">
               <AiFillStar />
               <AiFillStar />
@@ -53,14 +95,14 @@ const Geral = () => {
             </div>
             <p className="endereco mt-4"></p>
             <p className="endereco text-secondary">
-              Av. Flores da Cunha 000, Gravataí, Rio Grande do Sul
+              {data.endereco}
             </p>
             <p className="endereco text-muted">
-              (51) 9008-0099
+              {data.telefone}
             </p>
 
             <p>
-              <AiOutlineInstagram className="fs-3" /> instagram.com/mrbarba
+              <AiOutlineInstagram className="fs-3" />{data.link_instagram}
             </p>
           </Col>
         </Row>

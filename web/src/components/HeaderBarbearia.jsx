@@ -22,9 +22,9 @@ const HeaderBarbearia = () => {
     <>
       <Navbar expand="lg" bg="light" className=" px-lg-5  navbar">
         <Container fluid className="px-md-5 py-xl-2 py-sm-3 py-3">
-          <Link to="/">
+          <Link to="/painel-barbearia/:id">
             <Navbar.Brand
-              href="#"
+              href="../"
               className="text-white ms-xl-5 mx-xl-5 fw-bolder"
             >
               <img src={logoPreta} className="logo" />
@@ -43,7 +43,7 @@ const HeaderBarbearia = () => {
                 id="link"
                 className="me-xl-5 py-1 fw-bold text-dark"
               >
-                Agendas
+                Minhas Agendas
               </Link>
             </Nav>
 

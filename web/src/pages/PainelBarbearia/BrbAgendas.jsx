@@ -21,8 +21,41 @@ import { TiThMenu } from "react-icons/ti";
 import PainelBarbearia from "../../components/PainelBarbearia";
 import { Card } from "react-bootstrap";
 import HeaderBarbearia from "../../components/HeaderBarbearia";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode"
+import axios from "axios";
 
 const BrbAgendas = () => {
+
+  const [data, setData] = useState([]);
+  const token = Cookies.get('token')
+  const decodedToken = jwt_decode(token)
+  // console.log(decodedToken)
+  const id = decodedToken.id
+  const apiUrl = "http://localhost:8001"
+
+
+  useEffect(() => {
+    async function fetchData() {
+        try {
+          const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
+            withCredentials: true
+          })
+           const data = {
+              agendas: res.data.agendas
+           }
+           setData(data)
+           console.log(data)
+        } catch(error){
+          console.error('Erro ao buscar dados da API:', error)
+        }
+    }
+    fetchData()
+  }, [])
+
+  
+
   return (
     <>
       <HeaderBarbearia />
@@ -42,23 +75,11 @@ const BrbAgendas = () => {
 
               <Container>
                 <Row>
-                  <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">
-                    <Card.Body>
-                    <h5 className="fs-6">Kauan da Silva Machado</h5>
-                    <hr></hr>
-                    <h5 className="fw-bold fs-6">Corte degradê</h5>
-                    <h5 className="text-success fs-6">R$30,00</h5>
-                    <p className="fs-6">
-                      <BsClock className="fs-6 fw-bold" /> 18:00 - 02/07/23
-                    </p>
-                    <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 w-100">
-                      <MdFreeCancellation />
-                      Cancelar horário
-                    </Button>
-                    </Card.Body>
-                  </Card>
+                  {data && data.agendas && data.agendas.length === 0 ? (
+                    <h5 className="text-muted">Não há agendas disponíveis.</h5>
+                  ) : (
 
-                  <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">
+                    <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">
                     <Card.Body>
                     <h5 className="fs-6">Kauan da Silva Machado</h5>
                     <hr></hr>
@@ -73,22 +94,8 @@ const BrbAgendas = () => {
                     </Button>
                     </Card.Body>
                   </Card>
-
-                  <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">
-                    <Card.Body>
-                    <h5 className="fs-6">Kauan da Silva Machado</h5>
-                    <hr></hr>
-                    <h5 className="fw-bold fs-6">Corte degradê</h5>
-                    <h5 className="text-success fs-6">R$30,00</h5>
-                    <p className="fs-6">
-                      <BsClock className="fs-6 fw-bold" /> 18:00 - 02/07/23
-                    </p>
-                    <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 w-100">
-                      <MdFreeCancellation />
-                      Cancelar horário
-                    </Button>
-                    </Card.Body>
-                  </Card>
+                  )}
+                 
                   
                   
                 

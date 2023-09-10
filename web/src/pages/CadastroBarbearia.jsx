@@ -82,7 +82,7 @@ const CadastroBarbearia = () => {
 
   const handleRegistrarBarbearia = async (e, response) => {
     e.preventDefault();
-
+    const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
     if (senha !== confirmSenha) {
       scrollToTop();
       setSenha("");
@@ -124,15 +124,14 @@ const CadastroBarbearia = () => {
       telefone: tel,
       link_instagram: linkInsta,
     }).then((response) => {
-      const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
-      console.log(response)
+      scrollToTop();
+      exibirToastCheck();
       const token = response.data.token;
           Cookies.set("token", token, { expires: cookieExpiresInSeconds });
           setTimeout(() => {
-            navigate("/");
+            navigate("/painel-barbearia");
           }, 2000)
-    scrollToTop();
-    exibirToastCheck();
+    
     })
   } catch (error) {
     console.log(error)

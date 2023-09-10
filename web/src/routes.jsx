@@ -29,44 +29,118 @@ import EditarCorteEstilo from "./pages/PainelBarbearia/EditarCorteEstilo";
 import PerfilBarbearia from "./pages/PerfilBarbearia";
 import Avaliar from "./pages/Avaliar";
 import RedefinirSenha from "./pages/RedefinirSenha";
+import jwt_decode from "jwt-decode"
 
-const PrivateRoute = ({children, redirectTo}) => {
+const checkIfTokenExists = () => {
   const isAuthenticated = Cookies.get('token');
-  console.log("isAuth: ", isAuthenticated)
-  return isAuthenticated ? children : <Navigate to={redirectTo} />
+  if(!isAuthenticated){
+    console.log('Token não encontrado!')
+  }
+}
+
+const PrivateRouteBarber = ({children, redirectTo}) => {
+  checkIfTokenExists()
+  const token = Cookies.get('token')
+  const decodedToken = jwt_decode(token)
+  const role = decodedToken.role
+
+  if (role !== "barbearia") {
+    return <Navigate to={redirectTo}/>
+  } 
+
+  return children
+}
+
+const PrivateRouteClient = ({children, redirectTo}) => {
+  checkIfTokenExists()
+  const token = Cookies.get('token')
+  const decodedToken =  jwt_decode(token)
+  const role =  decodedToken.role
+
+  if(role !== "cliente") {
+    return <Navigate to={redirectTo}/>
+  }
+  return children
+}
+
+  const LogRoute = ({children, redirectTo}) => {
+  const token = Cookies.get('token')
+
+  if(token) {
+    return <Navigate to={redirectTo}/>
+  }
+
+  return children
 }
 
 const Routers = () => {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path="/" element={<Home />} />
-        <Route path="login-cliente" element={<LoginCliente />} />
-        <Route path="cadastro-cliente" element={<CadastroCliente />} />
-        <Route path="login-barbearia" element={<LoginBarbearia />} />
-        <Route path="cadastro-barbearia" element={<CadastroBarbearia />} />
 
-        {/* PAINEL DO CLIENTE */}
-        <Route path="painel-cliente" element={<PrivateRoute redirectTo="/login-cliente">
+        {/* ROTAS DE LOGIN E CADASTRO */}
+        <Route path="login-cliente" element={<LogRoute redirectTo={"/"}>
+          <LoginCliente />
+        </LogRoute>} />
+        <Route path="cadastro-cliente" element={<LogRoute redirectTo={"/"}>
+          <CadastroCliente />
+        </LogRoute>} />
+        <Route path="login-barbearia" element={<LogRoute redirectTo={"/"}>
+          <LoginBarbearia />
+        </LogRoute>} />
+        <Route path="cadastro-barbearia" element={<LogRoute redirectTo={"/"}>
+          <CadastroBarbearia />
+        </LogRoute>} />
+
+        {/* ROTAS DO CLIENTE */}
+        <Route path="painel-cliente" element={<PrivateRouteClient redirectTo="/login-cliente">
           <CliGeral />
-        </PrivateRoute>} />
-        <Route path="painel-cliente/agendas" element={<CliAgendas />} />
-        <Route path="painel-cliente/alterar-dados" element={<CliEditarDados />} />
-        <Route path="painel-cliente/salvos" element={<CliSalvos />} />
+        </PrivateRouteClient>} />
+        <Route path="painel-cliente/agendas" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
+          <CliAgendas />
+        </PrivateRouteClient>} />
+        <Route path="painel-cliente/alterar-dados" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
+          <CliEditarDados />
+        </PrivateRouteClient>} />
+        <Route path="painel-cliente/salvos" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
+          <CliSalvos />
+        </PrivateRouteClient>} />
 
-        {/* PAINEL DA BARBEARIA */}
-        <Route path="painel-barbearia" element={<Geral />} />
-        <Route path="painel-barbearia/agendas" element={<BrbAgendas />} />
-        <Route path="painel-barbearia/cortes-estilos" element={<CortesEstilos />} />
-        <Route path="painel-barbearia/alterar-dados" element={<BrbEditarDados />} />
-        <Route path="painel-barbearia/cortes-estilos/adicionar-corteestilo" element={<AdicionarCorteEstilo />} />
-        <Route path="painel-barbearia/cortes-estilos/editar-corteestilo" element={<EditarCorteEstilo />} />
-        <Route path="painel-barbearia/profissionais" element={<Profissionais />} />
-        <Route path="painel-barbearia/avaliacoes" element={<Avaliacoes />} />
-        <Route path="perfil-barbearia" element={<PerfilBarbearia />} />
-        <Route path="perfil-barbearia/avaliar" element={<Avaliar />} />
+        {/* ROTAS DA BARBEARIA */}
+        <Route path="painel-barbearia" element={<PrivateRouteBarber redirectTo="/login-barbearia">
+          <Geral />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/agendas" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <BrbAgendas />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/cortes-estilos" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <CortesEstilos />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/alterar-dados" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <BrbEditarDados />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/cortes-estilos/adicionar-corteestilo" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <AdicionarCorteEstilo />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/cortes-estilos/editar-corteestilo" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <EditarCorteEstilo />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/profissionais" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <Profissionais />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/avaliacoes" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <Avaliacoes />
+        </PrivateRouteBarber>} />
+        <Route path="perfil-barbearia" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <PerfilBarbearia />
+        </PrivateRouteBarber>} />
+        <Route path="perfil-barbearia/avaliar" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <Avaliar />
+        </PrivateRouteBarber>} />
 
-
+        {/* ROTAS PÚBLICAS */}
         <Route path="/redefinir-senha" element={<RedefinirSenha />} /> 
         <Route path="/barbearias" element={<Barbearias />} /> 
         <Route path="/agenda" element={<Agenda/>} />   
@@ -74,70 +148,5 @@ const Routers = () => {
     </BrowserRouter>
   );
 };
-//   {
-//     path: "/",
-//     element: <Home />,
-//   },
-//   {
-//     path: "login-cliente",
-//     element: <LoginCliente />,
-//   },
-//   {
-//     path: "login-barbearia",
-//     element: <LoginBarbearia />,
-//   },
-//   {
-//     path: "cadastro-cliente",
-//     element: <CadastroCliente />,
-//   },
-//   {
-//     path: "cadastro-barbearia",
-//     element: <CadastroBarbearia />,
-//   },
-//   {
-//     path: "perfil-cliente",
-//     element: <PerfilCliente />,
-//   },
-//   {
-//     path: "barbearias",
-//     element: <Barbearias />,
-//   },
-//   {
-//     path: "painel-barbearia",
-//     element: <Geral />,
-//   },
-//   {
-//     path: "painel-barbearia/agendas",
-//     element: <BrbAgendas />,
-//   },
-//   {
-//     path: "painel-barbearia/dashboard",
-//     element: <Dashboard />,
-//   },
-//   {
-//     path: "painel-barbearia/cortes-estilos",
-//     element: <CortesEstilos />,
-//   },
-//   {
-//     path: "painel-barbearia/alterar-dados",
-//     element: <BrbEditarDados />,
-//   },
-//   {
-//     path: "painel-barbearia/cortes-estilos/adicionar-corteestilo",
-//     element: <AdicionarCorteEstilo />,
-//   },
-//   {
-//     path: "painel-cliente",
-//     element: <CliGeral />,
-//   },
-//   {
-//     path: "painel-cliente/agendas",
-//     element: <CliAgendas />,
-//   },
-//   {
-//     path: "painel-cliente/alterar-dados",
-//     element: <CliEditarDados />,
-//   },
-// ])
 
 export default Routers;

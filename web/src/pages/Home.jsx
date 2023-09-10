@@ -1,7 +1,6 @@
 import "../styles/home.css"
 import imgHome from "../assets/img/barberbeard.png";
 import imgHome2 from "../assets/img/imgBarbearia.jpg";
-import HeaderClienteLogado from "../components/HeaderClienteLogado";
 import Footer from "../components/footer/Footer";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -19,7 +18,7 @@ const Home = () => {
 
   return (
     <>
-      {Autenticado ? <HeaderClienteLogado /> : <Header/>}
+      <Header/>
       <Container fluid className=" px-xl-5" id="containerHome">
         <Row>
           <Col sm={12} md={6} lg={6} className="">

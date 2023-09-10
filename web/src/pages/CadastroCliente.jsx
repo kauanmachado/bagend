@@ -65,9 +65,9 @@ const CadastroCliente = () => {
     }, 3000);
   };
 
-  const handleRegistrarCliente = async (e) => {
+  const handleRegistrarCliente = async (e, response) => {
     e.preventDefault();
-
+    const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
     if (senha !== confirmSenha) {
       scrollToTop();
       setSenha("");
@@ -75,41 +75,33 @@ const CadastroCliente = () => {
       throw exibirToastSenha();
     }
 
-    if (response.data.error.msg) {
-      scrollToTop();
-      exibirToastErro();
-      setEmail("");
-    }
 
+    try {
     await axios
       .post("http://localhost:8001/cadastrar-cliente", {
         nome_completo: nome,
         email: email,
         senha: senha,
         endereco: endereco,
-      })
-
-      .then((response) => {
-        console.log(response.data);
-
-        const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
-
-        if (response.data.error) {
-          scrollToTop();
-          exibirToastErro();
-          setEmail("");
-        } else {
-          scrollToTop();
-          exibirToastCheck();
+      }).then((response) => {
+        scrollToTop();
+        exibirToastCheck();
           const token = response.data.token;
           Cookies.set("token", token, { expires: cookieExpiresInSeconds });
           setTimeout(() => {
-            navigate("/");
+            navigate("/painel-cliente");
           }, 2000);
-        }
+        
       })
+    }
 
-      .catch((error) => alert("Erro ao cadastrar: ", error));
+      catch(error) {
+        if (error.response.data) {
+          scrollToTop();
+          exibirToastErro();
+          setEmail("");
+        }
+      }
   };
 
   return (

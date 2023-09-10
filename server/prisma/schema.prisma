@@ -18,6 +18,8 @@ model Cliente {
   endereco String
 
   agendas Agenda[]
+  avaliacoes Avaliacao[]
+  salvos Salvo[]
 }
 
 model Barbearia {
@@ -35,6 +37,8 @@ model Barbearia {
 
   agendas Agenda[]
   cortesestilos CortesEstilos[]
+  profissionais Profissional[]
+  avaliacoes Avaliacao[]
 }
 
 model Agenda {
@@ -58,4 +62,33 @@ model CortesEstilos {
   
 
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+}
+
+model Profissional {
+  id String @id @default(uuid())
+  id_barbearia String
+  nome_profissional String
+  foto_profissional String
+
+  barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+}
+
+model Avaliacao {
+  id String @id @default(uuid())
+  id_barbearia String
+  id_cliente String
+  comentario String
+  nota Int
+
+  barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+  cliente Cliente @relation(fields: [id_cliente], references: [id])
+}
+
+model Salvo {
+  id String @id @default(uuid())
+  id_cliente String
+  nome_barbearia String
+  endereco_barbearia String
+
+  cliente Cliente @relation(fields: [id_cliente], references: [id])
 }

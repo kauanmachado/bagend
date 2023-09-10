@@ -9,8 +9,39 @@ import { Link } from "react-router-dom";
 import { HiOutlinePlusSm, HiUserRemove } from "react-icons/hi";
 import profileEx from "../../assets/img/profileExample.jpg";
 import HeaderBarbearia from "../../components/HeaderBarbearia";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode"
+import axios from "axios";
 
 const Profissionais = () => {
+
+  const [data, setData] = useState([]);
+  const token = Cookies.get('token')
+  const decodedToken = jwt_decode(token)
+  // console.log(decodedToken)
+  const id = decodedToken.id
+  const apiUrl = "http://localhost:8001"
+
+
+  useEffect(() => {
+    async function fetchData() {
+        try {
+          const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
+            withCredentials: true
+          })
+           const data = {
+              profissionais: res.data.profissionais
+           }
+           setData(data)
+           console.log(data)
+        } catch(error){
+          console.error('Erro ao buscar dados da API:', error)
+        }
+    }
+    fetchData()
+  }, [])
+
   return (
     <>
       <HeaderBarbearia />
@@ -48,7 +79,10 @@ const Profissionais = () => {
                 Adicionar
               </Button>
             </Link>
-            <Card
+            {data && data.profissionais && data.profissionais.length === 0 ? (
+              <h5 className="text-muted">Não há nenhum profissional registrado.</h5>
+            ) : (
+              <Card
               style={{ width: "15rem" }}
               className="border-0 shadow m-1 p-1"
             >
@@ -69,6 +103,8 @@ const Profissionais = () => {
                 </Button>
               </Card.Body>
             </Card>
+            )}
+            
           </Col>
         </Row>
       </Container>

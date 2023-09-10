@@ -18,16 +18,54 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
 import { FaUserCheck } from "react-icons/fa";
 import exBarber from "../../assets/img/exBarber.png";
-import HeaderClienteLogado from "../../components/HeaderClienteLogado";
+import HeaderClienteLogado from "../../components/HeaderCliente";
 import Cookies from "js-cookie";
 import PainelCliente from "../../components/PainelCliente.jsx";
+import { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode"
+import axios from "axios";
 
 const CliGeral = () => {
-  const Autenticado = Cookies.get("token");
+
+  const [data, setData] = useState([]);
+  const token = Cookies.get('token')
+  const decodedToken = jwt_decode(token)
+  console.log(decodedToken)
+  const id = decodedToken.id
+  const apiUrl = "http://localhost:8001"
+
+
+    useEffect(() => {
+      async function fetchData(){
+        try {
+          
+          const res = await axios.get(`${apiUrl}/painel-cliente/${id}`, {
+          withCredentials: true
+        })
+        
+        
+          console.log(res)
+          const data = {
+            nomecompleto: res.data.nome_completo,
+            email: res.data.email,
+            endereco: res.data.endereco,
+          }
+          setData(data)
+
+          
+          // console.log(data)
+    
+      }
+        catch(error) {
+          console.error('Erro ao buscar dados da API:', error)
+        }
+      }
+      fetchData();
+    },[])
 
   return (
     <>
-      {Autenticado ? <HeaderClienteLogado /> : <Header />}
+      <HeaderClienteLogado />
       <Container className="default-margin">
         <Row className="shadow rounded bg-white">
           <Col
@@ -42,13 +80,13 @@ const CliGeral = () => {
               <h3 className="fw-bold mb-5 text-secondary ms-3">Visão Geral</h3>
             </div>
             <p>
-              <MdPerson /> Kauan Machado
+              <MdPerson /> {data.nomecompleto}
             </p>
             <p>
-              <MdOutlineAlternateEmail /> kauan.smachado0@gmail.com
+              <MdOutlineAlternateEmail /> {data.email}
             </p>
             <p>
-              <MdPersonPinCircle /> Rua flor de lótus 334 | Gravataí
+              <MdPersonPinCircle /> {data.endereco}
             </p>
           </Col>
         </Row>
