@@ -29,7 +29,8 @@ import jwt_decode from "jwt-decode"
 
 const CortesEstilos = () => {
 
-  const [data, setData] = useState([]);
+  const [cortesEstilos, setCortesEstilo] = useState([]);
+  const [deletedCorteEstilo, setDeletedCorteEstilo] = useState(null);
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
   // console.log(decodedToken)
@@ -39,22 +40,26 @@ const CortesEstilos = () => {
 
   useEffect(() => {
     async function fetchData() {
-        try {
-          const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
-            withCredentials: true
-          })
-           const data = {
-              cortesestilos: res.data.cortesestilos
-           }
-           setData(data)
-           console.log(data)
-        } catch(error){
-          console.error('Erro ao buscar dados da API:', error)
-        }
+      try {
+        const res = await axios.get(`${apiUrl}/painel-barbearia/${id}/corteestilos`, {
+          withCredentials: true
+        })
+        setCortesEstilo(res.data)
+      } catch (error) {
+        console.error('Erro ao buscar dados da API:', error)
+      }
     }
     fetchData()
-  }, [])
+  }, [deletedCorteEstilo])
 
+  const handleDelete = async (id) => {
+    try {
+    await axios.delete(`${apiUrl}/painel-barbearia/${id}/corteestilos/${id}`);
+    setDeletedCorteEstilo(id)
+    } catch (error) {
+      console.error('Erro ao excluir o corte de estilo:', error);
+    }
+  }
 
   return (
     <>
@@ -77,44 +82,51 @@ const CortesEstilos = () => {
             </div>
             <Link to="./adicionar-corteestilo">
               <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 ">
-              <HiOutlinePlusSm />
+                <HiOutlinePlusSm />
                 Adicionar
               </Button>
             </Link>
-            <ListGroup horizontal variant="flush" className="mt-3 d-flex">
+            <ListGroup horizontal className="mt-3 d-flex">
               <Container>
                 <Row>
-                  {data && data.cortesestilos && data.cortesestilos.length === 0 ? (
+
+                  {cortesEstilos.length === 0 ? (
                     <h5 className="text-muted mt-4">Não há nenhum corte ou estilo registrado.</h5>
                   ) : (
-                    <Card
-                    style={{ width: "18rem" }}
-                    className="border-0 shadow m-1 p-3"
-                  >
-                    <Card.Body>
-                      <h5 className="fw-bold fs-6 text-uppercase">
-                        Corte degradê
-                      </h5>
-                      <h5 className="text-success fs-6">R$30,00</h5>
-                      <p className="">Tempo estimado: 30 minutos</p>
-                      <Button className="bg-danger px-4 py-2 btnRed shadow rounded-pill w-100 mt-3 mb-1">
-                        <MdFreeCancellation />
-                        Remover
-                      </Button>
-                      <Link to="./editar-corteestilo">
-                      <Button className="bg-dark px-4 py-2  btnDark shadow rounded-pill w-100">
-                        <AiOutlineEdit />
-                        Alterar
-                      </Button>
-                      </Link>
-                    </Card.Body>
-                  </Card>
+                    cortesEstilos.map((corteEstilo) => (
+                      <Card
+                        style={{ width: "18rem" }}
+                        className="border-0 shadow m-1 p-3"
+                        key={corteEstilo.id}
+                      >
+                        <Card.Body>
+                          <h5 className="fw-bold fs-6 text-uppercase">
+                            {corteEstilo.nome_corte}
+                          </h5>
+                          <h5 className="text-success fs-6">R${corteEstilo.preco}</h5>
+                          <p className="">Tempo estimado: {corteEstilo.tempo_estimado}</p>
+                          <Button onClick={() => handleDelete(corteEstilo.id)}className="bg-danger px-4 py-2 btnRed shadow rounded-pill w-100 mt-3 mb-1">
+                            <MdFreeCancellation />
+                            Remover
+                          </Button>
+                          <Link to="./editar-corteestilo">
+                            <Button className="bg-dark px-4 py-2  btnDark shadow rounded-pill w-100">
+                              <AiOutlineEdit />
+                              Alterar
+                            </Button>
+                          </Link>
+                        </Card.Body>
+                      </Card>
+                    ))
+
                   )}
-                  
 
-                  
 
-                  
+
+
+
+
+
                 </Row>
               </Container>
             </ListGroup>

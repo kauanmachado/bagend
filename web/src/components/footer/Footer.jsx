@@ -22,13 +22,13 @@ const Footer = () => {
             <h4 className="text-white">Links</h4>
           <ul className="list-unstyled ">
             <li>
-              <a href="#" className="text-decoration-none">Página Inicial</a>
+              <a href="/" className="text-decoration-none">Página Inicial</a>
             </li>
             <li>
-              <a href="#" className="text-decoration-none">Procurar Barbearias</a>
+              <a href="/barbearias" className="text-decoration-none">Procurar Barbearias</a>
             </li>
             <li>
-              <a href="#" className="text-decoration-none">Acessar conta</a>
+              <a href="/login-cliente" className="text-decoration-none">Acessar conta</a>
             </li>
           </ul>
             </Col>

@@ -11,6 +11,7 @@ import logoPreta from "../assets/img/logo1.png";
 import { Dropdown } from "react-bootstrap";
 import Cookies from "js-cookie";
 import exBarber from "../assets/img/exBarber.png";
+import Logout from "./Logout";
 
 const HeaderBarbearia = () => {
 
@@ -22,9 +23,8 @@ const HeaderBarbearia = () => {
     <>
       <Navbar expand="lg" bg="light" className=" px-lg-5  navbar">
         <Container fluid className="px-md-5 py-xl-2 py-sm-3 py-3">
-          <Link to="/painel-barbearia/:id">
+          <Link to="/">
             <Navbar.Brand
-              href="../"
               className="text-white ms-xl-5 mx-xl-5 fw-bolder"
             >
               <img src={logoPreta} className="logo" />
@@ -37,6 +37,13 @@ const HeaderBarbearia = () => {
             <Nav style={{ maxHeight: "100px" }} navbarScroll>
               <Link to="/" id="link" className="me-5 py-1 fw-bold text-dark">
                 Página Inicial
+              </Link>
+              <Link
+                to="/barbearias"
+                id="link"
+                className="me-xl-5 py-1 fw-bold text-dark"
+              >
+                Barbearias
               </Link>
               <Link
                 to="../painel-barbearia/agendas"
@@ -58,21 +65,22 @@ const HeaderBarbearia = () => {
               </Dropdown.Menu>
             </Dropdown>
               <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
-              <img
-                src={exBarber}
-                width="40"
-                height="40"
-                className="rounded-circle me-2"
-              />
+              
               </Dropdown.Toggle>
 
               
             
 
 
-            <Link to="/painel-cliente">
-              
+            <Link to="/painel-barbearia">
+            <img
+                src={exBarber}
+                width="40"
+                height="40"
+                className="rounded-circle me-2"
+              />  
             </Link>
+            <Logout />
           </Navbar.Collapse>
         </Container>
       </Navbar>

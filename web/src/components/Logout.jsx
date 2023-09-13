@@ -11,7 +11,7 @@ const Logout = () => {
     function LoadingLogout() {
         return (
             <div className="d-flex p-1">
-                <Spinner animation="border" variant="primary me-3" /><p className="fw-bold mt-1">Fazendo logout...</p>
+                <Spinner animation="border" variant="primary ms-3" />
             </div>
         );
     }

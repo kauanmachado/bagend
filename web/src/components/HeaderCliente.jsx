@@ -10,12 +10,11 @@ import logoPreta from "../assets/img/logo1.png";
 import { Dropdown } from "react-bootstrap";
 import Cookies from "js-cookie";
 import { MdNotifications } from "react-icons/md";
+import Logout from "./Logout";
 
-const HeaderClienteLogado = () => {
+const HeaderCliente = () => {
 
-  const fazerLogout = () => {
-    Cookies.remove('token')
-  }
+
 
   return (
     <>
@@ -23,7 +22,6 @@ const HeaderClienteLogado = () => {
         <Container fluid className="px-md-5 py-xl-2 py-sm-3 py-3">
           <Link to="/">
             <Navbar.Brand
-              href="#"
               className="text-white ms-xl-5 mx-xl-5 fw-bolder"
             >
               <img src={logoPreta} className="logo" />
@@ -57,11 +55,12 @@ const HeaderClienteLogado = () => {
               </Dropdown.Menu>
             </Dropdown>
               <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
-              Kauan Machado
-              </Dropdown.Toggle>
-            <Link to="/painel-cliente">
               
+              </Dropdown.Toggle>
+            <Link to="/painel-cliente" className="fw-bold me-3 text-dark">
+              Meu painel
             </Link>
+            <Logout />
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -69,4 +68,4 @@ const HeaderClienteLogado = () => {
   );
 };
 
-export default HeaderClienteLogado;
+export default HeaderCliente;

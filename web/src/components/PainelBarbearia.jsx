@@ -45,7 +45,7 @@ const PainelBarbearia = () => {
       const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
         withCredentials: true
       })
-        console.log(res)
+        // console.log(res)
         const data = {
           nomebarbearia: res.data.nome_barbearia,
         }

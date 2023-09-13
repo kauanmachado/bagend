@@ -10,15 +10,21 @@ import { Link } from "react-router-dom"
 import Cookies from "js-cookie";
 import Header from "../components/header/Header";
 import { FcBusiness } from "react-icons/fc"
+import CheckRole from "../components/CheckRole";
+import HeaderBarbearia from "../components/HeaderBarbearia";
+import HeaderCliente from "../components/HeaderCliente";
 
 
 const Home = () => {
 
-  const Autenticado = Cookies.get('token')
+  const role = CheckRole()
+  console.log(role)
+
 
   return (
     <>
-      <Header/>
+      {role === "cliente" ? <HeaderCliente /> : role === "barbearia" ? <HeaderBarbearia /> : <Header />}
+
       <Container fluid className=" px-xl-5" id="containerHome">
         <Row>
           <Col sm={12} md={6} lg={6} className="">

@@ -18,7 +18,9 @@ router.get('/painel-barbearia/:id', authMiddleware, roleMiddleware('barbearia'),
 
 // router.put('/editar-dados/:id', authMiddleware, roleMiddleware('barbearia'), BarbeariaController.editDados)
 
-router.post('/adicionar-corteestilo', authMiddleware, roleMiddleware('barbearia'), BarbeariaController.addCorteEstilo)
+router.post('/painel-barbearia/:id/adicionar-corteestilo', BarbeariaController.addCorteEstilo)
+router.get('/painel-barbearia/:id/corteestilos', BarbeariaController.getCortesEstilos)
+router.delete('/painel-barbearia/:id/corteestilos/:id', BarbeariaController.deleteCorteEstilo)
 
 module.exports = router
 

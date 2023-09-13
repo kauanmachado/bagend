@@ -177,7 +177,7 @@ exports.getBarbearia = async (req, res) => {
 
 exports.addCorteEstilo = async (req, res) => {
     const {
-        id,
+        id_barbearia,
         nome_corte,
         tempo_estimado,
         preco
@@ -196,17 +196,57 @@ exports.addCorteEstilo = async (req, res) => {
     }
 
     try {
-        await prisma.cortesEstilos.create({
+        const corteestilo = await prisma.cortesEstilos.create({
             data: {
-                id,
+                id_barbearia,
                 nome_corte,
                 tempo_estimado,
                 preco
             }
         })
+        return res.json(corteestilo)
     } catch (error) {
         res.status(400).json({ msg: error.message })
     }
 
 
 }
+
+exports.getCortesEstilos = async (res) => {
+    try {
+        const corteestilo = await prisma.cortesEstilos.findMany()
+        return res.json(corteestilo);
+    } catch (error) {
+        console.error(`Erro ao buscar os cortes de estilos: ${error}`)
+    }
+}
+
+exports.deleteCorteEstilo = async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const deletedCorteEstilo = await prisma.cortesEstilos.delete({
+            where: {
+                id: id
+            }
+        })
+        return res.json(deletedCorteEstilo);
+    } catch (error) {
+        console.error(`Erro ao excluir o corte ou estilo: ${error}`)
+    }
+}
+
+// exports.updateCorteEstilo = async (req, res) => {
+//     const id = req.params.id;
+
+//     try {
+//         const updatedCorteEstilo = await prisma.cortesEstilos.update({
+//             where: {
+//                 id: id
+//             }
+//         })
+//         return res.json(updatedCorteEstilo)
+//     } catch(error) {
+//         console.error(`Erro ao excluir o corte ou estilo: ${error}`)
+//     }
+// }

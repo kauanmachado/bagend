@@ -35,7 +35,7 @@ const CliAgendas = () => {
           withCredentials: true
         })
         const data = {
-          agendas: res.data.agendas
+          nome_corte: res.data.agendas
         }
         console.log(data)
         setData(data)
