@@ -5,6 +5,7 @@ import {
   Navigate,
   Route,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import Home from "./pages/Home";
 import LoginCliente from "./pages/LoginCliente";
@@ -30,12 +31,21 @@ import PerfilBarbearia from "./pages/PerfilBarbearia";
 import Avaliar from "./pages/Avaliar";
 import RedefinirSenha from "./pages/RedefinirSenha";
 import jwt_decode from "jwt-decode"
+import AdicionarProfissional from "./pages/PainelBarbearia/AdicionarProfissional";
+
+
 
 const checkIfTokenExists = () => {
   const isAuthenticated = Cookies.get('token');
+
   if(!isAuthenticated){
     console.log('Token não encontrado!')
+    window.location.href = "/login-cliente"
   }
+}
+
+const checkIfTokenIsValid = async () => {
+  
 }
 
 const PrivateRouteBarber = ({children, redirectTo}) => {
@@ -124,11 +134,14 @@ const Routers = () => {
         <Route path="painel-barbearia/cortes-estilos/adicionar-corteestilo" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <AdicionarCorteEstilo />
         </PrivateRouteBarber>} />
-        <Route path="painel-barbearia/cortes-estilos/editar-corteestilo" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+        <Route path="painel-barbearia/cortes-estilos/editar-corteestilo/:id" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <EditarCorteEstilo />
         </PrivateRouteBarber>} />
         <Route path="painel-barbearia/profissionais" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <Profissionais />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/profissionais/adicionar-profissional" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <AdicionarProfissional />
         </PrivateRouteBarber>} />
         <Route path="painel-barbearia/avaliacoes" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <Avaliacoes />

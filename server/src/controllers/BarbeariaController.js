@@ -1,8 +1,6 @@
 const prisma = require('../lib/prisma')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const Cookies = require('js-cookie')
-
 
 // Cadastro da barbearia
 exports.registerBarbearia = async (req, res) => {
@@ -212,7 +210,7 @@ exports.addCorteEstilo = async (req, res) => {
 
 }
 
-exports.getCortesEstilos = async (res) => {
+exports.getCortesEstilos = async (req, res) => {
     try {
         const corteestilo = await prisma.cortesEstilos.findMany()
         return res.json(corteestilo);
@@ -236,17 +234,101 @@ exports.deleteCorteEstilo = async (req, res) => {
     }
 }
 
-// exports.updateCorteEstilo = async (req, res) => {
-//     const id = req.params.id;
+ exports.updateCorteEstilo = async (req, res) => {
 
-//     try {
-//         const updatedCorteEstilo = await prisma.cortesEstilos.update({
-//             where: {
-//                 id: id
-//             }
-//         })
-//         return res.json(updatedCorteEstilo)
-//     } catch(error) {
-//         console.error(`Erro ao excluir o corte ou estilo: ${error}`)
-//     }
-// }
+     const id = req.params.id;
+     const {
+        nome_corte,
+        preco,
+        tempo_estimado
+     } = req.body
+
+     try {
+        const existingCorteEstilo = await prisma.cortesEstilos.findUnique({
+            where: { id: id },
+          });
+
+        if(!existingCorteEstilo){
+            return res.status(404).json({ error: 'Corte ou estilo não encontrado' });
+        }
+
+         const updatedCorteEstilo = await prisma.cortesEstilos.update({
+             where: {
+                 id: id
+             },
+             data: {
+                nome_corte,
+                preco,
+                tempo_estimado
+             }
+         })
+         return res.json(updatedCorteEstilo)
+     } catch(error) {
+         console.error(`Erro ao atualizar o corte ou estilo: ${error}`)
+     }
+ }
+
+exports.addProfissional = async (req, res) => {
+    const {
+        id_barbearia,
+        nome_profissional,    
+    } = req.body
+
+    if (!nome_profissional) {
+        return res.status(422).json({ msg: "O nome do profissional é obrigatório!" })
+    }    
+
+    
+    try {
+        const foto_profissional = req.file.path
+
+        if (!foto_profissional) {
+            return res.status(422).json({ msg: "A imagem do profissional é obrigatória!" });
+        }
+        // const foto_profissional = req.file;
+        const profissional = await prisma.profissional.create({
+            data: {
+                id_barbearia,
+                nome_profissional,
+                foto_profissional: foto_profissional
+            }
+        })
+        return res.json(profissional)
+    } catch (error) {
+        res.status(400).json({ msg: error.message })
+    }
+}
+
+exports.getProfissional = async (req,res) => {
+    try {
+        const profissionais = await prisma.profissional.findMany()
+        const profissionaisComImagens = profissionais.map((profissional) => {
+            // Suponha que o campo 'foto_profissional' contenha o nome do arquivo da imagem
+            // e que as imagens estejam armazenadas na pasta 'uploads'
+            const imagemUrl = `/uploads/${profissional.foto_profissional}`;
+      
+            return {
+              ...profissional,
+              imagemUrl, // Adicione o campo 'imagemUrl' com o caminho da imagem
+            };
+          });
+        return res.json(profissionaisComImagens);
+    } catch (error) {
+        console.error(`Erro ao buscar os profissionais: ${error}`)
+    }
+}
+
+exports.deleteProfissional = async (req,res) => {
+    const id = req.params.id
+
+    try {
+        const deletedProfissional = await prisma.profissional.delete({
+            where: {
+                id: id
+            }
+        })
+        return res.json(deletedProfissional);
+    } catch (error) {
+        console.error(`Erro ao excluir o profissional: ${error}`)
+    }
+}

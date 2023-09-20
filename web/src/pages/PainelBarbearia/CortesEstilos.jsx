@@ -1,12 +1,7 @@
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import "../../styles/dashboard.css";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Navbar from "react-bootstrap/Navbar";
-import ListGroup from "react-bootstrap/ListGroup";
+import { Container, Row, Col, ListGroup, Button, Toast } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
   MdBusinessCenter,
@@ -15,19 +10,31 @@ import {
 } from "react-icons/md";
 import { AiFillSchedule, AiOutlinePlus, AiOutlineEdit } from "react-icons/ai";
 import { BsScissors } from "react-icons/bs";
-import { RiEditBoxFill } from "react-icons/ri";
+import { RiCheckboxCircleFill, RiEditBoxFill } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import { TiThMenu } from "react-icons/ti";
 import PainelBarbearia from "../../components/PainelBarbearia";
 import { Card } from "react-bootstrap";
 import HeaderBarbearia from "../../components/HeaderBarbearia";
 import { HiOutlinePlusSm } from "react-icons/hi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import jwt_decode from "jwt-decode"
+import ScrollToTop from "../../components/ScrollToTop";
+import CustomToastCheck from "../../components/toasts/CustomToastCheck";
+
 
 const CortesEstilos = () => {
+  const [toastCheck, setToastCheck] = useState(false);
+
+  const exibirToastCheck = () => {
+    setToastCheck(true);
+
+    setTimeout(() => {
+      setToastCheck(false);
+    }, 3000);
+  };
 
   const [cortesEstilos, setCortesEstilo] = useState([]);
   const [deletedCorteEstilo, setDeletedCorteEstilo] = useState(null);
@@ -45,6 +52,8 @@ const CortesEstilos = () => {
           withCredentials: true
         })
         setCortesEstilo(res.data)
+        ScrollToTop()
+        // console.log(res.data)
       } catch (error) {
         console.error('Erro ao buscar dados da API:', error)
       }
@@ -56,6 +65,7 @@ const CortesEstilos = () => {
     try {
     await axios.delete(`${apiUrl}/painel-barbearia/${id}/corteestilos/${id}`);
     setDeletedCorteEstilo(id)
+    exibirToastCheck()
     } catch (error) {
       console.error('Erro ao excluir o corte de estilo:', error);
     }
@@ -66,6 +76,17 @@ const CortesEstilos = () => {
       <HeaderBarbearia />
       <Container className="default-margin">
         <Row className="justify-content-center shadow rounded bg-white">
+        
+        <Toast
+            show={toastCheck}
+            onClose={() => setToastCheck(false)}
+            className="position-absolute toastEmail bg-success text-white mb-5"
+          >
+            <Toast.Body>
+              <RiCheckboxCircleFill className="me-2" />
+              Corte / Estilo excluído com sucesso!
+            </Toast.Body>
+          </Toast>
           <Col
             md={3}
             className="bg-light col-auto d-flex flex-column p-5 rounded bg-white"
@@ -103,13 +124,13 @@ const CortesEstilos = () => {
                           <h5 className="fw-bold fs-6 text-uppercase">
                             {corteEstilo.nome_corte}
                           </h5>
-                          <h5 className="text-success fs-6">R${corteEstilo.preco}</h5>
-                          <p className="">Tempo estimado: {corteEstilo.tempo_estimado}</p>
+                          <h5 className="text-success fs-5 fw-bold">R${corteEstilo.preco}</h5>
+                          <p className="">Tempo estimado: {corteEstilo.tempo_estimado} Minutos</p>
                           <Button onClick={() => handleDelete(corteEstilo.id)}className="bg-danger px-4 py-2 btnRed shadow rounded-pill w-100 mt-3 mb-1">
                             <MdFreeCancellation />
                             Remover
                           </Button>
-                          <Link to="./editar-corteestilo">
+                          <Link to={`./editar-corteestilo/${corteEstilo.id}`}>
                             <Button className="bg-dark px-4 py-2  btnDark shadow rounded-pill w-100">
                               <AiOutlineEdit />
                               Alterar

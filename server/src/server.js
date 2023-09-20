@@ -1,17 +1,16 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const path = require('path')
+
 const cookieParser = require('cookie-parser');
 
+app.use('/uploads', express.static(path.join(__dirname, './uploads')))
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173', // Substitua com o URL do seu frontend
-    credentials: true, // Permite o uso de cookies e cabeçalhos personalizados
+    origin: 'http://localhost:5173',
+    credentials: true, 
   }));
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Permitir credenciais (cookies)
-//     next();
-//   });
 app.use(express.json())
 
 // Carregando rotas

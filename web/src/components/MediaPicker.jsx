@@ -1,6 +1,7 @@
 import { Form } from "react-bootstrap";
 import { useState } from "react";
 import { MdPermMedia } from "react-icons/md";
+import axios from "axios";
 
 const MediaPicker = ({ onChange }) => {
   const [preview, setPreview] = useState(null);
@@ -9,29 +10,37 @@ const MediaPicker = ({ onChange }) => {
   //const fotoperfil = document.getElementById("fotoperfil");
   //fotoperfil.addEventListener("fotoperfil", onFileSelected);
 
-  const onFileSelected = (event) => {
+  const onFileSelected = async (event) => {
     const { files } = event.target;
 
     if (!files) {
       return;
     }
 
-    const previewUrl = URL.createObjectURL(files[0]);
+    const selectedFile = files[0];
+    const fileName = selectedFile.name; 
+
+    // const formData = new FormData();
+    // formData.append("image", files[0]);
+
+
+    const previewUrl = URL.createObjectURL(selectedFile);
+    setPreview(previewUrl);
+
     const novoValor = event.target.value;
-    // Chame a função de controle fornecida pelo formulário
-    onChange(novoValor);
+    onChange(fileName);
     setPreview(previewUrl);
   };
 
-  
+
 
   return (
     <>
       <Form.Label
-        htmlFor="fotoperfil"
-        className="w-100 d-flex rounded-pill border p-5 justify-content-center mediaPicker"
+        htmlFor="image"
+        className=" d-flex rounded border p-5 justify-content-center mediaPicker"
       >
-        <MdPermMedia className="icon me-2" /> Selecione sua foto de perfil
+        <MdPermMedia className="icon me-2" /> Selecione uma imagem
       </Form.Label>
       <Form.Group
         controlId="formFile"
@@ -40,8 +49,8 @@ const MediaPicker = ({ onChange }) => {
         <Form.Control
           type="file"
           accept="image/png,image/jpeg"
-          id="fotoperfil"
-          name="fotoperfil"
+          id="image"
+          name="image"
           className="d-none"
           onChange={onFileSelected}
         />

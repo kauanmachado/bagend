@@ -18,6 +18,7 @@ import { useState } from "react"
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode"
+import CustomToastCheck from "../../components/toasts/CustomToastCheck";
 
 const AdicionarCorteEstilo = () => {
 
@@ -37,9 +38,7 @@ const AdicionarCorteEstilo = () => {
     setTempoEstimado(event.target.value);
   };
 
-  const handleChangeUnit = (event) => {
-    setUnit(event.target.value);
-  };
+  
 
   const handleChange = (e) => {
     const inputValue = e.target.value;
@@ -61,7 +60,17 @@ const AdicionarCorteEstilo = () => {
       'Content-Type': 'application/json', // Tipo de conteúdo JSON
     }
   };
-  
+  const [toastMessage, setToastMessage] = useState('');
+  const [showToast, setShowToast] = useState(false);
+
+  const exibirToastCheck = (message, duration) => {
+    setToastMessage(message);
+    setShowToast(true);
+
+    setTimeout(() => {
+      setShowToast(false);
+    }, duration);
+  };
 
   const handleCriarCorteEstilo = async (e) => {
     e.preventDefault()
@@ -72,16 +81,26 @@ const AdicionarCorteEstilo = () => {
         tempo_estimado: tempoEstimado,
         preco: preco
       }, config)
+      exibirToastCheck('Adicionado com sucesso', 2000)
       navigate('/painel-barbearia/cortes-estilos')
     } catch (error) {
       console.error("Erro ao cadastrar corte ou estilo:", error);
     }
   }
+  
 
   return (
     <>
       <HeaderBarbearia />
       <Container className="default-margin">
+      {showToast && (
+        <CustomToastCheck
+        message={toastMessage}
+        duration={2000}
+        />
+      )}
+      
+        
         <Row className="justify-content-center shadow bg-white rounded">
           <Col
             md={3}
@@ -90,30 +109,39 @@ const AdicionarCorteEstilo = () => {
             <PainelBarbearia />
           </Col>
           <Col md={9} className="rounded p-5 bg-light border">
-            <Container>
-              <Form onSubmit={handleCriarCorteEstilo}>
-                <Row>
-                  <Link
+          <div className="d-flex justify-content-between">
+              
+              <h3 className="fw-bold text-secondary  mb-5">
+              <BsScissors className="fs-2 text-secondary me-3 mb-1" />
+                Cortes e Estilos
+              </h3>
+              <Link
                     to="../painel-barbearia/cortes-estilos"
                     id="linkBack"
                     className="me-5 py-1 fw-bold text-dark mb-5"
                   >
                     <MdOutlineArrowBackIos
-                      style={{ fontSize: 15 }}
+                      style={{ fontSize: 18 }}
                       className="me-2"
                     />
-                    Voltar para cortes e estilos
+                    Voltar
                   </Link>
+            </div>
+            <Container>
+              <Form onSubmit={handleCriarCorteEstilo}>
+                <Row>
+                  
 
                   <Col md={6}>
                     <div class="form-floating mb-4">
                       <input
                         id="corte"
                         type="text"
-                        value={nomeCorte}
+                        value={nomeCorte} 
                         onChange={(e) => setNomeCorte(e.target.value)}
                         placeholder="12345teste"
                         className="form-control shadow"
+                        maxLength="30"
                         required
                         autoComplete="senha"
                       />
@@ -133,6 +161,7 @@ const AdicionarCorteEstilo = () => {
                         className="form-control shadow"
                         required
                         autoComplete="senha"
+                        maxLength="5"
                       />
                       {!isValid && <p style={{ color: 'red' }}>Digite um preço válido</p>}
                       <label for="floatingInput" className="text-secondary">
@@ -142,20 +171,22 @@ const AdicionarCorteEstilo = () => {
                       </label>
                     </div>
                   </Col>
-                  <Col md={3}>
+                  <Col md={6}>
                     <div class="form-floating mb-4">
                       <input
                         id="tempoEstimado"
-                        type="text"
-                        onChange={handleChangeTime}
+                        type="number"
+                        value={tempoEstimado}
+                        onChange={(e) => setTempoEstimado(e.target.value)}
                         className="form-control shadow"
-                        placeholder="Tempo estimado"
+                        placeholder="Tempo estimado em minutos"
+                        maxLength={"3"}
                         required
                         autoComplete="senha"
                       />
                       <label for="floatingInput" className="text-secondary">
                         <BsClock className="fs-3 me-2" />
-                        Minutos
+                        Tempo estimado em minutos
                       </label>
                     </div>
                   </Col>
