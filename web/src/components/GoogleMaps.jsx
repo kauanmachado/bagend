@@ -2,14 +2,15 @@ import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState, useCallback, useEffect, useRef } from "react";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { GoogleMap, InfoWindow, InfoWindowF, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import Geocode from "react-geocode";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
+import { FaMapMarkerAlt} from "react-icons/fa";
 
 Geocode.setLanguage("pt");
 Geocode.setRegion("br");
@@ -25,7 +26,7 @@ const GoogleMaps = () => {
 
 
 
-  const [center, setCenter] = useState({lat: -30.030775, lng: -51.227831})
+  const [center, setCenter] = useState({ lat: -30.030775, lng: -51.227831 })
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -55,7 +56,7 @@ const GoogleMaps = () => {
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         const enderecoFormatado = response.results[0].formatted_address;
-        setCenter({lat, lng})
+        setCenter({ lat, lng })
         console.log(lat, lng);
         console.log(enderecoFormatado);
       },
@@ -66,51 +67,36 @@ const GoogleMaps = () => {
   };
   const apiUrl = "http://localhost:8001"
   const [locations, setLocations] = useState()
+  const [activeMarker, setActiveMarker] = useState()
+
+  const handleActiveMarker = (location) => {
+    if (location === activeMarker) {
+      return
+    }
+    setActiveMarker(location)
+  }
 
   // --GEOCODE-- //
   useEffect(() => {
     async function fetchData() {
-    try {
-      const res = await axios.get(`${apiUrl}/barbearias`,)
-      
-      const convertedData = res.data.map(barbearia => ({
-        ...barbearia,
-        lat: parseFloat(barbearia.lat), 
-        lng: parseFloat(barbearia.lng)
-      }))
-      console.log(convertedData)
-      setLocations(convertedData)
-    } catch (error) {
-      console.error()
+      try {
+        const res = await axios.get(`${apiUrl}/barbearias`,)
+
+        const convertedData = res.data.map(barbearia => ({
+          ...barbearia,
+          lat: parseFloat(barbearia.lat),
+          lng: parseFloat(barbearia.lng)
+        }))
+        console.log(convertedData)
+        setLocations(convertedData)
+      } catch (error) {
+        console.error()
+      }
     }
-  }
-  fetchData()
+    fetchData()
   }, [])
 
-  const Marker = ({map, children, position}) => {
-    const markerRef = useRef()
-    const rootRef = useRef()
 
-    useEffect(() => {
-      if(!rootRef.current) {
-        const container = document.createElement("div")
-        rootRef.current = ReactDOM.createRoot(container)
-        markerRef.current = new google.maps.marker.AdvancedMarkerElement({
-          position, 
-          content: container
-        })
-      }
-
-    },[])
-
-    useEffect(() => {
-      rootRef.current.render(children)
-      markerRef.current.position = position
-      markerRef.current.map = map
-
-
-    },[map, position, children])
-  }
 
   return isLoaded ? (
     <>
@@ -180,17 +166,36 @@ const GoogleMaps = () => {
                 ],
               }}
             >
-              {/* Child components, such as markers, info windows, etc. */}
-               {Object.entries(locations).map(([index, location]) => (
-                <Marker
-                key={index}
-                position={{ lat: location.lat, lng: location.lng }}
-              >
-                <div className={`marker`}>
-                  <h5>teste</h5>
-                </div>
-              </Marker>
-              ))} 
+              {
+                locations.map((location) => (
+                  <MarkerF 
+                  key={location.id} 
+                  position={{ lat: location.lat, lng: location.lng }}
+                  onClick={() => handleActiveMarker(location.id)}
+                  icon={
+                    <FaMapMarkerAlt/>
+                  }
+                  >
+                    {
+                      activeMarker === location.id ? <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                        <div className="p-4">
+                          <img src={location.foto_perfil} className="rounded" />
+                          <h6 className="fw-bold">{location.nome_barbearia}</h6>
+                          <p className="text-secondary">{location.endereco}</p>
+                          <div className="d-flex">
+                            <Button className="bg-white px-4 py-2 agendar shadow rounded-pill ms-3  float-end text-primary">
+                              Ver perfil
+                            </Button>
+                            <Button className="primary px-4 py-2 agendar shadow rounded-pill ms-3  float-end">
+                              Agendar
+                            </Button>
+                          </div>
+                        </div>
+                      </InfoWindowF> : null
+                    }
+                  </MarkerF>
+                ))
+              }
             </GoogleMap>
           </Col>
         </Row>
@@ -200,5 +205,6 @@ const GoogleMaps = () => {
     <></>
   );
 };
+
 
 export default GoogleMaps;
