@@ -65,6 +65,7 @@ const CortesEstilos = () => {
     try {
     await axios.delete(`${apiUrl}/painel-barbearia/${id}/corteestilos/${id}`);
     setDeletedCorteEstilo(id)
+    ScrollToTop()
     exibirToastCheck()
     } catch (error) {
       console.error('Erro ao excluir o corte de estilo:', error);
@@ -80,7 +81,7 @@ const CortesEstilos = () => {
         <Toast
             show={toastCheck}
             onClose={() => setToastCheck(false)}
-            className="position-absolute toastEmail bg-success text-white mb-5"
+            className="position-absolute top-0 start-50 translate-middle-x toastEmail bg-success text-white mt-5"
           >
             <Toast.Body>
               <RiCheckboxCircleFill className="me-2" />

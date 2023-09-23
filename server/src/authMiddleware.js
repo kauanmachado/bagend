@@ -16,7 +16,7 @@ exports.authMiddleware = (req, res, next) => {
 
     next();
   } catch (err) {
-    res.status(400).json({ msg: "O Token é inválido!" });
+    res.status(401).json({ msg: "O Token é inválido!" });
   }
   
 };

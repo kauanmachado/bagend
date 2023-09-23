@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdBusinessCenter, MdDashboard } from "react-icons/md";
 import { BsScissors } from "react-icons/bs";
 import { RiEditBoxFill } from "react-icons/ri";
@@ -28,6 +28,7 @@ import Cookies from "js-cookie";
 
 const Geral = () => {
 
+  const navigate = useNavigate()
   const [data, setData] = useState([]);
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
@@ -36,35 +37,35 @@ const Geral = () => {
   const apiUrl = "http://localhost:8001"
 
 
-    useEffect(() => {
-      async function fetchData(){
-        try {
+  useEffect(() => {
+    async function fetchData() {
+      try {
         const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
           withCredentials: true
         })
-          const data = {
-            nomebarbearia: res.data.nome_barbearia,
-            email: res.data.email,
-            cnpj: res.data.cnpj,
-            endereco: res.data.endereco,
-            telefone: res.data.telefone,
-            link_instagram: res.data.link_instagram,
-            foto_perfil: res.data.foto_perfil
-          }
-          setData(data)
-          // console.log(data)
-    
-      }
-        catch(error) {
-          console.error('Erro ao buscar dados da API:', error)
+        const data = {
+          nomebarbearia: res.data.nome_barbearia,
+          email: res.data.email,
+          cnpj: res.data.cnpj,
+          endereco: res.data.endereco,
+          telefone: res.data.telefone,
+          link_instagram: res.data.link_instagram,
+          foto_perfil: res.data.foto_perfil
         }
-      }
-      fetchData();
-    },[])
-    
-  
+        setData(data)
+        // console.log(data)
 
-  
+      }
+      catch (error) {
+        console.error('Erro ao buscar dados da API:', error)
+      }
+    }
+    fetchData();
+  }, [])
+
+
+
+
   return (
     <>
       <HeaderBarbearia />

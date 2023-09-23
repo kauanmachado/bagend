@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
 const clienteController = require('../controllers/ClienteController')
 const { authMiddleware } = require('../authMiddleware')
 const { roleMiddleware } = require('../roleMiddleware')
@@ -14,6 +13,7 @@ router.post('/login-cliente', clienteController.loginCliente)
 router.get('/painel-cliente/:id', authMiddleware, roleMiddleware('cliente'), clienteController.getCliente, (req, res) => {
     res.json({ msg: 'Bem-vindo, cliente!'})
 })
+router.get('/painel-cliente/:id/agendas', authMiddleware, roleMiddleware('cliente'), clienteController.getAgendas)
 
 
 module.exports = router

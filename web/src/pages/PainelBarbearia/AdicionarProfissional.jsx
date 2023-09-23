@@ -85,7 +85,7 @@ const AdicionarProfissional = () => {
                                     htmlFor="foto_profissional"
                                     className=" d-flex rounded border p-5 justify-content-center mediaPicker"
                                 >
-                                    <MdPermMedia className="icon me-2" /> Selecione uma imagem
+                                    <MdPermMedia className="icon me-2" /> {selectedImage ? selectedImage.name : "Selecione uma imagem"}
                                 </Form.Label>
                                 <Form.Group
                                     className="mb-3 justify-content-center d-flex"

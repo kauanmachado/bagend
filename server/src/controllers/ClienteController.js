@@ -134,3 +134,12 @@ exports.getCliente = async (req, res) => {
 
     return res.json(cliente);
 }
+
+exports.getAgendas = async (req, res) => {
+    try {
+        const agendas = await prisma.agenda.findMany()
+        return res.json(agendas)
+    } catch {
+        console.error(`Erro ao buscar agendas: ${error}`)
+    }
+}

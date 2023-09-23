@@ -44,9 +44,6 @@ const checkIfTokenExists = () => {
   }
 }
 
-const checkIfTokenIsValid = async () => {
-  
-}
 
 const PrivateRouteBarber = ({children, redirectTo}) => {
   checkIfTokenExists()

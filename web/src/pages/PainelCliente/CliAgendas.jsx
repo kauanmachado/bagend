@@ -20,10 +20,9 @@ import jwt_decode from "jwt-decode"
 
 const CliAgendas = () => {
 
-  const [data, setData] = useState([]);
+  const [agendas, setAgendas] = useState([]);
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
-  console.log(decodedToken)
   const id = decodedToken.id
   const apiUrl = "http://localhost:8001"
 
@@ -31,14 +30,10 @@ const CliAgendas = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get(`${apiUrl}/painel-cliente/${id}`, {
+        const res = await axios.get(`${apiUrl}/painel-cliente/${id}/agendas`, {
           withCredentials: true
         })
-        const data = {
-          nome_corte: res.data.agendas
-        }
-        console.log(data)
-        setData(data)
+        setAgendas(res.data)
       }
       catch (error) {
         console.error('Erro ao buscar dados da API:', error)
@@ -67,7 +62,7 @@ const CliAgendas = () => {
 
             <Container>
               <Row className="d-flex justify-content-start">
-              {data && data.agendas && data.agendas.length === 0 ? (
+              {agendas.length === 0 ? (
                 <h5 className="text-muted">Não há agendas disponíveis.</h5>
               ): (
                 <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">

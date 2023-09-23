@@ -15,6 +15,7 @@ router.get('/painel-barbearia/:id', authMiddleware, roleMiddleware('barbearia'),
     console.log(req.barbearia)
     res.json({ msg: 'Bem-vindo, barbearia!' });
 })
+router.get('/barbearias', BarbeariaController.getAllBarbearias)
 
 router.post('/painel-barbearia/:id/adicionar-corteestilo', BarbeariaController.addCorteEstilo)
 router.get('/painel-barbearia/:id/corteestilos', BarbeariaController.getCortesEstilos)

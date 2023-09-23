@@ -1,25 +1,13 @@
-import Header from "./header/Header";
-import Footer from "./footer/Footer";
+
 import "../styles/dashboard.css";
 import {
-  Container,
-  Row,
-  Col,
   Navbar,
-  ListGroup,
-  Button,
-  ListGroupItem,
 } from "react-bootstrap";
-import { FaBars } from "react-icons/fa";
-import HeaderClienteLogado from "./HeaderCliente";
 import { AiOutlineSchedule } from "react-icons/ai";
-import { VscAccount } from "react-icons/vsc";
-import { BsBookmarks, BsScissors } from "react-icons/bs";
+import { BsScissors } from "react-icons/bs";
 import { RiEditBoxFill, RiMenu2Fill } from "react-icons/ri";
-import logoPreta from "../assets/img/logo1.png";
-import { Form, Link } from "react-router-dom";
-import { MdBusinessCenter, MdCoPresent, MdOutlineForum } from "react-icons/md";
-import { TiThMenu } from "react-icons/ti";
+import { Form, Link, useNavigate } from "react-router-dom";
+import { MdBusinessCenter, MdOutlineForum } from "react-icons/md";
 import { ImUserTie } from "react-icons/im";
 import exBarber from "../assets/img/exBarber.png";
 import { useEffect, useState } from "react";
@@ -30,6 +18,7 @@ import Logout from "./Logout";
 
 const PainelBarbearia = () => {
 
+  const navigate = useNavigate()
   const [data, setData] = useState([]);
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
@@ -53,6 +42,10 @@ const PainelBarbearia = () => {
     }
       catch(error) {
         console.error('Erro ao buscar dados da API:', error)
+        if (error.response.status = 401) {
+          Cookies.remove('token')
+          navigate('/login-barbearia')
+        }
       }
     }
     fetchData();

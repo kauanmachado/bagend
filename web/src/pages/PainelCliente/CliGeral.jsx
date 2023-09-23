@@ -4,20 +4,11 @@ import "../../styles/dashboard.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Navbar from "react-bootstrap/Navbar";
-import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
 import {
-  MdCoPresent,
   MdPerson,
   MdOutlineAlternateEmail,
   MdPersonPinCircle,
 } from "react-icons/md";
-import { RiEditBoxFill } from "react-icons/ri";
-import { IoLogOutOutline } from "react-icons/io5";
-import { TiThMenu } from "react-icons/ti";
-import { FaUserCheck } from "react-icons/fa";
-import exBarber from "../../assets/img/exBarber.png";
 import HeaderClienteLogado from "../../components/HeaderCliente";
 import Cookies from "js-cookie";
 import PainelCliente from "../../components/PainelCliente.jsx";
@@ -43,8 +34,6 @@ const CliGeral = () => {
           withCredentials: true
         })
         
-        
-          console.log(res)
           const data = {
             nomecompleto: res.data.nome_completo,
             email: res.data.email,

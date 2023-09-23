@@ -173,6 +173,15 @@ exports.getBarbearia = async (req, res) => {
     return res.json(barbearia);
 }
 
+exports.getAllBarbearias = async (req, res) => {
+    try {
+        const barbearias = await prisma.barbearia.findMany()
+        return res.json(barbearias)
+    } catch (error) {
+        console.error(`Erro ao buscar barbearias ${error}`)
+    }
+}
+
 exports.addCorteEstilo = async (req, res) => {
     const {
         id_barbearia,

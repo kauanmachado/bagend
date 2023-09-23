@@ -14,6 +14,7 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode"
 import axios from "axios";
 import { RiCheckboxCircleFill } from "react-icons/ri";
+import ScrollToTop from "../../components/ScrollToTop";
 
 const Profissionais = () => {
 
@@ -61,6 +62,7 @@ const Profissionais = () => {
     try {
       await axios.delete(`${apiUrl}/painel-barbearia/${id}/profissionais/${id}`);
       setDeletedProfissional(id)
+      ScrollToTop()
       exibirToastCheck()
     } catch (error) {
       console.error('Erro ao excluir o profissional:', error);
@@ -71,11 +73,13 @@ const Profissionais = () => {
     <>
       <HeaderBarbearia />
       <Container className="default-margin">
+      
         <Row className="justify-content-center shadow rounded bg-white">
+        
           <Toast
             show={toastCheck}
             onClose={() => setToastCheck(false)}
-            className="position-absolute toastEmail bg-success text-white mb-5"
+            className="position-absolute top-0 start-50 translate-middle-x toastEmail bg-success text-white mt-5"
           >
             <Toast.Body>
               <RiCheckboxCircleFill className="me-2" />
