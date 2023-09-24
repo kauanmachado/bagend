@@ -43,19 +43,15 @@ const Geral = () => {
         const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
           withCredentials: true
         })
-        const data = {
-          nomebarbearia: res.data.nome_barbearia,
-          email: res.data.email,
-          cnpj: res.data.cnpj,
-          endereco: res.data.endereco,
-          telefone: res.data.telefone,
-          link_instagram: res.data.link_instagram,
-          foto_perfil: res.data.foto_perfil
+        const dados = res.data
+        console.log(res.data)
+        const barbearia = {
+          ...dados,
+          imagemUrl: `${apiUrl}/${dados.foto_perfil}`
         }
-        setData(data)
-        // console.log(data)
-
+        setData(barbearia)
       }
+
       catch (error) {
         console.error('Erro ao buscar dados da API:', error)
       }
@@ -83,7 +79,7 @@ const Geral = () => {
               <MdBusinessCenter className="fs-2 text-secondary ms-1" />
               <h3 className="fw-bold mb-5 text-secondary ms-3">Visão Geral</h3>
             </div>
-            <img src={data.foto_perfil} className="logo rounded-circle" />
+            <img src={data.imagemUrl} className="logo rounded-circle" />
 
             <h3 className=" mt-3 fw-bold title">{data.nomebarbearia}</h3>
             <div className="d-flex">

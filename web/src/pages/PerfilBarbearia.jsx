@@ -4,17 +4,45 @@ import Footer from "../components/footer/Footer";
 import exBarber from "../assets/img/exBarber.png";
 import {
   AiFillStar,
-  AiOutlineFacebook,
   AiOutlineInstagram,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { BsBookmark} from "react-icons/bs";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import HeaderCliente from "../components/HeaderCliente";
+import HeaderBarbearia from "../components/HeaderBarbearia";
+import CheckRole from "../components/CheckRole";
 
 const PerfilBarbearia = () => {
+
+  const role = CheckRole()
+  const { id } = useParams()
+  const [data, setData] = useState([]);
+  const apiUrl = "http://localhost:8001"
+
+  useEffect(() => {
+    async function fetchData(){
+      try {
+        const res = await axios.get(`${apiUrl}/perfil-barbearia/${id}`, {
+          withCredentials: true
+        })
+        const dados = res.data
+        const barbearia = {
+          ...dados,
+          imagemUrl: `${apiUrl}/${dados.foto_perfil}`
+        }
+        setData(barbearia)  
+      } catch(error) {
+        console.error(`Erro ao buscar dados da API ${error}`)
+      }
+    }
+    fetchData()
+  }, [])
   return (
     <>
-      <Header />
+      {role === "cliente" ? <HeaderCliente /> : role === "barbearia" ? <HeaderBarbearia /> : <Header />}
       <Container className="default-margin">
         <Row className="justify-content-center">
           <Col md={6} className="shadow rounded p-5">
@@ -31,17 +59,17 @@ const PerfilBarbearia = () => {
                 </Link>
             <div className="d-flex align-items-center mt-5">
               <img
-                src={exBarber}
+                src={data.imagemUrl}
                 width="120"
                 height="120"
                 className="rounded-circle me-2"
               />
               <div className="ms-3">
-                <h5 className="fw-bold">Mr Barba</h5>
+                <h5 className="fw-bold">{data.nome_barbearia}</h5>
                 <p className="endereco text-secondary">
-                  Av. Flores da Cunha 000, Gravataí, Rio Grande do Sul
+                  {data.endereco}
                 </p>
-                <p className="text-secondary">(51)98000-0000</p>
+                <p className="text-secondary">{data.telefone}</p>
                 <div className="d-flex mt-3">
                   <AiFillStar />
                   <AiFillStar />
@@ -53,7 +81,9 @@ const PerfilBarbearia = () => {
             </div>
 
             <div className="d-flex ms-4 mt-2">
+              <Link to={data.link_instagram}>
               <AiOutlineInstagram className="fs-3 ms-4" />
+              </Link>
 
             </div>
             

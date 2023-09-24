@@ -14,7 +14,6 @@ exports.registerBarbearia = async (req, res) => {
         endereco,
         lat,
         lng,
-        foto_perfil,
         telefone,
         link_instagram } = req.body
 
@@ -76,6 +75,12 @@ exports.registerBarbearia = async (req, res) => {
 
 
     try {
+        const foto_perfil = req.file.path
+
+        if(!foto_perfil) {
+            return res.status(422).json({ msg: "A imagem do profissional é obrigatória!" });
+        }
+
         const barbearia = await prisma.barbearia.create({
             data: {
                 id,
@@ -167,20 +172,35 @@ exports.getBarbearia = async (req, res) => {
             avaliacoes: true
         }
     })
-    if (!barbearia) {
+    const imagemUrl = `/uploads/${barbearia.foto_perfil}`;
+        const barbeariaComImagem = {
+            ...barbearia,
+            imagemUrl
+        };
+    if (!barbeariaComImagem) {
         return res.status(404).json({ msg: 'Barbearia não encontrado' });
     }
-    return res.json(barbearia);
+    return res.json(barbeariaComImagem);
 }
 
 exports.getAllBarbearias = async (req, res) => {
     try {
         const barbearias = await prisma.barbearia.findMany()
-        return res.json(barbearias)
+        const barbeariasComImagem = barbearias.map((barbearia) => {
+
+        const imagemUrl = `/uploads/${barbearia.foto_perfil}`
+
+        return {
+            ...barbearia,
+            imagemUrl
+        }
+        })
+        return res.json(barbeariasComImagem)
     } catch (error) {
         console.error(`Erro ao buscar barbearias ${error}`)
     }
 }
+
 
 exports.addCorteEstilo = async (req, res) => {
     const {

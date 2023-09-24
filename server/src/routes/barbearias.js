@@ -6,7 +6,7 @@ const { roleMiddleware } = require('../roleMiddleware')
 const upload = require('../multerConfig')
 
 // Cadastro da barbearia
-router.post('/cadastrar-barbearia', BarbeariaController.registerBarbearia)
+router.post('/cadastrar-barbearia', upload.single('foto_perfil'), BarbeariaController.registerBarbearia)
 
 // Login da barbearia
 router.post('/login-barbearia', BarbeariaController.loginBarbearia)
@@ -15,6 +15,7 @@ router.get('/painel-barbearia/:id', authMiddleware, roleMiddleware('barbearia'),
     console.log(req.barbearia)
     res.json({ msg: 'Bem-vindo, barbearia!' });
 })
+router.get('/perfil-barbearia/:id', BarbeariaController.getBarbearia)
 router.get('/barbearias', BarbeariaController.getAllBarbearias)
 
 router.post('/painel-barbearia/:id/adicionar-corteestilo', BarbeariaController.addCorteEstilo)

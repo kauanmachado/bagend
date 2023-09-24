@@ -4,7 +4,7 @@ import React from "react";
 import { Container, Row, Col, Form, InputGroup, Button, Toast } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RiCheckboxCircleFill, RiErrorWarningFill, RiLockPasswordFill } from "react-icons/ri";
-import { MdAlternateEmail, MdBusinessCenter } from "react-icons/md";
+import { MdAlternateEmail, MdBusinessCenter, MdPermMedia } from "react-icons/md";
 import { AiOutlineInstagram, AiOutlineFacebook } from "react-icons/ai";
 import logoPreta from "../assets/img/logo1.png";
 import Geocode from "react-geocode";
@@ -101,7 +101,7 @@ const CadastroBarbearia = () => {
         console.log(enderecoFormatado);
         console.log(lat.toString(), lng.toString());
 
-      return { lat: lat.toString(), lng: lng.toString() };
+        return { lat: lat.toString(), lng: lng.toString() };
       } catch {
         console.error(error)
         alert(error)
@@ -111,45 +111,48 @@ const CadastroBarbearia = () => {
     const { lat, lng } = await obterLatELng(enderecoFormatado);
 
     try {
-    await axios.post("http://localhost:8001/cadastrar-barbearia", 
-    {
-      nome_barbearia: nomeBarbearia,
-      email: email,
-      cnpj: cnpj,
-      senha: senha,
-      endereco: enderecoFormatado,
-      lat: lat,
-      lng: lng,
-      foto_perfil: selectedImage,
-      telefone: tel,
-      link_instagram: linkInsta,
-    }).then((response) => {
-      scrollToTop();
-      exibirToastCheck();
-      const token = response.data.token;
+      const formData = new FormData()
+
+
+      formData.append("nome_barbearia", nomeBarbearia)
+      formData.append("email", email)
+      formData.append("cnpj", cnpj)
+      formData.append("senha", senha)
+      formData.append("endereco", enderecoFormatado)
+      formData.append("lat", lat)
+      formData.append("lng", lng)
+      formData.append("foto_perfil", selectedImage)
+      formData.append("telefone", tel)
+      formData.append("link_instagram", linkInsta)
+
+      const res = await axios.post("http://localhost:8001/cadastrar-barbearia",
+        formData).then((response) => {
+          scrollToTop();
+          exibirToastCheck();
+          const token = response.data.token;
           Cookies.set("token", token, { expires: cookieExpiresInSeconds });
           setTimeout(() => {
             navigate("/painel-barbearia");
           }, 2000)
-    
-    })
-  } catch (error) {
-    console.log(error)
-    if (error.response.data) {
-      if (error.response.data.msg == "Email ja cadastrado!"){
-        scrollToTop();
-        exibirToastErro();
-        setEmail("");
-      } else if(error.response.data.msg == "CNPJ ja cadastrado!"){
-        scrollToTop();
-        exibirToastErroCnpj();
-        setCnpj("");
-      }else {
-        exibirToastErro();
+
+        })
+    } catch (error) {
+      console.error(error)
+      if (error.response.data) {
+        if (error.response.data.msg == "Email ja cadastrado!") {
+          scrollToTop();
+          exibirToastErro();
+          setEmail("");
+        } else if (error.response.data.msg == "CNPJ ja cadastrado!") {
+          scrollToTop();
+          exibirToastErroCnpj();
+          setCnpj("");
+        } else {
+          exibirToastErro();
+        }
       }
+      console.error("Erro ao cadastrar:", error);
     }
-    console.error("Erro ao cadastrar:", error);
-  }
   };
 
   return (
@@ -157,7 +160,7 @@ const CadastroBarbearia = () => {
       <Header />
       <Container className="mt-3 mb-5">
         <Row className="justify-content-center">
-        <Toast
+          <Toast
             show={toastErro}
             onClose={() => setToastErro(false)}
             className="position-absolute toastEmail bg-danger text-white scrollTop"
@@ -409,7 +412,23 @@ const CadastroBarbearia = () => {
                     </Col>
                   </Row>
 
-                  <MediaPicker onChange={handleImageSelected} />
+                  <Form.Label
+                    htmlFor="foto_profissional"
+                    className=" d-flex rounded border p-5 justify-content-center mediaPicker"
+                  >
+                    <MdPermMedia className="icon me-2" /> {selectedImage ? selectedImage.name : "Selecione uma imagem"}
+                  </Form.Label>
+                  <Form.Group
+                    className="mb-3 justify-content-center d-flex"
+                  >
+                    <Form.Control
+                      type="file"
+                      accept="image/png,image/jpeg"
+                      className="d-none"
+                      id="foto_profissional"
+                      onChange={(e) => setSelectedImage(e.target.files[0])}
+                    />
+                  </Form.Group>
                 </Col>
 
                 <Col md={12}>

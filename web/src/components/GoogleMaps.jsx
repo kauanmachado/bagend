@@ -11,6 +11,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
 import { createRoot } from "react-dom/client";
 import { FaMapMarkerAlt} from "react-icons/fa";
+import Loading from "./Loading";
+import { Link } from "react-router-dom";
 
 Geocode.setLanguage("pt");
 Geocode.setRegion("br");
@@ -21,7 +23,7 @@ Geocode.enableDebug();
 const GoogleMaps = () => {
   const containerStyle = {
     width: "100%",
-    height: "500px",
+    height: "600px",
   };
 
 
@@ -66,7 +68,7 @@ const GoogleMaps = () => {
     );
   };
   const apiUrl = "http://localhost:8001"
-  const [locations, setLocations] = useState()
+  const [locations, setLocations] = useState([])
   const [activeMarker, setActiveMarker] = useState()
 
   const handleActiveMarker = (location) => {
@@ -81,16 +83,20 @@ const GoogleMaps = () => {
     async function fetchData() {
       try {
         const res = await axios.get(`${apiUrl}/barbearias`,)
+        console.log(res.data)
 
-        const convertedData = res.data.map(barbearia => ({
+        const convertedData = res.data.map((barbearia) => {
+          return {
           ...barbearia,
+          imagemUrl: `${apiUrl}/${barbearia.foto_perfil}`,
           lat: parseFloat(barbearia.lat),
           lng: parseFloat(barbearia.lng)
-        }))
-        console.log(convertedData)
+        }
+        })
+        console.log(res.data)
         setLocations(convertedData)
       } catch (error) {
-        console.error()
+        console.error(error)
       }
     }
     fetchData()
@@ -178,15 +184,17 @@ const GoogleMaps = () => {
                   >
                     {
                       activeMarker === location.id ? <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                        <div className="p-4">
-                          <img src={location.foto_perfil} className="rounded" />
+                        <div className="p-4 d-flex-column justify-content-center">
+                          <img src={location.imagemUrl} className="rounded infoWindowImage mb-3" />
                           <h6 className="fw-bold">{location.nome_barbearia}</h6>
                           <p className="text-secondary">{location.endereco}</p>
                           <div className="d-flex">
-                            <Button className="bg-white px-4 py-2 agendar shadow rounded-pill ms-3  float-end text-primary">
+                            <Link to={`perfil-barbearia/${location.id}`}>
+                            <Button className="bg-white px-4 py-2 agendar shadow rounded-pill me-2 float-end text-primary">
                               Ver perfil
                             </Button>
-                            <Button className="primary px-4 py-2 agendar shadow rounded-pill ms-3  float-end">
+                            </Link>
+                            <Button className="primary px-4 py-2 agendar shadow rounded-pill  float-end">
                               Agendar
                             </Button>
                           </div>
@@ -202,7 +210,7 @@ const GoogleMaps = () => {
       </Container>
     </>
   ) : (
-    <></>
+    <Loading/>
   );
 };
 

@@ -143,9 +143,9 @@ const Routers = () => {
         <Route path="painel-barbearia/avaliacoes" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <Avaliacoes />
         </PrivateRouteBarber>} />
-        <Route path="perfil-barbearia" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+        {/* <Route path="perfil-barbearia" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <PerfilBarbearia />
-        </PrivateRouteBarber>} />
+        </PrivateRouteBarber>} /> */}
         <Route path="perfil-barbearia/avaliar" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <Avaliar />
         </PrivateRouteBarber>} />
@@ -154,6 +154,7 @@ const Routers = () => {
         <Route path="/redefinir-senha" element={<RedefinirSenha />} /> 
         <Route path="/barbearias" element={<Barbearias />} /> 
         <Route path="/agenda" element={<Agenda/>} />   
+        <Route path="barbearias/perfil-barbearia/:id" element={<PerfilBarbearia/>} />   
       </Routes>
     </BrowserRouter>
   );

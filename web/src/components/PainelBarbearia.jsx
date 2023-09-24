@@ -1,4 +1,3 @@
-
 import "../styles/dashboard.css";
 import {
   Navbar,
@@ -6,10 +5,9 @@ import {
 import { AiOutlineSchedule } from "react-icons/ai";
 import { BsScissors } from "react-icons/bs";
 import { RiEditBoxFill, RiMenu2Fill } from "react-icons/ri";
-import { Form, Link, useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { MdBusinessCenter, MdOutlineForum } from "react-icons/md";
 import { ImUserTie } from "react-icons/im";
-import exBarber from "../assets/img/exBarber.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -34,11 +32,12 @@ const PainelBarbearia = () => {
       const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
         withCredentials: true
       })
-        // console.log(res)
-        const data = {
-          nomebarbearia: res.data.nome_barbearia,
+        const dados = res.data
+        const barbearia = {
+          ...dados,
+          imagemUrl: `${apiUrl}/${dados.foto_perfil}`
         }
-        setData(data)  
+        setData(barbearia)  
     }
       catch(error) {
         console.error('Erro ao buscar dados da API:', error)
@@ -61,12 +60,12 @@ const PainelBarbearia = () => {
           <div>
             <a className="text-decoration-none text-dark d-flex align-itemcenter ms-3 mt-2">
               <img
-                src={exBarber}
+                src={data.imagemUrl}
                 width="40"
                 height="40"
                 className="rounded-circle "
               />
-              <span className="ms-2 mt-2 fw-bold">{data.nomebarbearia}</span>
+              <span className="ms-2 mt-2 fw-bold">{data.nome_barbearia}</span>
             </a>
             <hr className="text-secondary" />
             <ul className="nav nav-pills flex-column">

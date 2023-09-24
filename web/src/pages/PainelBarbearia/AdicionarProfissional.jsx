@@ -43,7 +43,6 @@ const AdicionarProfissional = () => {
                     }
                 })
                 navigate('/painel-barbearia/profissionais')
-            console.log(res)
 
         } catch (error) {
             console.error(`Erro ao enviar dados para a API: ${error}`)
