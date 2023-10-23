@@ -75,9 +75,9 @@ const HeaderBarbearia = () => {
             <Link to="/painel-barbearia">
             <img
                 src={exBarber}
-                width="40"
-                height="40"
-                className="rounded-circle me-2"
+                width="32"
+                height="32"
+                className="rounded-circle"
               />  
             </Link>
             <Logout />

@@ -25,6 +25,9 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode"
 import axios from "axios";
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import ptBRLocale from '@fullcalendar/core/locales/pt-br';
 
 const BrbAgendas = () => {
 
@@ -42,9 +45,6 @@ const BrbAgendas = () => {
           const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
             withCredentials: true
           })
-           const data = {
-              agendas: res.data.agendas
-           }
            setData(data)
            console.log(data)
         } catch(error){
@@ -54,6 +54,12 @@ const BrbAgendas = () => {
     fetchData()
   }, [])
 
+  
+
+    const handleEventoClicado = (info) => {
+      // A função que será chamada quando um evento for clicado
+      console.log('Evento clicado:', info.event.title);
+    };
   
 
   return (
@@ -75,30 +81,12 @@ const BrbAgendas = () => {
 
               <Container>
                 <Row>
-                  {data && data.agendas && data.agendas.length === 0 ? (
-                    <h5 className="text-muted">Não há agendas disponíveis.</h5>
-                  ) : (
-
-                    <Card style={{ width: "18rem" }} className="border-0 shadow m-1 p-3">
-                    <Card.Body>
-                    <h5 className="fs-6">Kauan da Silva Machado</h5>
-                    <hr></hr>
-                    <h5 className="fw-bold fs-6">Corte degradê</h5>
-                    <h5 className="text-success fs-6">R$30,00</h5>
-                    <p className="fs-6">
-                      <BsClock className="fs-6 fw-bold" /> 18:00 - 02/07/23
-                    </p>
-                    <Button variant="primary px-4 py-2 agendar shadow rounded-pill mt-3 w-100">
-                      <MdFreeCancellation />
-                      Cancelar horário
-                    </Button>
-                    </Card.Body>
-                  </Card>
-                  )}
-                 
                   
-                  
-                
+                 <FullCalendar
+                 className="p-0"
+                 plugins={[dayGridPlugin]}
+                 initialView="dayGridMonth"
+                 locale={ptBRLocale}/>
                 </Row>
               </Container>
             

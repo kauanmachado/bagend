@@ -15,5 +15,10 @@ router.get('/painel-cliente/:id', authMiddleware, roleMiddleware('cliente'), cli
 })
 router.get('/painel-cliente/:id/agendas', authMiddleware, roleMiddleware('cliente'), clienteController.getAgendas)
 
+router.post('/salvar-barbearia/:id',  clienteController.salvarBarbearia)
+router.post('/agendar', clienteController.fazerAgenda)
+router.get('/painel-cliente/:id/salvos', clienteController.getSalvos)
+router.delete('/painel-cliente/salvos/:id', clienteController.deleteSalvo)
+
 
 module.exports = router

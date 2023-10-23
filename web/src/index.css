@@ -4,6 +4,10 @@
 body {
   font-family: "Inter", sans-serif !important;
   background-color: #f8f9fa !important;
+  display: flex;
+    flex-direction: column;
+    min-height: 100vh !important;
+    margin: 0;
 }
 
 :root {
@@ -18,6 +22,7 @@ body {
 .bg-brown {
   background-color: #63523D;
 }
+
 
 .bg-white {
   background-color: white;
@@ -86,4 +91,89 @@ b {
 .dropdown-toggle::after {
   content: none !important;
 }
+
+
+/* HorarioSelector.css */
+/* Estilo para o TimePicker */
+
+/* Estilo para o TimePicker input */
+.react-time-picker__inputGroup {
+  display: flex;
+  align-items: center;
+  
+}
+
+.react-time-picker__inputGroup__input {
+  flex-grow: 1;
+  border: none;
+  border-bottom: 2px solid var(--blue-strong);
+  outline: none;
+  font-size: 18px;
+  padding: 10px;
+}
+
+/* Estilo para o botão de limpar */
+.react-time-picker__inputGroup__clear-button {
+  background-color: transparent;
+  border: none;
+  color: var(--blue-strong);
+  cursor: pointer;
+}
+
+.react-time-picker__inputGroup__clear-button:hover {
+  text-decoration: underline;
+}
+
+.react-time-picker__inputGroup__leadingZero {
+  display: none;
+}
+
+/* TabelaEventos.css */
+
+/* Estilo da tabela */
+.tabela-eventos {
+  margin: 20px;
+}
+
+/* Estilo do cabeçalho dos dias da semana */
+.cabecalho-dia {
+  background-color: var(--blue-strong); 
+  color: white; 
+  text-align: center; 
+}
+
+/* Estilo dos eventos */
+.evento {
+  margin: 5px;
+  padding: 5px; 
+  background-color: #f2f2f2; 
+  border: 1px solid #ccc; 
+}
+
+.custom-datepicker input {
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+/* Estilize o calendário de datas */
+.custom-datepicker .react-datepicker {
+  font-family: Arial, sans-serif;
+}
+
+/* Estilize os dias no calendário */
+.custom-datepicker .react-datepicker__day {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+}
+
+/* Estilize os dias selecionados no calendário */
+.custom-datepicker .react-datepicker__day--selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
 

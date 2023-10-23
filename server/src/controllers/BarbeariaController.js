@@ -361,3 +361,61 @@ exports.deleteProfissional = async (req,res) => {
         console.error(`Erro ao excluir o profissional: ${error}`)
     }
 }
+
+exports.createHorarioDisponivel = async (req, res) => {
+
+    const {
+        id_barbearia,
+        dataHorario,
+        horario
+    } = req.body
+
+    const horarioExiste = await prisma.horarioDisponivel.findUnique({
+        where: {
+            dataHorario: dataHorario
+        }
+    })
+
+    if (horarioExiste) {
+        return res.status(400).json({ error: "Horário já existe." });
+    }
+
+    try {
+        const novoHorario = await prisma.HorarioDisponivel.create({
+            data: {
+                id_barbearia,
+                dataHorario,
+                horario,
+            }
+        })
+
+        return res.json(novoHorario)
+    } catch (error) {
+        console.error(`Erro ao adicionar horário: ${error}`)
+        return res.status(500).json({ error: "Erro ao adicionar horário" });
+    }
+}
+
+exports.getHorariosDisponiveis = async (req, res) => {
+    try {
+      const horarios = await prisma.HorarioDisponivel.findMany();
+      res.json(horarios);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar horários disponíveis.' });
+    }
+  };
+
+exports.deleteHorario = async (req,res) => {
+    const id = req.params.id
+
+    try {
+        const deletedHorario = await prisma.horarioDisponivel.delete({
+            where: {
+                id: id
+            }
+        })
+        return res.json(deletedHorario);
+    } catch (error) {
+        console.error(`Erro ao excluir o horario: ${error}`)
+    }
+}

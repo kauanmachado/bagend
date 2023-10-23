@@ -15,6 +15,7 @@ router.get('/painel-barbearia/:id', authMiddleware, roleMiddleware('barbearia'),
     console.log(req.barbearia)
     res.json({ msg: 'Bem-vindo, barbearia!' });
 })
+
 router.get('/perfil-barbearia/:id', BarbeariaController.getBarbearia)
 router.get('/barbearias', BarbeariaController.getAllBarbearias)
 
@@ -26,6 +27,10 @@ router.put('/painel-barbearia/atualizar-corteestilo/:id', BarbeariaController.up
 router.post('/painel-barbearia/:id/adicionar-profissional', upload.single('foto_profissional'), BarbeariaController.addProfissional)
 router.get('/painel-barbearia/:id/profissionais', BarbeariaController.getProfissional)
 router.delete('/painel-barbearia/:id/profissionais/:id', BarbeariaController.deleteProfissional)
+
+router.post('/painel-barbearia/:id/adicionar-horario', BarbeariaController.createHorarioDisponivel)
+router.get('/painel-barbearia/:id/horarios', BarbeariaController.getHorariosDisponiveis)
+router.delete('/painel-barbearia/:id/remover-horario/:id', BarbeariaController.deleteHorario)
 
 
 module.exports = router

@@ -151,20 +151,6 @@ const CadastroCliente = () => {
             <Form onSubmit={handleRegistrarCliente}>
               <Row className="justify-content-center">
                 <Col md={12}>
-                  {/* <Form.Label>E-mail</Form.Label>
-                  <InputGroup className="mb-3 shadow rounded">
-                    <InputGroup.Text id="basic-addon1">
-                      <MdAlternateEmail />
-                    </InputGroup.Text>
-                    <Form.Control
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="cliente@exemplo.com"
-                      required
-                    />
-                  </InputGroup> */}
                   <div class="form-floating mb-4">
                     <input
                       id="email"

@@ -13,17 +13,17 @@ exports.registerCliente = async (req, res) => {
     } = req.body
 
     // Validações
-    if(!nome_completo){
-        return res.status(422).json({ msg: "O seu nome é obrigatório!"})
+    if (!nome_completo) {
+        return res.status(422).json({ msg: "O seu nome é obrigatório!" })
     }
-    if(!email){
-        return res.status(422).json({ msg: "O email é obrigatório!"})
+    if (!email) {
+        return res.status(422).json({ msg: "O email é obrigatório!" })
     }
-    if(!senha){
-        return res.status(422).json({ msg: "A senha é obrigatória!"})
+    if (!senha) {
+        return res.status(422).json({ msg: "A senha é obrigatória!" })
     }
-    if(!endereco){
-        return res.status(422).json({ msg: "O endereco é obrigatório!"})
+    if (!endereco) {
+        return res.status(422).json({ msg: "O endereco é obrigatório!" })
     }
 
     //Checar se o usuário existe
@@ -33,9 +33,9 @@ exports.registerCliente = async (req, res) => {
         }
     })
 
-     if(clienteExiste){
-            return res.json({ error: "Email ja cadastrado!"})
-        }
+    if (clienteExiste) {
+        return res.json({ error: "Email ja cadastrado!" })
+    }
 
     // Criar senha
     const salt = await bcrypt.genSalt(12)
@@ -51,25 +51,25 @@ exports.registerCliente = async (req, res) => {
                 endereco
             }
         })
-        
+
 
         const chaveSecreta = process.env.SECRET; // Substitua pela sua chave secreta
         const token = jwt.sign({
             id: cliente.id,
             role: "cliente"
         }, chaveSecreta, { expiresIn: '1h' });
-        const data = {cliente, token}
+        const data = { cliente, token }
         const tokenCookie = res.cookie('token', token, { httpOnly: true, secure: true });
         console.log(tokenCookie)
 
         return res.json(data)
-        
+
 
     } catch (error) {
         res.status(400).json({ status: "error" })
     }
 
-    
+
 
 }
 
@@ -77,11 +77,11 @@ exports.loginCliente = async (req, res) => {
     const { email, senha } = req.body
 
     //Validações
-    if(!email){
-        return res.status(422).json({ msg: "O email é obrigatório!"})
+    if (!email) {
+        return res.status(422).json({ msg: "O email é obrigatório!" })
     }
-    if(!senha){
-        return res.status(422).json({ msg: "A senha é obrigatória!"})
+    if (!senha) {
+        return res.status(422).json({ msg: "A senha é obrigatória!" })
     }
 
     const cliente = await prisma.Cliente.findUnique({
@@ -90,15 +90,15 @@ exports.loginCliente = async (req, res) => {
         }
     })
 
-    if(!cliente) {
-        return res.status(404).json({ msg: "Usuario não encontrado!"})
+    if (!cliente) {
+        return res.status(404).json({ msg: "Usuario não encontrado!" })
     }
 
     // Checar se as senhas conferem
     const checarSenha = await bcrypt.compare(senha, cliente.senha)
 
-    if(!checarSenha){
-        return res.status(422).json({ msg: "Senhas inválida!"})
+    if (!checarSenha) {
+        return res.status(422).json({ msg: "Senhas inválida!" })
     }
 
     try {
@@ -109,7 +109,7 @@ exports.loginCliente = async (req, res) => {
             role: "cliente"
         }, secret)
 
-        res.status(200).json({ msg: "Autenticação realizada com sucesso", token})
+        res.status(200).json({ msg: "Autenticação realizada com sucesso", token })
     } catch (error) {
         res.status(400).json({ msg: error.message })
     }
@@ -141,5 +141,124 @@ exports.getAgendas = async (req, res) => {
         return res.json(agendas)
     } catch {
         console.error(`Erro ao buscar agendas: ${error}`)
+    }
+}
+
+exports.salvarBarbearia = async (req, res) => {
+    const idCliente = req.params.id
+
+    const {
+        id,
+        idBarbearia,
+    } = req.body
+
+    try {
+        const existeSalvo = await prisma.salvo.findFirst({
+            where: {
+                id_cliente: idCliente,
+                id_barbearia: idBarbearia,
+            },
+        });
+
+        if(existeSalvo) {
+            const updatedSalvo = await prisma.salvo.update({
+                where: {
+                    id: existeSalvo.id,
+                },
+                data: {
+                    data: new Date()
+                }
+            })
+            return res.json(updatedSalvo)
+        } else {
+            const barbeariaSalva = await prisma.salvo.create({
+                data: {    
+                    id,
+                    cliente: {
+                        connect: { id: idCliente } 
+                    },
+                    barbearia: {
+                        connect: { id: idBarbearia}
+                    },
+                    data: new Date()
+                }
+            })
+            res.json(barbeariaSalva)
+        }      
+    } catch (error) {
+        console.error(`Erro ao salvar barbearia: ${error}`)
+    }
+}
+
+exports.getSalvos = async (req, res) => {
+    try {
+        const salvos = await prisma.salvo.findMany()
+        if (!salvos || salvos.length === 0) {
+            return res.status(404).json({ error: 'Nenhum registro encontrado' });
+        }
+        const barbearias = await Promise.all(
+            salvos.map(async (salvo) => {
+                const idBarbearia = salvo.id_barbearia
+                const barbearia = await prisma.barbearia.findUnique({
+                    where: {
+                        id: idBarbearia
+                    },
+                    select: {
+                        id: true,
+                        nome_barbearia: true,
+                        endereco: true,
+                        telefone: true,
+                        link_instagram: true
+                    }
+                })
+                barbearia.idSalvo = salvo.id;
+                return barbearia;
+            })
+        )
+        res.json(barbearias)
+    } catch (error) {
+        console.error(`Erro ao buscar as barbearias salvas: ${error}`)
+    }
+}
+
+exports.deleteSalvo = async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const deletedSalvo = await prisma.salvo.delete({
+            where: {
+                id: id
+            }
+        })
+        return res.json(deletedSalvo)
+    } catch (error) {
+        console.error(`Erro ao deletar barbearia salva: ${error}`)
+    }
+}
+
+
+exports.fazerAgenda = async () => {
+    const {
+       idCliente,
+       idBarbearia,
+       idCorteestilo,
+       idProfissional,
+       data
+    } = req.body
+
+    try {
+        const agenda = await prisma.agenda.create({
+            data: {
+                id,
+                id_cliente: idCliente,
+                id_barbearia: idBarbearia,
+                id_corteestilo: idCorteestilo,
+                id_profissional: idProfissional,
+                data: data
+            }
+        })
+        res.json(agenda)
+    } catch (error) {
+        console.error(`Erro ao fazer agendamento: ${error}`)
     }
 }

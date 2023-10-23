@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <>
       <footer className="shadow">
-        <Container fluid className="bg-dark shadow ">
+        <Container fluid className="bg-dark shadow">
         <Container className="p-5 bg-dark">
           <Row className="justify-content-center">
             <Col md={6}>

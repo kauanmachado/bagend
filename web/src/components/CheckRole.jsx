@@ -5,7 +5,6 @@ const CheckRole = () => {
     const token = Cookies.get('token')
 
     if (!token) {
-        console.log("Você não possui nenhum token")
         return null
     }
 

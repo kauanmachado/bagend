@@ -36,20 +36,25 @@ model Barbearia {
   link_instagram String
 
   agendas Agenda[]
+  horarios HorarioDisponivel[]
   cortesestilos CortesEstilos[]
   profissionais Profissional[]
   avaliacoes Avaliacao[]
+  salvos Salvo[]
 }
 
 model Agenda {
   id String @id @default(uuid())
   id_cliente String
   id_barbearia String
-  corte String
+  id_corteestilo String
+  id_profissional String
   data_horario DateTime
 
   cliente Cliente @relation(fields: [id_cliente], references: [id])
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+  cortesestilos CortesEstilos @relation(fields: [id_corteestilo], references: [id])
+  profissional Profissional @relation(fields: [id_profissional], references: [id])
 
 }
 
@@ -60,7 +65,7 @@ model CortesEstilos {
   tempo_estimado String
   preco Float
   
-
+  agendas Agenda[]
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
 }
 
@@ -70,6 +75,7 @@ model Profissional {
   nome_profissional String
   foto_profissional String
 
+  agendas Agenda[]
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
 }
 
@@ -87,8 +93,18 @@ model Avaliacao {
 model Salvo {
   id String @id @default(uuid())
   id_cliente String
-  nome_barbearia String
-  endereco_barbearia String
+  id_barbearia String
+  data DateTime
 
   cliente Cliente @relation(fields: [id_cliente], references: [id])
+  barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+}
+
+model HorarioDisponivel {
+  id String @id @default(uuid())
+  id_barbearia String
+  dataHorario String @unique
+  horario String
+
+  barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
 }

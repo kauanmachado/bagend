@@ -113,7 +113,7 @@ const CortesEstilos = () => {
                 <Row>
 
                   {cortesEstilos.length === 0 ? (
-                    <h5 className="text-muted mt-4">Não há nenhum corte ou estilo registrado.</h5>
+                    <h5 className="text-muted mt-4 p-0">Não há nenhum corte ou estilo registrado.</h5>
                   ) : (
                     cortesEstilos.map((corteEstilo) => (
                       <Card
@@ -131,7 +131,7 @@ const CortesEstilos = () => {
                             <MdFreeCancellation />
                             Remover
                           </Button>
-                          <Link to={`./editar-corteestilo/${corteEstilo.id}`}>
+                          <Link to={`./editar-corteestilo/${corteEstilo.id}`} className="mx-auto">
                             <Button className="bg-dark px-4 py-2  btnDark shadow rounded-pill w-100">
                               <AiOutlineEdit />
                               Alterar

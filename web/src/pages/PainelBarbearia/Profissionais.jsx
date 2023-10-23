@@ -20,6 +20,7 @@ const Profissionais = () => {
 
   const [profissionais, setProfissionais] = useState([]);
   const [deletedProfissional, setDeletedProfissional] = useState(null)
+  
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
   // console.log(decodedToken)

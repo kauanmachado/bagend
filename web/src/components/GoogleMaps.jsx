@@ -7,12 +7,21 @@ import Geocode from "react-geocode";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineInstagram, AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
 import { createRoot } from "react-dom/client";
-import { FaMapMarkerAlt} from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
+import { BsBookmark } from "react-icons/bs";
+import { BsFillPinMapFill } from "react-icons/bs";
+import { SlScreenSmartphone } from "react-icons/sl";
+import CheckRole from "./CheckRole";
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode"
+import ScrollToTop from "./ScrollToTop";
+import { Toast } from "react-bootstrap";
+import { RiCheckboxCircleFill } from "react-icons/ri";
 
 Geocode.setLanguage("pt");
 Geocode.setRegion("br");
@@ -21,6 +30,16 @@ Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
 const GoogleMaps = () => {
+
+
+  const token = Cookies.get('token')
+  let id
+  if(token) {
+    const decodedToken = jwt_decode(token)
+    id = decodedToken.id
+  }
+  
+
   const containerStyle = {
     width: "100%",
     height: "600px",
@@ -83,17 +102,14 @@ const GoogleMaps = () => {
     async function fetchData() {
       try {
         const res = await axios.get(`${apiUrl}/barbearias`,)
-        console.log(res.data)
-
         const convertedData = res.data.map((barbearia) => {
           return {
-          ...barbearia,
-          imagemUrl: `${apiUrl}/${barbearia.foto_perfil}`,
-          lat: parseFloat(barbearia.lat),
-          lng: parseFloat(barbearia.lng)
-        }
+            ...barbearia,
+            imagemUrl: `${apiUrl}/${barbearia.foto_perfil}`,
+            lat: parseFloat(barbearia.lat),
+            lng: parseFloat(barbearia.lng)
+          }
         })
-        console.log(res.data)
         setLocations(convertedData)
       } catch (error) {
         console.error(error)
@@ -102,7 +118,29 @@ const GoogleMaps = () => {
     fetchData()
   }, [])
 
+  const [toastCheck, setToastCheck] = useState(false);
 
+  const exibirToastCheck = () => {
+    setToastCheck(true);
+
+    setTimeout(() => {
+      setToastCheck(false);
+    }, 3000);
+  };
+
+  const handleSalvar = async (idBarbearia) => {
+    try {
+      const res = await axios.post(`${apiUrl}/salvar-barbearia/${id}`, {
+        idBarbearia: idBarbearia
+      })
+      ScrollToTop()
+      exibirToastCheck()
+    } catch (error) {
+      console.error(`Erro ao salvar barbearia ${error}`)
+    }
+  }
+
+  const role = CheckRole()
 
   return isLoaded ? (
     <>
@@ -114,9 +152,10 @@ const GoogleMaps = () => {
           <p className="text-secondary">
             Procure barbearias de forma fácil e rápida e faça seu agendamento
           </p>
+          
 
           <Form onSubmit={buscarEndereco}>
-            <div class="form-floating mb-4">
+            <div className="form-floating mb-4">
               <input
                 type="text"
                 name="endereco"
@@ -130,7 +169,7 @@ const GoogleMaps = () => {
                 autoComplete="email"
                 className="form-control shadow"
               />
-              <label for="floatingInput" className="text-secondary">
+              <label htmlFor="floatingInput" className="text-secondary">
                 <AiOutlineSearch className="fs-3 me-2" />
                 Digite o endereço da barbearia
               </label>
@@ -140,7 +179,18 @@ const GoogleMaps = () => {
       </Container>
       <Container className="mt-4" fluid>
         <Row className="justify-content-center">
+        
           <Col md={12}>
+          <Toast
+            show={toastCheck}
+            onClose={() => setToastCheck(false)}
+            className="position-absolute top-0 start-50 translate-middle-x toastEmail bg-success text-white mt-5"
+          >
+            <Toast.Body>
+              <RiCheckboxCircleFill className="me-2" />
+              Barbearia salva com sucesso!
+            </Toast.Body>
+          </Toast>
             <GoogleMap
               id="map"
               className="mb-5"
@@ -172,31 +222,56 @@ const GoogleMaps = () => {
                 ],
               }}
             >
+              
               {
                 locations.map((location) => (
-                  <MarkerF 
-                  key={location.id} 
-                  position={{ lat: location.lat, lng: location.lng }}
-                  onClick={() => handleActiveMarker(location.id)}
-                  icon={
-                    <FaMapMarkerAlt/>
-                  }
+                  <MarkerF
+                    key={location.id}
+                    position={{ lat: location.lat, lng: location.lng }}
+                    onClick={() => handleActiveMarker(location.id)}
+                    
                   >
                     {
                       activeMarker === location.id ? <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
                         <div className="p-4 d-flex-column justify-content-center">
-                          <img src={location.imagemUrl} className="rounded infoWindowImage mb-3" />
-                          <h6 className="fw-bold">{location.nome_barbearia}</h6>
-                          <p className="text-secondary">{location.endereco}</p>
-                          <div className="d-flex">
-                            <Link to={`perfil-barbearia/${location.id}`}>
-                            <Button className="bg-white px-4 py-2 agendar shadow rounded-pill me-2 float-end text-primary">
-                              Ver perfil
-                            </Button>
+                          <img src={location.imagemUrl} className="rounded infoWindowImage mb-2" />
+                          <h5 className="fw-bold mb-3">{location.nome_barbearia}</h5>
+                          <p className="text-secondary">
+                            <BsFillPinMapFill className="fs-4 me-2 text-dark" />{location.endereco}</p>
+                          <p className="text-secondary">
+                            <SlScreenSmartphone className="fs-4 me-2 text-dark" />{location.telefone}</p>
+                          <p className="text-secondary">
+                            <AiOutlineInstagram className="fs-4 me-2 text-dark" />{location.link_instagram}</p>
+                          <div className="d-flex flex-column justify-content-center">
+                            <Link to="">
+                              <u><p className="fs-6 fw-bold">Ver avaliações</p></u>
                             </Link>
-                            <Button className="primary px-4 py-2 agendar shadow rounded-pill  float-end">
-                              Agendar
-                            </Button>
+
+
+                            {role === "cliente" ?
+                              <>
+                                <Link to="">
+                                  <Button className="primary py-2 agendar shadow rounded-pill w-100 mb-2">
+                                    Agendar
+                                  </Button>
+                                </Link>
+                                <Button onClick={() => handleSalvar(location.id)}className="bg-white py-2 agendar shadow rounded-pill w-100 text-primary">
+                                  Adicionar aos salvos
+                                </Button>
+                              </>
+                              : role === "barbearia" ?
+                                null
+                                :
+                                <Link to="/login-cliente">
+                                  <Button className="primary py-2 agendar shadow rounded-pill w-100 mb-2">
+                                    Agendar
+                                  </Button>
+                                  <Button className="bg-white py-2 agendar shadow rounded-pill w-100 text-primary">
+                                    Adicionar aos salvos
+                                  </Button>
+                                </Link>}
+
+
                           </div>
                         </div>
                       </InfoWindowF> : null
@@ -210,7 +285,7 @@ const GoogleMaps = () => {
       </Container>
     </>
   ) : (
-    <Loading/>
+    <Loading />
   );
 };
 

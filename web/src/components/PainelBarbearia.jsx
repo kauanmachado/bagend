@@ -3,7 +3,7 @@ import {
   Navbar,
 } from "react-bootstrap";
 import { AiOutlineSchedule } from "react-icons/ai";
-import { BsScissors } from "react-icons/bs";
+import { BsClockHistory, BsScissors } from "react-icons/bs";
 import { RiEditBoxFill, RiMenu2Fill } from "react-icons/ri";
 import {  Link, useNavigate } from "react-router-dom";
 import { MdBusinessCenter, MdOutlineForum } from "react-icons/md";
@@ -65,7 +65,7 @@ const PainelBarbearia = () => {
                 height="40"
                 className="rounded-circle "
               />
-              <span className="ms-2 mt-2 fw-bold">{data.nome_barbearia}</span>
+              <span className="ms-2 mt-2 fw-bold text-capitalize">{data.nome_barbearia}</span>
             </a>
             <hr className="text-secondary" />
             <ul className="nav nav-pills flex-column">
@@ -90,6 +90,15 @@ const PainelBarbearia = () => {
               </li>
               <li className="nav-item  fs-4 my-1">
                 <Link
+                  to="../painel-barbearia/horarios"
+                  className="nav-link text-secondary fs-5"
+                >
+                  <BsClockHistory />
+                  <span className="ms-3 ">Horarios Disponíveis</span>
+                </Link>
+              </li>
+              <li className="nav-item  fs-4 my-1">
+                <Link
                   to="../painel-barbearia/cortes-estilos"
                   className="nav-link text-secondary fs-5"
                 >
@@ -106,15 +115,7 @@ const PainelBarbearia = () => {
                   <span className="ms-3 ">Profissionais</span>
                 </Link>
               </li>
-              <li className="nav-item  fs-4 my-1">
-                <Link
-                  to="../painel-barbearia/avaliacoes"
-                  className="nav-link text-secondary fs-5"
-                >
-                  <MdOutlineForum />
-                  <span className="ms-3 ">Avaliações</span>
-                </Link>
-              </li>
+              
               <li className="nav-item fs-4 my-1">
                 <Link
                   to="../painel-barbearia/alterar-dados"

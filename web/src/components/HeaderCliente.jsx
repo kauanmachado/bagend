@@ -11,6 +11,7 @@ import { Dropdown } from "react-bootstrap";
 import Cookies from "js-cookie";
 import { MdNotifications } from "react-icons/md";
 import Logout from "./Logout";
+import { FaUserCircle } from "react-icons/fa";
 
 const HeaderCliente = () => {
 
@@ -57,8 +58,8 @@ const HeaderCliente = () => {
               <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
               
               </Dropdown.Toggle>
-            <Link to="/painel-cliente" className="fw-bold me-3 text-dark">
-              Meu painel
+            <Link to="/painel-cliente" className="fw-bold me-1 text-dark">
+              <FaUserCircle className="fs-2"/>
             </Link>
             <Logout />
           </Navbar.Collapse>

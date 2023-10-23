@@ -22,9 +22,9 @@ import CliGeral from "./pages/PainelCliente/CliGeral";
 import CliAgendas from "./pages/PainelCliente/CliAgendas";
 import CliEditarDados from "./pages/PainelCliente/CliEditarDados";
 import Cookies from "js-cookie";
-import Agenda from "./pages/Agenda";
+import Agenda from "./pages/Agendamento/Agenda";
 import Profissionais from "./pages/PainelBarbearia/Profissionais";
-import Avaliacoes from "./pages/PainelBarbearia/Avaliacoes";
+import Horarios from "./pages/PainelBarbearia/Horarios";
 import CliSalvos from "./pages/PainelCliente/CliSalvos";
 import EditarCorteEstilo from "./pages/PainelBarbearia/EditarCorteEstilo";
 import PerfilBarbearia from "./pages/PerfilBarbearia";
@@ -32,6 +32,7 @@ import Avaliar from "./pages/Avaliar";
 import RedefinirSenha from "./pages/RedefinirSenha";
 import jwt_decode from "jwt-decode"
 import AdicionarProfissional from "./pages/PainelBarbearia/AdicionarProfissional";
+import AdicionarHorarios from "./pages/PainelBarbearia/AdicionarHorarios";
 
 
 
@@ -140,8 +141,11 @@ const Routers = () => {
         <Route path="painel-barbearia/profissionais/adicionar-profissional" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <AdicionarProfissional />
         </PrivateRouteBarber>} />
-        <Route path="painel-barbearia/avaliacoes" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
-          <Avaliacoes />
+        <Route path="painel-barbearia/horarios" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <Horarios />
+        </PrivateRouteBarber>} />
+        <Route path="painel-barbearia/horarios/adicionar-horarios" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+          <AdicionarHorarios />
         </PrivateRouteBarber>} />
         {/* <Route path="perfil-barbearia" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <PerfilBarbearia />

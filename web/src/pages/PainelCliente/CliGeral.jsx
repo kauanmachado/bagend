@@ -68,14 +68,14 @@ const CliGeral = () => {
               <MdPerson className="fs-2 text-secondary ms-1" />
               <h3 className="fw-bold mb-5 text-secondary ms-3">Visão Geral</h3>
             </div>
-            <p>
-              <MdPerson /> {data.nomecompleto}
+            <p className="text-capitalize">
+              <MdPerson className="fs-2"/> {data.nomecompleto}
             </p>
-            <p>
-              <MdOutlineAlternateEmail /> {data.email}
+            <p className="">
+              <MdOutlineAlternateEmail className="fs-2"/> {data.email}
             </p>
-            <p>
-              <MdPersonPinCircle /> {data.endereco}
+            <p className="text-capitalize">
+              <MdPersonPinCircle className="fs-2"/> {data.endereco}
             </p>
           </Col>
         </Row>
