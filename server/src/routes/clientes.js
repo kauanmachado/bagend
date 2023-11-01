@@ -13,7 +13,9 @@ router.post('/login-cliente', clienteController.loginCliente)
 router.get('/painel-cliente/:id', authMiddleware, roleMiddleware('cliente'), clienteController.getCliente, (req, res) => {
     res.json({ msg: 'Bem-vindo, cliente!'})
 })
+router.put('/painel-cliente/:id', clienteController.updateCliente)
 router.get('/painel-cliente/:id/agendas', authMiddleware, roleMiddleware('cliente'), clienteController.getAgendas)
+router.get('/perfil')
 
 router.post('/salvar-barbearia/:id',  clienteController.salvarBarbearia)
 router.post('/agendar', clienteController.fazerAgenda)

@@ -176,4 +176,12 @@ b {
   color: #fff;
 }
 
+.btn-prev {
+  background-color: #f8f9fa !important;
+}
+
+.btn-prev:hover {
+  background-color: #f0f0f0 !important;
+}
+
 

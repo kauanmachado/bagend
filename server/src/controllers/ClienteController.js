@@ -10,6 +10,8 @@ exports.registerCliente = async (req, res) => {
         email,
         senha,
         endereco,
+        lat,
+        lng
     } = req.body
 
     // Validações
@@ -48,7 +50,9 @@ exports.registerCliente = async (req, res) => {
                 nome_completo,
                 email,
                 senha: senhaHash,
-                endereco
+                endereco,
+                lat,
+                lng
             }
         })
 
@@ -260,5 +264,87 @@ exports.fazerAgenda = async () => {
         res.json(agenda)
     } catch (error) {
         console.error(`Erro ao fazer agendamento: ${error}`)
+    }
+}
+
+exports.getBarbearia = async (req, res) => {
+    const id = req.params.id;
+
+    const barbearia = await prisma.barbearia.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            agendas: true,
+            cortesestilos: true,
+            profissionais: true,
+            avaliacoes: true
+        }
+    })
+    const imagemUrl = `/uploads/${barbearia.foto_perfil}`;
+        const barbeariaComImagem = {
+            ...barbearia,
+            imagemUrl
+        };
+    if (!barbeariaComImagem) {
+        return res.status(404).json({ msg: 'Barbearia não encontrado' });
+    }
+    return res.json(barbeariaComImagem);
+}
+
+exports.createAgenda = async (req, res) => {
+
+    const {
+        id_cliente,
+        id_barbearia,
+        id_datahorario,
+        id_corteestilo,
+        id_profissional
+    } = req.body
+
+    try {
+
+    } catch (error) {
+
+    }
+}
+
+exports.updateCliente = async (req, res) => {
+    const { id } = req.params
+
+    const {
+        nome_completo,
+        email,
+        senha,
+        endereco
+    } = req.body
+
+    const salt = await bcrypt.genSalt(12)
+    const senhaHash = await bcrypt.hash(senha, salt)
+
+    try {
+        const cliente = await prisma.cliente.findUnique({
+            where: { id: id }
+          });
+
+        if(!cliente){
+            return res.status(404).json({ error: 'Cliente não encontrado' });
+        }
+
+        const uptadedCliente = await prisma.cliente.update({
+            where: {
+                id: id
+            },
+            data: {
+               nome_completo,
+               email,
+               senha: senhaHash,
+               endereco
+            }
+        })
+        return res.json(uptadedCliente)
+
+    } catch(error) {
+        console.error(`Erro ao atualizar o cliente: ${error}`)
     }
 }

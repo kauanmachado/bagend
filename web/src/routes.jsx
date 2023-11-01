@@ -157,7 +157,9 @@ const Routers = () => {
         {/* ROTAS PÚBLICAS */}
         <Route path="/redefinir-senha" element={<RedefinirSenha />} /> 
         <Route path="/barbearias" element={<Barbearias />} /> 
-        <Route path="/agenda" element={<Agenda/>} />   
+        <Route path="/agenda/:id" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
+          <Agenda/>
+        </PrivateRouteClient>} />   
         <Route path="barbearias/perfil-barbearia/:id" element={<PerfilBarbearia/>} />   
       </Routes>
     </BrowserRouter>

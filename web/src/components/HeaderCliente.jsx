@@ -46,18 +46,7 @@ const HeaderCliente = () => {
             </Nav>
 
             <br />
-            <Dropdown className="me-2">
-              <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
-                <MdNotifications className="text-secondary"/>
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu className="shadow border-0 mt-2 p-4">
-                <p className="text-secondary fs-6">Não há notificações para você</p>
-              </Dropdown.Menu>
-            </Dropdown>
-              <Dropdown.Toggle className="bg-light text-dark fw-bold m-0 p-0" id="dropdown-basic">
-              
-              </Dropdown.Toggle>
+            
             <Link to="/painel-cliente" className="fw-bold me-1 text-dark">
               <FaUserCircle className="fs-2"/>
             </Link>

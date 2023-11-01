@@ -141,10 +141,7 @@ const LoginBarbearia = () => {
                   </div>
                 </Col>
 
-                <p className="mt-0 textP text-secondary mb-5">
-                  Esqueceu sua senha?
-                  <Link to="/cadastro-cliente"> Clique aqui</Link>
-                </p>
+              
                 <Button
                   variant="primary rounded-pill px-5 py-3 mt-3 shadow mx-0 w-100"
                   type="submit"

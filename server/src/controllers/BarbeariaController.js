@@ -158,6 +158,102 @@ exports.loginBarbearia = async (req, res) => {
     }
 }
 
+exports.updateBarbearia = async (req, res) => {
+    const { id } = req.params
+
+    const {
+        nome_barbearia,
+        email,
+        cnpj,
+        senha,
+        endereco,
+        lat,
+        lng,
+        foto_perfil,
+        telefone,
+        link_instagram
+    } = req.body
+
+    if (!nome_barbearia) {
+        return res.status(422).json({ msg: "O nome da barbearia é obrigatório!" })
+    }
+    if (!email) {
+        return res.status(422).json({ msg: "O email é obrigatório!" })
+    }
+    if (!cnpj) {
+        return res.status(422).json({ msg: "O CNPJ é obrigatório!" })
+    }
+    if (!senha) {
+        return res.status(422).json({ msg: "A senha é obrigatória!" })
+    }
+    if (!endereco) {
+        return res.status(422).json({ msg: "O endereco é obrigatório!" })
+    }
+    if (!lat) {
+        return res.status(422).json({ msg: "A latitude é obrigatória!" })
+    }
+    if (!lng) {
+        return res.status(422).json({ msg: "A longitude é obrigatória!" })
+    }
+    if (!telefone) {
+        return res.status(422).json({ msg: "O telefone é obrigatório!" })
+    }
+    
+        const barbeariaCnpjExiste = await prisma.Barbearia.findUnique({
+            where: {
+                cnpj: cnpj
+            }
+        })
+        
+    
+        
+    
+        if (barbeariaCnpjExiste) {
+            return res.status(422).json({ msg: "CNPJ ja cadastrado!" })
+        }
+
+        const salt = await bcrypt.genSalt(12)
+        const senhaHash = await bcrypt.hash(senha, salt)
+
+    try {
+        
+        const existingBarbearia = await prisma.barbearia.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!existingBarbearia) {
+            return res.status(404).json({ msg: "Barbearia não encontrada." });
+        }
+    
+        
+
+        const updatedBarbearia = await prisma.barbearia.update({
+            where: {
+                id: id
+            },
+            data: {
+                nome_barbearia,
+                email,
+                cnpj,
+                senha: senhaHash,
+                endereco,
+                lat,
+                lng,
+                foto_perfil,
+                telefone,
+                link_instagram
+            }
+        })
+
+        return res.json(updatedBarbearia)
+
+    } catch (error) {
+        console.error(`Erro ao atualizar dados da barbearia ${error}`)
+    }
+}
+
 exports.getBarbearia = async (req, res) => {
     const id = req.params.id;
 
@@ -169,7 +265,7 @@ exports.getBarbearia = async (req, res) => {
             agendas: true,
             cortesestilos: true,
             profissionais: true,
-            avaliacoes: true
+            horarios: true
         }
     })
     const imagemUrl = `/uploads/${barbearia.foto_perfil}`;
@@ -399,11 +495,11 @@ exports.createHorarioDisponivel = async (req, res) => {
 exports.getHorariosDisponiveis = async (req, res) => {
     try {
       const horarios = await prisma.HorarioDisponivel.findMany();
-      res.json(horarios);
+      return res.json(horarios);
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao buscar horários disponíveis.' });
+      return res.status(500).json({ error: 'Erro ao buscar horários disponíveis.' });
     }
-  };
+  }
 
 exports.deleteHorario = async (req,res) => {
     const id = req.params.id
@@ -419,3 +515,14 @@ exports.deleteHorario = async (req,res) => {
         console.error(`Erro ao excluir o horario: ${error}`)
     }
 }
+
+exports.getAgendas = async (req, res) => {
+    try {
+        const agendas = await prisma.agenda.findMany()
+        return res.json(agendas)
+      } catch (error) {
+        return res.status(500).json({ error: 'Erro ao buscar agendas.' });
+      }
+}
+
+

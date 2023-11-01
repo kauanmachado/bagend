@@ -16,9 +16,10 @@ model Cliente {
   email String @unique
   senha String 
   endereco String
+  lat String
+  lng String
 
   agendas Agenda[]
-  avaliacoes Avaliacao[]
   salvos Salvo[]
 }
 
@@ -39,7 +40,6 @@ model Barbearia {
   horarios HorarioDisponivel[]
   cortesestilos CortesEstilos[]
   profissionais Profissional[]
-  avaliacoes Avaliacao[]
   salvos Salvo[]
 }
 
@@ -49,7 +49,7 @@ model Agenda {
   id_barbearia String
   id_corteestilo String
   id_profissional String
-  data_horario DateTime
+  id_datahorario String
 
   cliente Cliente @relation(fields: [id_cliente], references: [id])
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
@@ -79,16 +79,6 @@ model Profissional {
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
 }
 
-model Avaliacao {
-  id String @id @default(uuid())
-  id_barbearia String
-  id_cliente String
-  comentario String
-  nota Int
-
-  barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
-  cliente Cliente @relation(fields: [id_cliente], references: [id])
-}
 
 model Salvo {
   id String @id @default(uuid())

@@ -12,7 +12,6 @@ import { useState } from "react";
 import MediaPicker from "../components/MediaPicker";
 import SelectCidadeEstado from "../components/SelectCidadeEstado";
 import axios from "axios";
-import { error } from "jquery";
 import Cookies from "js-cookie";
 
 const CadastroBarbearia = () => {

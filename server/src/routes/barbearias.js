@@ -15,7 +15,7 @@ router.get('/painel-barbearia/:id', authMiddleware, roleMiddleware('barbearia'),
     console.log(req.barbearia)
     res.json({ msg: 'Bem-vindo, barbearia!' });
 })
-
+router.put('/painel-barbearia/:id', upload.single('foto_perfil'), BarbeariaController.updateBarbearia)
 router.get('/perfil-barbearia/:id', BarbeariaController.getBarbearia)
 router.get('/barbearias', BarbeariaController.getAllBarbearias)
 

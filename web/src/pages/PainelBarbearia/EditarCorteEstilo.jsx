@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 
 const EditarCorteEstilo = () => {
   const { id } = useParams()
-  console.log(id)
   const navigate = useNavigate()
 
   const [nomeCorte, setNomeCorte] = useState(null)

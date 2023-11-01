@@ -7,59 +7,66 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdPerson, MdAlternateEmail } from "react-icons/md";
-import { RiEditBoxFill, RiLockPasswordFill } from "react-icons/ri";
+import { RiEditBoxFill, RiErrorWarningFill, RiLockPasswordFill } from "react-icons/ri";
 import HeaderCliente from "../../components/HeaderCliente";
 import PainelCliente from "../../components/PainelCliente";
 import { useState } from "react";
 import { HiUser } from "react-icons/hi";
 import { BsFillPinMapFill } from "react-icons/bs";
+import axios from "axios";
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode"
+import { Toast } from "react-bootstrap";
+import ScrollToTop from "../../components/ScrollToTop";
 
 const CliEditarDados = () => {
 
-  const [email, setEmail] = useState("");
-  const [nome, setNome] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmSenha, setConfirmSenha] = useState("");
-  const [endereco, setEndereco] = useState("");
+  const [email, setEmail] = useState("")
+  const [nome, setNome] = useState("")
+  const [senha, setSenha] = useState("")
+  const [toastSenha, setToastSenha] = useState(false)
+  const [confirmSenha, setConfirmSenha] = useState("")
+  const [endereco, setEndereco] = useState("")
 
-  const handleRegistrarCliente = async (e) => {
+  const navigate = useNavigate()
+  const token = Cookies.get('token')
+  const decodedToken = jwt_decode(token)
+  const id = decodedToken.id
+
+  const apiUrl = "http://localhost:8001"
+
+  const exibirToastSenha = () => {
+    setToastSenha(true)
+
+    setTimeout(() => {
+      setToastSenha(false)
+    }, 3000)
+  }
+
+  const handleUpdate = async (e) => {
+
     e.preventDefault();
 
     if (senha !== confirmSenha) {
-      setSenha("");
-      setConfirmSenha("");
-      throw exibirToastSenha();
+      setSenha("")
+      setConfirmSenha("")
+      throw exibirToastSenha()
     }
 
-    await axios
-      .post("http://localhost:8001/cadastrar-cliente", {
+    try {
+      const res = await axios.put(`${apiUrl}/painel-cliente/${id}`, {
         nome_completo: nome,
         email: email,
         senha: senha,
-        endereco: endereco,
+        endereco: endereco
       })
-
-      .then((response) => {
-        console.log(response.data);
-
-        const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
-
-        if (response.data.error) {
-          exibirToastErro();
-          setEmail("");
-        } else {
-          exibirToastCheck();
-          const token = response.data.token;
-          Cookies.set("token", token, { expires: cookieExpiresInSeconds });
-          setTimeout(() => {
-            navigate("/barbearias");
-          }, 2000);
-        }
-      })
-
-      .catch((error) => alert("Erro ao cadastrar: ", error));
+      ScrollToTop()
+      console.log(res)
+    } catch (error) {
+      console.error(`Erro ao atualizar seus dados: ${error}`)
+    }
   };
 
 
@@ -69,6 +76,16 @@ const CliEditarDados = () => {
     <>
       <HeaderCliente/>
       <Container className="default-margin">
+      <Toast
+            show={toastSenha}
+            onClose={() => setToastSenha(false)}
+            className="position-absolute toastEmail bg-danger text-white"
+          >
+            <Toast.Body>
+              <RiErrorWarningFill className="me-2" />
+              Senhas não conferem!
+            </Toast.Body>
+          </Toast>
         <Row className="shadow rounded bg-white">
           <Col
             md={3}
@@ -82,13 +99,10 @@ const CliEditarDados = () => {
               <RiEditBoxFill className="fs-2 text-secondary ms-1" />
               <h3 className="fw-bold text-secondary ms-3">Alterar dados</h3>
             </div>
-            <p className="textP text-secondary mb-5">
-              Deseja redefinir sua senha?{" "}
-              <Link to="/login-cliente">Clique aqui</Link>
-            </p>
+    
             <Container>
               <Row>
-                <Form onSubmit={handleRegistrarCliente}>
+                <Form onSubmit={handleUpdate}>
                     <Col md={8}>
                       <div class="form-floating mb-4">
                         <input

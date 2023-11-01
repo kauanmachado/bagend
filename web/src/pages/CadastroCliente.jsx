@@ -22,6 +22,7 @@ import axios from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { BsFillPinMapFill } from "react-icons/bs";
+import Geocode from "react-geocode";
 
 const CadastroCliente = () => {
   const navigate = useNavigate();
@@ -65,15 +66,33 @@ const CadastroCliente = () => {
     }, 3000);
   };
 
-  const handleRegistrarCliente = async (e, response) => {
-    e.preventDefault();
+  
+
+  const handleRegistrarCliente = async (e) => {
+    e.preventDefault()
     const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
     if (senha !== confirmSenha) {
-      scrollToTop();
-      setSenha("");
-      setConfirmSenha("");
-      throw exibirToastSenha();
+      scrollToTop()
+      setSenha("")
+      setConfirmSenha("")
+      throw exibirToastSenha()
     }
+
+    const obterLatELng = async (endereco) => {
+      try {
+        const response = await Geocode.fromAddress(endereco)
+        const { lat, lng } = response.results[0].geometry.location
+  
+        console.log(endereco)
+        console.log(lat.toString(), lng.toString())
+  
+        return { lat: lat.toString(), lng: lng.toString() }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  
+    const { lat, lng } = await obterLatELng(endereco)
 
 
     try {
@@ -83,6 +102,8 @@ const CadastroCliente = () => {
         email: email,
         senha: senha,
         endereco: endereco,
+        lat: lat,
+        lng: lng
       }).then((response) => {
         scrollToTop();
         exibirToastCheck();
@@ -97,6 +118,7 @@ const CadastroCliente = () => {
 
       catch(error) {
         if (error.response.data) {
+          console.log(error)
           scrollToTop();
           exibirToastErro();
           setEmail("");

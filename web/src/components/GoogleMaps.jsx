@@ -31,7 +31,8 @@ Geocode.enableDebug();
 
 const GoogleMaps = () => {
 
-
+  const apiUrl = "http://localhost:8001"
+  const role = CheckRole()
   const token = Cookies.get('token')
   let id
   if(token) {
@@ -46,8 +47,80 @@ const GoogleMaps = () => {
   };
 
 
+  let lat = 0
+  let lng = 0
 
   const [center, setCenter] = useState({ lat: -30.030775, lng: -51.227831 })
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get(`${apiUrl}/barbearias`,)
+        const convertedData = res.data.map((barbearia) => {
+          return {
+            ...barbearia,
+            imagemUrl: `${apiUrl}/${barbearia.foto_perfil}`,
+            lat: parseFloat(barbearia.lat),
+            lng: parseFloat(barbearia.lng)
+          }
+        })
+        setLocations(convertedData)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+      async function getUserCoordinates(){
+        try {
+          if(role == "cliente"){
+            const res = await axios.get(`${apiUrl}/painel-cliente/${id}`, {
+              withCredentials: true
+            })
+            lat = parseFloat(res.data.lat)
+            lng = parseFloat(res.data.lng)
+            setCenter({lat: lat, lng: lng})
+            console.log(lat)
+            
+          } else if (role == "barbearia"){
+            const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
+              withCredentials: true
+            })
+            lat = parseFloat(res.data.lat)
+            lng = parseFloat(res.data.lng)
+            setCenter({lat: lat, lng: lng})
+          }
+        } catch (error) {
+          console.error(error)
+        }
+        
+        
+      }
+
+    getUserCoordinates()
+    fetchData()
+  }, [])
+
+  const [toastCheck, setToastCheck] = useState(false);
+
+  const exibirToastCheck = () => {
+    setToastCheck(true);
+
+    setTimeout(() => {
+      setToastCheck(false);
+    }, 3000);
+  };
+
+  const handleSalvar = async (idBarbearia) => {
+    try {
+      const res = await axios.post(`${apiUrl}/salvar-barbearia/${id}`, {
+        idBarbearia: idBarbearia
+      })
+      ScrollToTop()
+      exibirToastCheck()
+    } catch (error) {
+      console.error(`Erro ao salvar barbearia ${error}`)
+    }
+  }
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -86,7 +159,7 @@ const GoogleMaps = () => {
       }
     );
   };
-  const apiUrl = "http://localhost:8001"
+  
   const [locations, setLocations] = useState([])
   const [activeMarker, setActiveMarker] = useState()
 
@@ -98,49 +171,9 @@ const GoogleMaps = () => {
   }
 
   // --GEOCODE-- //
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axios.get(`${apiUrl}/barbearias`,)
-        const convertedData = res.data.map((barbearia) => {
-          return {
-            ...barbearia,
-            imagemUrl: `${apiUrl}/${barbearia.foto_perfil}`,
-            lat: parseFloat(barbearia.lat),
-            lng: parseFloat(barbearia.lng)
-          }
-        })
-        setLocations(convertedData)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [])
+  
 
-  const [toastCheck, setToastCheck] = useState(false);
-
-  const exibirToastCheck = () => {
-    setToastCheck(true);
-
-    setTimeout(() => {
-      setToastCheck(false);
-    }, 3000);
-  };
-
-  const handleSalvar = async (idBarbearia) => {
-    try {
-      const res = await axios.post(`${apiUrl}/salvar-barbearia/${id}`, {
-        idBarbearia: idBarbearia
-      })
-      ScrollToTop()
-      exibirToastCheck()
-    } catch (error) {
-      console.error(`Erro ao salvar barbearia ${error}`)
-    }
-  }
-
-  const role = CheckRole()
+  
 
   return isLoaded ? (
     <>
@@ -243,14 +276,11 @@ const GoogleMaps = () => {
                           <p className="text-secondary">
                             <AiOutlineInstagram className="fs-4 me-2 text-dark" />{location.link_instagram}</p>
                           <div className="d-flex flex-column justify-content-center">
-                            <Link to="">
-                              <u><p className="fs-6 fw-bold">Ver avaliações</p></u>
-                            </Link>
 
 
                             {role === "cliente" ?
                               <>
-                                <Link to="">
+                                <Link to={`/agenda/${location.id}`}>
                                   <Button className="primary py-2 agendar shadow rounded-pill w-100 mb-2">
                                     Agendar
                                   </Button>
@@ -262,6 +292,7 @@ const GoogleMaps = () => {
                               : role === "barbearia" ?
                                 null
                                 :
+
                                 <Link to="/login-cliente">
                                   <Button className="primary py-2 agendar shadow rounded-pill w-100 mb-2">
                                     Agendar
