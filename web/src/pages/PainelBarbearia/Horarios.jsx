@@ -20,12 +20,11 @@ import ptBRLocale from '@fullcalendar/core/locales/pt-br';
 const Horarios = () => {
 
   const [selectedEvent, setSelectedEvent] = useState(null)
-
   const [showModal, setShowModal] = useState(false)
   const [eventsForFullCalendar, setEventsForFullCalendar] = useState([])
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
-  // console.log(decodedToken)
+  console.log(decodedToken)
   const id = decodedToken.id
   const apiUrl = "http://localhost:8001"
 
@@ -48,15 +47,16 @@ const Horarios = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get(`${apiUrl}/painel-barbearia/${id}/horarios`, {
+        const res = await axios.get(`${apiUrl}/painel-barbearia/${id}/horarios`,
+        {
+
           withCredentials: true
         })
         if (res.data && res.data.length > 0) {
           const eventos = res.data.map(mapEventToFullCalendarFormat)
-          console.log(eventsForFullCalendar)
           setEventsForFullCalendar(eventos)
         }
-        console.log(res)
+       
       } catch (error) {
         console.error('Erro ao buscar dados da API:', error)
       }
@@ -119,7 +119,6 @@ const Horarios = () => {
             </div>
             <div>
               <FullCalendar
-      
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"
                 locale={ptBRLocale}

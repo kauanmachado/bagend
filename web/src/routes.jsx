@@ -106,13 +106,13 @@ const Routers = () => {
         <Route path="painel-cliente" element={<PrivateRouteClient redirectTo="/login-cliente">
           <CliGeral />
         </PrivateRouteClient>} />
-        <Route path="painel-cliente/agendas" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
+        <Route path="painel-cliente/agendas/:id" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
           <CliAgendas />
         </PrivateRouteClient>} />
         <Route path="painel-cliente/alterar-dados" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
           <CliEditarDados />
         </PrivateRouteClient>} />
-        <Route path="painel-cliente/salvos" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
+        <Route path="painel-cliente/:id/salvos" element={<PrivateRouteClient redirectTo={"/login-cliente"}>
           <CliSalvos />
         </PrivateRouteClient>} />
 
@@ -141,10 +141,10 @@ const Routers = () => {
         <Route path="painel-barbearia/profissionais/adicionar-profissional" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <AdicionarProfissional />
         </PrivateRouteBarber>} />
-        <Route path="painel-barbearia/horarios" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+        <Route path="painel-barbearia/:id/horarios" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <Horarios />
         </PrivateRouteBarber>} />
-        <Route path="painel-barbearia/horarios/adicionar-horarios" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
+        <Route path="painel-barbearia/:id/horarios/adicionar-horarios" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>
           <AdicionarHorarios />
         </PrivateRouteBarber>} />
         {/* <Route path="perfil-barbearia" element={<PrivateRouteBarber redirectTo={"/login-barbearia"}>

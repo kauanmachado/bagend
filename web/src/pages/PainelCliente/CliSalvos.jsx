@@ -29,8 +29,8 @@ const CliSalvos = () => {
         const res = await axios.get(`${apiUrl}/painel-cliente/${id}/salvos`, {
           withCredentials: true
         })
-        console.log(res.data)
         setBarbeariasSalvas(res.data)
+        console.log(res.data)
       }
       catch (error) {
         console.error('Erro ao buscar dados da API:', error)
@@ -44,7 +44,6 @@ const CliSalvos = () => {
     try {
     await axios.delete(`${apiUrl}/painel-cliente/salvos/${id}`);
     setDeletedBarbearia(id)
-    
     ScrollToTop()
     window.location.reload()
     } catch (error) {

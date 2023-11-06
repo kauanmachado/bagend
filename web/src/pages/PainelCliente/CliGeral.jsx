@@ -21,7 +21,6 @@ const CliGeral = () => {
   const [data, setData] = useState([]);
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
-  console.log(decodedToken)
   const id = decodedToken.id
   const apiUrl = "http://localhost:8001"
 
@@ -49,7 +48,7 @@ const CliGeral = () => {
           console.error('Erro ao buscar dados da API:', error)
         }
       }
-      fetchData();
+      fetchData()
     },[])
 
   return (

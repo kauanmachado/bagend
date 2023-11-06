@@ -44,7 +44,6 @@ const Geral = () => {
           withCredentials: true
         })
         const dados = res.data
-        console.log(res.data)
         const barbearia = {
           ...dados,
           imagemUrl: `${apiUrl}/${dados.foto_perfil}`
@@ -82,24 +81,19 @@ const Geral = () => {
             <img src={data.imagemUrl} className="logo rounded-circle" />
 
             <h3 className=" mt-3 fw-bold title">{data.nomebarbearia}</h3>
-            <div className="d-flex">
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-            </div>
+            
             <p className="endereco mt-4"></p>
-            <p className="endereco text-secondary">
+            <p className="endereco text-secondary fw-bold">
               {data.endereco}
             </p>
-            <p className="endereco text-muted">
+            <p className="endereco text-muted fw-bold">
               {data.telefone}
             </p>
 
-            <p>
-              <AiOutlineInstagram className="fs-3" />{data.link_instagram}
-            </p>
+            <Link to={`${data.link_instagram}`} className="fw-bold text-dark">
+              <AiOutlineInstagram className="fs-3" />
+              Ir para o instagram
+            </Link>
           </Col>
         </Row>
       </Container>

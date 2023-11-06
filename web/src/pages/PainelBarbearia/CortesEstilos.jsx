@@ -127,7 +127,7 @@ const CortesEstilos = () => {
                           </h5>
                           <h5 className="text-success fs-5 fw-bold">R${corteEstilo.preco}</h5>
                           <p className="">Tempo estimado: {corteEstilo.tempo_estimado} Minutos</p>
-                          <Button onClick={() => handleDelete(corteEstilo.id)}className="bg-danger px-4 py-2 btnRed shadow rounded-pill w-100 mt-3 mb-1">
+                          <Button onClick={() => handleDelete(corteEstilo.id)} className="bg-danger px-4 py-2 btnRed shadow rounded-pill w-100 mt-3 mb-1">
                             <MdFreeCancellation />
                             Remover
                           </Button>

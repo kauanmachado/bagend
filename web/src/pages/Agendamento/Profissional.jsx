@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Button, Card, Col, Container, ListGroup, Modal, Row } from "react-bootstrap"
 import { BsScissors } from "react-icons/bs"
+import { ImUserTie } from "react-icons/im"
 import { MdOutlineArrowBackIos } from "react-icons/md"
 import { Link, useParams } from "react-router-dom"
 
@@ -112,7 +113,7 @@ const Profissional = ({ onPrev, updateProfissional }) => {
                     </div>
                     <hr></hr>
                     <div className="d-flex mt-5">
-                        <BsScissors className="fs-2 text-secondary ms-1" />
+                        <ImUserTie className="fs-2 text-secondary ms-1" />
                         <h3 className="fw-bold mb-3 text-secondary ms-3">Cortes e estilos</h3>
                     </div>
                     <ListGroup horizontal className=" d-flex">

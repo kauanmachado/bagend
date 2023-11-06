@@ -50,11 +50,13 @@ model Agenda {
   id_corteestilo String
   id_profissional String
   id_datahorario String
+  concluida Boolean
 
   cliente Cliente @relation(fields: [id_cliente], references: [id])
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
   cortesestilos CortesEstilos @relation(fields: [id_corteestilo], references: [id])
   profissional Profissional @relation(fields: [id_profissional], references: [id])
+  horarioDisponivel HorarioDisponivel[]
 
 }
 
@@ -74,6 +76,7 @@ model Profissional {
   id_barbearia String
   nome_profissional String
   foto_profissional String
+  
 
   agendas Agenda[]
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
@@ -95,6 +98,8 @@ model HorarioDisponivel {
   id_barbearia String
   dataHorario String @unique
   horario String
+  disponivel Boolean
 
   barbearia Barbearia @relation(fields: [id_barbearia], references: [id])
+  agendas Agenda[]
 }

@@ -13,8 +13,10 @@ router.post('/login-barbearia', BarbeariaController.loginBarbearia)
 
 router.get('/painel-barbearia/:id', authMiddleware, roleMiddleware('barbearia'), BarbeariaController.getBarbearia,  (req, res) => {
     console.log(req.barbearia)
-    res.json({ msg: 'Bem-vindo, barbearia!' });
+    res.json({ msg: 'Bem-vindo, barbearia!' })
 })
+router.get('/painel-barbearia/agendas/:id', BarbeariaController.getAgendas)
+router.delete('/painel-barbearia/agendas/:id', BarbeariaController.cancelAgenda)
 router.put('/painel-barbearia/:id', upload.single('foto_perfil'), BarbeariaController.updateBarbearia)
 router.get('/perfil-barbearia/:id', BarbeariaController.getBarbearia)
 router.get('/barbearias', BarbeariaController.getAllBarbearias)
@@ -31,6 +33,8 @@ router.delete('/painel-barbearia/:id/profissionais/:id', BarbeariaController.del
 router.post('/painel-barbearia/:id/adicionar-horario', BarbeariaController.createHorarioDisponivel)
 router.get('/painel-barbearia/:id/horarios', BarbeariaController.getHorariosDisponiveis)
 router.delete('/painel-barbearia/:id/remover-horario/:id', BarbeariaController.deleteHorario)
+
+
 
 
 module.exports = router

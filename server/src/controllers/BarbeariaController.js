@@ -336,8 +336,15 @@ exports.addCorteEstilo = async (req, res) => {
 }
 
 exports.getCortesEstilos = async (req, res) => {
+
+    const id = req.params.id
+
     try {
-        const corteestilo = await prisma.cortesEstilos.findMany()
+        const corteestilo = await prisma.cortesEstilos.findMany({
+            where: {
+                id_barbearia: id
+            }
+        })
         return res.json(corteestilo);
     } catch (error) {
         console.error(`Erro ao buscar os cortes de estilos: ${error}`)
@@ -425,8 +432,14 @@ exports.addProfissional = async (req, res) => {
 }
 
 exports.getProfissional = async (req,res) => {
+    const id = req.params.id
+
     try {
-        const profissionais = await prisma.profissional.findMany()
+        const profissionais = await prisma.profissional.findMany({
+            where: {
+                id_barbearia: id
+            }
+        })
         const profissionaisComImagens = profissionais.map((profissional) => {
             // Suponha que o campo 'foto_profissional' contenha o nome do arquivo da imagem
             // e que as imagens estejam armazenadas na pasta 'uploads'
@@ -482,6 +495,7 @@ exports.createHorarioDisponivel = async (req, res) => {
                 id_barbearia,
                 dataHorario,
                 horario,
+                disponivel: true,
             }
         })
 
@@ -493,8 +507,15 @@ exports.createHorarioDisponivel = async (req, res) => {
 }
 
 exports.getHorariosDisponiveis = async (req, res) => {
+
+    const id = req.params.id
+
     try {
-      const horarios = await prisma.HorarioDisponivel.findMany();
+      const horarios = await prisma.HorarioDisponivel.findMany({
+        where: {
+            id_barbearia: id
+        }
+      });
       return res.json(horarios);
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar horários disponíveis.' });
@@ -510,19 +531,87 @@ exports.deleteHorario = async (req,res) => {
                 id: id
             }
         })
-        return res.json(deletedHorario);
+        return res.json(deletedHorario)
     } catch (error) {
         console.error(`Erro ao excluir o horario: ${error}`)
     }
 }
 
-exports.getAgendas = async (req, res) => {
+exports.getAgendas= async (req, res) => {
+    const idBarbearia = req.params.id;
+
     try {
-        const agendas = await prisma.agenda.findMany()
-        return res.json(agendas)
-      } catch (error) {
-        return res.status(500).json({ error: 'Erro ao buscar agendas.' });
-      }
+        const agendas = await prisma.agenda.findMany({
+            where: {
+                id_barbearia: idBarbearia
+            },
+        });
+
+
+        const agendaDetails = []
+
+        for (const agenda of agendas) {
+            const { id, id_cliente, id_profissional, id_corteestilo, id_datahorario} = agenda;
+
+            // Consultar informações relacionadas separadamente
+
+            const cliente = await prisma.cliente.findUnique({
+                where: {
+                    id: id_cliente
+                }
+            })
+
+
+            const profissional = await prisma.profissional.findUnique({
+                where: {
+                    id: id_profissional
+                }
+            })
+
+            const corteestilo = await prisma.cortesEstilos.findUnique({
+                where: {
+                    id: id_corteestilo
+                }
+            })
+
+            const datahorario = await prisma.horarioDisponivel.findUnique({
+                where: {
+                    id: id_datahorario
+                }
+            });
+
+
+            const agendaInfo = {
+                id,
+                cliente,
+                profissional,
+                corteestilo,
+                datahorario
+            };
+
+            agendaDetails.push(agendaInfo)
+        }
+
+        return res.json(agendaDetails)
+    } catch (error) {
+        return res.status(500).json({ error: 'Erro ao buscar agendas do cliente.' });
+    }
 }
+
+exports.cancelAgenda = async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const canceledAgenda = await prisma.agenda.delete({
+            where: {
+                id: id
+            }
+        })
+        return res.json(canceledAgenda);
+    } catch (error) {
+        console.error(`Erro ao cancelar agenda: ${error}`)
+    }
+}
+
 
 

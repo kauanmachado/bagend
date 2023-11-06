@@ -90,7 +90,7 @@ const PainelBarbearia = () => {
               </li>
               <li className="nav-item  fs-4 my-1">
                 <Link
-                  to="../painel-barbearia/horarios"
+                  to={`../painel-barbearia/${id}/horarios`}
                   className="nav-link text-secondary fs-5"
                 >
                   <BsClockHistory />

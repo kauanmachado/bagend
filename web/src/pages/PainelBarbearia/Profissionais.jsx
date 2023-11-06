@@ -51,7 +51,7 @@ const Profissionais = () => {
           };
         });
         setProfissionais(profissionaisComImagens)
-        console.log(res.data)
+      
       } catch (error) {
         console.error('Erro ao buscar dados da API:', error)
       }

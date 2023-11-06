@@ -3,70 +3,144 @@ import Footer from "../../components/footer/Footer";
 import "../../styles/dashboard.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Navbar from "react-bootstrap/Navbar";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
-import {
-  MdBusinessCenter,
-  MdFreeCancellation,
-  MdDashboard,
-} from "react-icons/md";
+
 import { AiFillSchedule } from "react-icons/ai";
-import { BsScissors, BsClock } from "react-icons/bs";
-import { RiEditBoxFill } from "react-icons/ri";
-import { IoLogOutOutline } from "react-icons/io5";
-import { TiThMenu } from "react-icons/ti";
 import PainelBarbearia from "../../components/PainelBarbearia";
-import { Card } from "react-bootstrap";
 import HeaderBarbearia from "../../components/HeaderBarbearia";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode"
+import { Modal, Toast } from "react-bootstrap";
 import axios from "axios";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import ptBRLocale from '@fullcalendar/core/locales/pt-br';
+import { RiCheckboxCircleFill } from "react-icons/ri";
+import ScrollToTop from "../../components/ScrollToTop";
 
 const BrbAgendas = () => {
 
-  const [data, setData] = useState([]);
+  const [events, setEvents] = useState([])
+  const [showModal, setShowModal] = useState(false)
+  const [selectedAgenda, setSelectedAgenda] = useState(null)
+  const [canceledAgenda, setCanceledAgenda] = useState(null)
   const token = Cookies.get('token')
   const decodedToken = jwt_decode(token)
   // console.log(decodedToken)
-  const id = decodedToken.id
+  const idBarbearia = decodedToken.id
   const apiUrl = "http://localhost:8001"
+  const [toastCheck, setToastCheck] = useState(false);
+
+  const exibirToastCheck = () => {
+    setToastCheck(true)
+
+    setTimeout(() => {
+      window.location.reload()
+      setToastCheck(false)
+    }, 3000)
+  }
 
 
   useEffect(() => {
-    async function fetchData() {
-        try {
-          const res = await axios.get(`${apiUrl}/painel-barbearia/${id}`, {
-            withCredentials: true
-          })
-           setData(data)
-           console.log(data)
-        } catch(error){
-          console.error('Erro ao buscar dados da API:', error)
+    async function fetchAgendas() {
+      try {
+        const res = await axios.get(`${apiUrl}/painel-barbearia/agendas/${idBarbearia}`, {
+          withCredentials: true
+        })
+
+        
+
+        const agendas = res.data
+        if (!agendas || agendas.length === 0) {
+          return
         }
+
+        const formattedEvents = agendas.map((agenda) => {
+          return {
+            title: `${agenda.datahorario.horario} - ${agenda.cliente.nome_completo} `,
+            start: agenda.datahorario.dataHorario,
+            agenda: agenda
+          }
+        })
+
+        setEvents(formattedEvents)
+
+
+      } catch (error) {
+        console.error(error)
+      }
     }
-    fetchData()
-  }, [])
+    fetchAgendas()
+  }, [canceledAgenda])
 
-  
+  const handleEventClick = (info) => {
+    setSelectedAgenda(info.event.extendedProps.agenda)
+    setShowModal(true)
+  }
 
-    const handleEventoClicado = (info) => {
-      // A função que será chamada quando um evento for clicado
-      console.log('Evento clicado:', info.event.title);
-    };
-  
+  const handleCloseModal = () => {
+    setSelectedAgenda(null)
+    setShowModal(false)
+  }
+
+  const handleCancelarAgenda = async (idAgenda) => {
+    try {
+      await axios.delete(`${apiUrl}/painel-barbearia/agendas/${idAgenda}`)
+      setCanceledAgenda(idAgenda)
+      setShowModal(false)
+      ScrollToTop()
+      exibirToastCheck()
+
+    } catch (error) {
+      console.error('Erro ao cancelar agenda:', error)
+    }
+  }
+
+
+
 
   return (
     <>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title className="fw-bold">Detalhes da Agenda</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedAgenda && (
+            <>
+              <p className="fw-bold">{selectedAgenda.corteestilo.nome_corte}</p>
+              <p className="fw-bold text-success">R${selectedAgenda.corteestilo.preco}</p>
+              <p><strong>Tempo estimado: </strong>{selectedAgenda.corteestilo.tempo_estimado} minutos</p>
+              <p><strong>Profissional: </strong> {selectedAgenda.profissional.nome_profissional}</p>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="bg-secondary" onClick={handleCloseModal}>
+            Fechar
+          </Button>
+          <Button variant="danger" onClick={() => handleCancelarAgenda(selectedAgenda.id)}>
+            Cancelar horário
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <HeaderBarbearia />
       <Container className="default-margin">
         <Row className="justify-content-center shadow bg-white rounded">
+        <Toast
+            show={toastCheck}
+            onClose={() => setToastCheck(false)}
+            className="position-absolute top-0 start-50 translate-middle-x toastEmail bg-success text-white mt-5"
+          >
+            <Toast.Body>
+              <RiCheckboxCircleFill className="me-2" />
+              Agenda cancelada com sucesso!
+            </Toast.Body>
+          </Toast>
           <Col
             md={3}
             className="rounded bg-light col-auto d-flex flex-column p-5 bg-white"
@@ -79,17 +153,20 @@ const BrbAgendas = () => {
               <h3 className="fw-bold mb-5 text-secondary ms-3">Agendas</h3>
             </div>
 
-              <Container>
-                <Row>
-                  
-                 <FullCalendar
-                 className="p-0"
-                 plugins={[dayGridPlugin]}
-                 initialView="dayGridMonth"
-                 locale={ptBRLocale}/>
-                </Row>
-              </Container>
-            
+            <Container>
+              <Row>
+
+                <FullCalendar
+                  className="p-0"
+                  plugins={[dayGridPlugin]}
+                  initialView="dayGridMonth"
+                  locale={ptBRLocale}
+                  events={events}
+                  eventTextColor="dark"
+                  eventClick={handleEventClick} />
+              </Row>
+            </Container>
+
           </Col>
         </Row>
       </Container>

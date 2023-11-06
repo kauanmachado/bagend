@@ -100,7 +100,7 @@ const CliEditarDados = () => {
               <h3 className="fw-bold text-secondary ms-3">Alterar dados</h3>
             </div>
     
-            <Container>
+            <Container className="mt-5">
               <Row>
                 <Form onSubmit={handleUpdate}>
                     <Col md={8}>

@@ -145,7 +145,6 @@ const BrbEditarDados = () => {
       console.log(formData)
 
       const res = await axios.put(`${apiUrl}/painel-barbearia/${id}`, formData)
-      console.log(res)
       ScrollToTop()
       exibirToastCheck()
       // setTimeout(() => {
@@ -173,7 +172,7 @@ const BrbEditarDados = () => {
           >
             <Toast.Body>
               <RiErrorWarningFill className="me-2" />
-              Endereço não!
+              Endereço não encontrado!
             </Toast.Body>
           </Toast>
       <Toast

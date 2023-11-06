@@ -139,14 +139,68 @@ exports.getCliente = async (req, res) => {
     return res.json(cliente);
 }
 
-exports.getAgendas = async (req, res) => {
+exports.getAgendas= async (req, res) => {
+    const idCliente = req.params.id;
+
     try {
-        const agendas = await prisma.agenda.findMany()
-        return res.json(agendas)
-    } catch {
-        console.error(`Erro ao buscar agendas: ${error}`)
+        const agendas = await prisma.agenda.findMany({
+            where: {
+                id_cliente: idCliente
+            },
+        })
+
+
+
+        const agendaDetails = []
+
+        for (const agenda of agendas) {
+            const { id, id_barbearia, id_profissional, id_corteestilo, id_datahorario} = agenda;
+
+            // Consultar informações relacionadas separadamente
+
+            const barbearia = await prisma.barbearia.findUnique({
+                where: {
+                    id: id_barbearia
+                }
+            })
+
+
+            const profissional = await prisma.profissional.findUnique({
+                where: {
+                    id: id_profissional
+                }
+            })
+
+            const corteestilo = await prisma.cortesEstilos.findUnique({
+                where: {
+                    id: id_corteestilo
+                }
+            })
+
+            const datahorario = await prisma.horarioDisponivel.findUnique({
+                where: {
+                    id: id_datahorario
+                }
+            });
+
+
+            const agendaInfo = {
+                id,
+                barbearia,
+                profissional,
+                corteestilo,
+                datahorario
+            };
+
+            agendaDetails.push(agendaInfo);
+        }
+
+        return res.json(agendaDetails);
+    } catch (error) {
+        return res.status(500).json({ error: 'Erro ao buscar agendas do cliente.' });
     }
 }
+
 
 exports.salvarBarbearia = async (req, res) => {
     const idCliente = req.params.id
@@ -195,11 +249,15 @@ exports.salvarBarbearia = async (req, res) => {
 }
 
 exports.getSalvos = async (req, res) => {
+    const id = req.params.id
+
     try {
-        const salvos = await prisma.salvo.findMany()
-        if (!salvos || salvos.length === 0) {
-            return res.status(404).json({ error: 'Nenhum registro encontrado' });
-        }
+        const salvos = await prisma.salvo.findMany({
+            where: {
+                id_barbearia: id
+            }
+        })
+
         const barbearias = await Promise.all(
             salvos.map(async (salvo) => {
                 const idBarbearia = salvo.id_barbearia
@@ -241,27 +299,37 @@ exports.deleteSalvo = async (req, res) => {
 }
 
 
-exports.fazerAgenda = async () => {
+exports.fazerAgenda = async (req, res) => {
     const {
-       idCliente,
-       idBarbearia,
-       idCorteestilo,
-       idProfissional,
-       data
+       id_cliente,
+       id_barbearia,
+       id_corteestilo,
+       id_profissional,
+       id_datahorario
     } = req.body
 
     try {
         const agenda = await prisma.agenda.create({
             data: {
-                id,
-                id_cliente: idCliente,
-                id_barbearia: idBarbearia,
-                id_corteestilo: idCorteestilo,
-                id_profissional: idProfissional,
-                data: data
+                id_cliente,
+                id_barbearia,
+                id_corteestilo,
+                id_profissional,
+                id_datahorario,
+                concluida: false
             }
         })
-        res.json(agenda)
+
+        await prisma.horarioDisponivel.update({
+            where: {
+                id: id_datahorario
+            },
+            data: {
+                disponivel: false
+            }
+        })
+        
+        return res.json(agenda)
     } catch (error) {
         console.error(`Erro ao fazer agendamento: ${error}`)
     }
@@ -290,23 +358,6 @@ exports.getBarbearia = async (req, res) => {
         return res.status(404).json({ msg: 'Barbearia não encontrado' });
     }
     return res.json(barbeariaComImagem);
-}
-
-exports.createAgenda = async (req, res) => {
-
-    const {
-        id_cliente,
-        id_barbearia,
-        id_datahorario,
-        id_corteestilo,
-        id_profissional
-    } = req.body
-
-    try {
-
-    } catch (error) {
-
-    }
 }
 
 exports.updateCliente = async (req, res) => {

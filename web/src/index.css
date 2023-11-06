@@ -184,4 +184,14 @@ b {
   background-color: #f0f0f0 !important;
 }
 
+.fc-event:hover {
+  cursor: pointer;
+}
+
+
+.fc-event {
+  font-size: 16px;
+  color: black;
+}
+
 

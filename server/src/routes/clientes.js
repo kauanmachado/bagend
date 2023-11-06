@@ -14,11 +14,11 @@ router.get('/painel-cliente/:id', authMiddleware, roleMiddleware('cliente'), cli
     res.json({ msg: 'Bem-vindo, cliente!'})
 })
 router.put('/painel-cliente/:id', clienteController.updateCliente)
-router.get('/painel-cliente/:id/agendas', authMiddleware, roleMiddleware('cliente'), clienteController.getAgendas)
-router.get('/perfil')
+router.get('/painel-cliente/agendas', clienteController.getAgendas)
 
 router.post('/salvar-barbearia/:id',  clienteController.salvarBarbearia)
 router.post('/agendar', clienteController.fazerAgenda)
+router.get('/painel-cliente/agendas/:id', clienteController.getAgendas)
 router.get('/painel-cliente/:id/salvos', clienteController.getSalvos)
 router.delete('/painel-cliente/salvos/:id', clienteController.deleteSalvo)
 

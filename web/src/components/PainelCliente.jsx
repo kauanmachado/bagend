@@ -74,13 +74,13 @@ const PainelCliente = () => {
             </li>
             
             <li className="nav-item  fs-4 my-1">
-              <Link to="../painel-cliente/agendas"  className="nav-link text-secondary fs-5">
+              <Link to={`../painel-cliente/agendas/${id}`}  className="nav-link text-secondary fs-5">
                 <AiOutlineSchedule />
                 <span className="ms-3">Agendas</span>
                 </Link>
             </li>
             <li className="nav-item  fs-4 my-1">
-            <Link to="../painel-cliente/salvos"  className="nav-link text-secondary fs-5">
+            <Link to={`../painel-cliente/${id}/salvos`}  className="nav-link text-secondary fs-5">
                 <BsBookmarks />
                 <span className="ms-3">Salvos</span>
                 </Link>

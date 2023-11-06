@@ -67,7 +67,7 @@ const AdicionarHorarios = () => {
                     horario: horarioSelecionado
                 }, config);
             
-                navigate('/painel-barbearia/horarios');
+                navigate('/painel-barbearia/:id/horarios');
             } catch (error) {
                 
                 if (error.response.data = "Horário já existe.") {
